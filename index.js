@@ -3,7 +3,7 @@ const express = require("express");
 const compression = require('compression');
 
 // config
-const port = process.env.PORT || 4200;
+const port = process.env.PORT || 3000;
 const app_folder = "dist/logo-ali-tem-app/browser";
 const options = {
   dotfiles: 'ignore',
