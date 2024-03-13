@@ -1,10 +1,30 @@
-var express =  require("express");
-var app = express();
+"use strict";
+const express = require("express");
+const compression = require('compression');
 
-app.use(express.static("dist/logo-ali-tem-app"));
-app.get("/", function(req,res){
-    res.redirect("/");
+// config
+const port = process.env.PORT || 4200;
+const app_folder = "dist/logo-ali-tem-app/browser";
+const options = {
+  dotfiles: 'ignore',
+  etag: false,
+  extensions: ['html', 'js', 'scss', 'css'],
+  index: false,
+  maxAge: '1y',
+  redirect: true,
+}
+
+// create app
+const app = express();
+app.use(compression());
+app.use(express.static(app_folder, options));
+
+// serve angular paths
+app.all('*', function (req, res) {
+    res.status(200).sendFile(`/`, {root: app_folder});
 });
 
-
-app.listen(4200);
+// start listening
+app.listen(port, function () {
+    console.log("Node Express server for " + app.name + " listening on http://localhost:" + port);
+});
