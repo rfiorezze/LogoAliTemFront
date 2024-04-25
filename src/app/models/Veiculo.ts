@@ -1,14 +1,11 @@
-import { Motorista } from "./Motorista";
-
 export interface Veiculo {
-    Id: number;
-    Placa: string;
-    Ano: number;
-    Marca: string;
-    Modelo: string;
-    Categoria: string;
-    TipoCarroceria: string;
-    QtdEixos: number;
-    MotoristaId: number;
-    Motorista: Motorista;
+    id: number;
+    placa: string;
+    ano: number;
+    marca: string;
+    modelo: string;
+    categoria: string;
+    tipoCarroceria: string;
+    qtdEixos: number;
+    motoristaId: number;
 }

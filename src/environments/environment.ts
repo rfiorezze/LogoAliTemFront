@@ -4,7 +4,7 @@
 
 export const environment = {
     production: false,
-    apiURL: 'https://logoalitemapi-2gxdtwfgaa-uc.a.run.app/',
+    apiURL: 'https://localhost:5001/',
   };
   
   /*

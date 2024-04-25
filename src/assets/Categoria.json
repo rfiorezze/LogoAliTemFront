@@ -1,0 +1,38 @@
+[
+    {
+        "chave": "CAMINHÃO SIMPLES (8T A 29T)",
+        "valor": "CAMINHÃO SIMPLES (8T A 29T)"
+    },
+    {
+        "chave": "CAMINHÃO TRATOR",
+        "valor": "CAMINHÃO TRATOR"
+    },
+    {
+        "chave": "REBOQUE",
+        "valor": "REBOQUE"
+    },
+    {
+        "chave": "SEMI-REBOQUE",
+        "valor": "SEMI-REBOQUE"
+    },
+    {
+        "chave": "CAMINHONETE / FURGÃO (1,5T A 3,49T)",
+        "valor": "CAMINHONETE / FURGÃO (1,5T A 3,49T)"
+    },
+    {
+        "chave": "CAMINHÃO LEVE (3,5T A 7,99T)",
+        "valor": "CAMINHÃO LEVE (3,5T A 7,99T)"
+    },
+    {
+        "chave": "UTILITÁRIO LEVE (0,5T A 1,49T)",
+        "valor": "UTILITÁRIO LEVE (0,5T A 1,49T)"
+    },
+    {
+        "chave": "CAMINHONETA",
+        "valor": "CAMINHONETA"
+    },
+    {
+        "chave": "CAMIONETA",
+        "valor": "CAMIONETA"
+    }
+]

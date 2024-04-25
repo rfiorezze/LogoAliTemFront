@@ -163,7 +163,7 @@
  	</div>
      <div class="card-footer">
 		<div class="d-flex">
-			<button class="btn btn-outline-secondary me-auto border" (click)="resetForm()">
+			<button class="btn btn-outline-secondary me-auto border" onclick="javascript:history.back()">
 				Cancelar Alteração
 			</button>
             <button class="btn btn-success" [disabled]="!form.valid" (click)="salvarAlteracao()">

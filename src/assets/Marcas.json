@@ -1,0 +1,1826 @@
+[
+    {
+        "chave": "VOLKSWAGEN",
+        "valor": "VOLKSWAGEN"
+    },
+    {
+        "chave": "AGRALE",
+        "valor": "AGRALE"
+    },
+    {
+        "chave": "AGROCABINA",
+        "valor": "AGROCABINA"
+    },
+    {
+        "chave": "ALFA",
+        "valor": "ALFA"
+    },
+    {
+        "chave": "AMV",
+        "valor": "AMV"
+    },
+    {
+        "chave": "ANTONINI",
+        "valor": "ANTONINI"
+    },
+    {
+        "chave": "ARGI",
+        "valor": "ARGI"
+    },
+    {
+        "chave": "ARTESANAL",
+        "valor": "ARTESANAL"
+    },
+    {
+        "chave": "ASIMEC",
+        "valor": "ASIMEC"
+    },
+    {
+        "chave": "AUSTIN",
+        "valor": "AUSTIN"
+    },
+    {
+        "chave": "BELAVTOMAZ",
+        "valor": "BELAVTOMAZ"
+    },
+    {
+        "chave": "BELEM",
+        "valor": "BELEM"
+    },
+    {
+        "chave": "BERTOLINI",
+        "valor": "BERTOLINI"
+    },
+    {
+        "chave": "BIANCHI",
+        "valor": "BIANCHI"
+    },
+    {
+        "chave": "BISELLI",
+        "valor": "BISELLI"
+    },
+    {
+        "chave": "BLAYA",
+        "valor": "BLAYA"
+    },
+    {
+        "chave": "BOIADEIRO",
+        "valor": "BOIADEIRO"
+    },
+    {
+        "chave": "BONANO",
+        "valor": "BONANO"
+    },
+    {
+        "chave": "BORTOLOTTO",
+        "valor": "BORTOLOTTO"
+    },
+    {
+        "chave": "BRASIL",
+        "valor": "BRASIL"
+    },
+    {
+        "chave": "CABRINI",
+        "valor": "CABRINI"
+    },
+    {
+        "chave": "CAMIONETE",
+        "valor": "CAMIONETE"
+    },
+    {
+        "chave": "CARBUS",
+        "valor": "CARBUS"
+    },
+    {
+        "chave": "CARGO",
+        "valor": "CARGO"
+    },
+    {
+        "chave": "CAR-REBOQUE",
+        "valor": "CAR-REBOQUE"
+    },
+    {
+        "chave": "CARRIAL",
+        "valor": "CARRIAL"
+    },
+    {
+        "chave": "CARRMETAL",
+        "valor": "CARRMETAL"
+    },
+    {
+        "chave": "CAST.Y",
+        "valor": "CAST.Y"
+    },
+    {
+        "chave": "CEAM",
+        "valor": "CEAM"
+    },
+    {
+        "chave": "CHARGER",
+        "valor": "CHARGER"
+    },
+    {
+        "chave": "CHEVROLET",
+        "valor": "CHEVROLET"
+    },
+    {
+        "chave": "CIOATO",
+        "valor": "CIOATO"
+    },
+    {
+        "chave": "CITROEN",
+        "valor": "CITROEN"
+    },
+    {
+        "chave": "CLARK",
+        "valor": "CLARK"
+    },
+    {
+        "chave": "COLON",
+        "valor": "COLON"
+    },
+    {
+        "chave": "COMETTO",
+        "valor": "COMETTO"
+    },
+    {
+        "chave": "CONTIN",
+        "valor": "CONTIN"
+    },
+    {
+        "chave": "CORONA",
+        "valor": "CORONA"
+    },
+    {
+        "chave": "CORSA",
+        "valor": "CORSA"
+    },
+    {
+        "chave": "CRESCENTE",
+        "valor": "CRESCENTE"
+    },
+    {
+        "chave": "CUMMINS",
+        "valor": "CUMMINS"
+    },
+    {
+        "chave": "DAEWOO",
+        "valor": "DAEWOO"
+    },
+    {
+        "chave": "DAIHATSU",
+        "valor": "DAIHATSU"
+    },
+    {
+        "chave": "DALI",
+        "valor": "DALI"
+    },
+    {
+        "chave": "DAMBROZ",
+        "valor": "DAMBROZ"
+    },
+    {
+        "chave": "DASA",
+        "valor": "DASA"
+    },
+    {
+        "chave": "DEUTZ",
+        "valor": "DEUTZ"
+    },
+    {
+        "chave": "DI",
+        "valor": "DI"
+    },
+    {
+        "chave": "DIAMOND",
+        "valor": "DIAMOND"
+    },
+    {
+        "chave": "DODGE",
+        "valor": "DODGE"
+    },
+    {
+        "chave": "DOLLY",
+        "valor": "DOLLY"
+    },
+    {
+        "chave": "ELLFEN",
+        "valor": "ELLFEN"
+    },
+    {
+        "chave": "ENGERAUTO",
+        "valor": "ENGERAUTO"
+    },
+    {
+        "chave": "EQUIPAL",
+        "valor": "EQUIPAL"
+    },
+    {
+        "chave": "FAB.",
+        "valor": "FAB."
+    },
+    {
+        "chave": "FABRIC",
+        "valor": "FABRIC"
+    },
+    {
+        "chave": "FABRICAR",
+        "valor": "FABRICAR"
+    },
+    {
+        "chave": "FABRIS",
+        "valor": "FABRIS"
+    },
+    {
+        "chave": "FACCHINI",
+        "valor": "FACCHINI"
+    },
+    {
+        "chave": "FIAT",
+        "valor": "FIAT"
+    },
+    {
+        "chave": "FIBREM",
+        "valor": "FIBREM"
+    },
+    {
+        "chave": "FNM",
+        "valor": "FNM"
+    },
+    {
+        "chave": "FNV-FRUEHAUF",
+        "valor": "FNV-FRUEHAUF"
+    },
+    {
+        "chave": "FORD",
+        "valor": "FORD"
+    },
+    {
+        "chave": "FORMIGHIERI",
+        "valor": "FORMIGHIERI"
+    },
+    {
+        "chave": "FRACCINI",
+        "valor": "FRACCINI"
+    },
+    {
+        "chave": "FREE",
+        "valor": "FREE"
+    },
+    {
+        "chave": "FREUHCY",
+        "valor": "FREUHCY"
+    },
+    {
+        "chave": "FRUE",
+        "valor": "FRUE"
+    },
+    {
+        "chave": "FRUEHAUF",
+        "valor": "FRUEHAUF"
+    },
+    {
+        "chave": "FURCARE",
+        "valor": "FURCARE"
+    },
+    {
+        "chave": "GALEGO",
+        "valor": "GALEGO"
+    },
+    {
+        "chave": "GANDOLFO",
+        "valor": "GANDOLFO"
+    },
+    {
+        "chave": "GENERAL",
+        "valor": "GENERAL"
+    },
+    {
+        "chave": "GMC",
+        "valor": "GMC"
+    },
+    {
+        "chave": "GOCEANO",
+        "valor": "GOCEANO"
+    },
+    {
+        "chave": "GOLIVE",
+        "valor": "GOLIVE"
+    },
+    {
+        "chave": "GONELLA",
+        "valor": "GONELLA"
+    },
+    {
+        "chave": "GOTTI",
+        "valor": "GOTTI"
+    },
+    {
+        "chave": "GOYDO",
+        "valor": "GOYDO"
+    },
+    {
+        "chave": "GRAHL",
+        "valor": "GRAHL"
+    },
+    {
+        "chave": "GROVE",
+        "valor": "GROVE"
+    },
+    {
+        "chave": "GUERRA",
+        "valor": "GUERRA"
+    },
+    {
+        "chave": "HANZ",
+        "valor": "HANZ"
+    },
+    {
+        "chave": "HEIL",
+        "valor": "HEIL"
+    },
+    {
+        "chave": "HIWAY",
+        "valor": "HIWAY"
+    },
+    {
+        "chave": "HYSTER",
+        "valor": "HYSTER"
+    },
+    {
+        "chave": "HYUNDAI",
+        "valor": "HYUNDAI"
+    },
+    {
+        "chave": "IDEROL",
+        "valor": "IDEROL"
+    },
+    {
+        "chave": "IMAROL",
+        "valor": "IMAROL"
+    },
+    {
+        "chave": "IMP",
+        "valor": "IMP"
+    },
+    {
+        "chave": "INCA",
+        "valor": "INCA"
+    },
+    {
+        "chave": "INCREAL",
+        "valor": "INCREAL"
+    },
+    {
+        "chave": "INDECAR",
+        "valor": "INDECAR"
+    },
+    {
+        "chave": "INMETRO",
+        "valor": "INMETRO"
+    },
+    {
+        "chave": "INTERNACIONAL",
+        "valor": "INTERNACIONAL"
+    },
+    {
+        "chave": "IRGA",
+        "valor": "IRGA"
+    },
+    {
+        "chave": "ISUZU",
+        "valor": "ISUZU"
+    },
+    {
+        "chave": "IVECO",
+        "valor": "IVECO"
+    },
+    {
+        "chave": "IVECOFIAT",
+        "valor": "IVECOFIAT"
+    },
+    {
+        "chave": "JAMANTA",
+        "valor": "JAMANTA"
+    },
+    {
+        "chave": "JAPERSIL",
+        "valor": "JAPERSIL"
+    },
+    {
+        "chave": "JOFEIR",
+        "valor": "JOFEIR"
+    },
+    {
+        "chave": "JULIETA",
+        "valor": "JULIETA"
+    },
+    {
+        "chave": "JUST",
+        "valor": "JUST"
+    },
+    {
+        "chave": "KENWORT",
+        "valor": "KENWORT"
+    },
+    {
+        "chave": "KIA",
+        "valor": "KIA"
+    },
+    {
+        "chave": "KIBRAS",
+        "valor": "KIBRAS"
+    },
+    {
+        "chave": "KORG",
+        "valor": "KORG"
+    },
+    {
+        "chave": "KRONE",
+        "valor": "KRONE"
+    },
+    {
+        "chave": "KRONORTE",
+        "valor": "KRONORTE"
+    },
+    {
+        "chave": "KUME",
+        "valor": "KUME"
+    },
+    {
+        "chave": "LAMF",
+        "valor": "LAMF"
+    },
+    {
+        "chave": "LANGERDORF",
+        "valor": "LANGERDORF"
+    },
+    {
+        "chave": "LEN OIS",
+        "valor": "LEN OIS"
+    },
+    {
+        "chave": "LIBRELATO",
+        "valor": "LIBRELATO"
+    },
+    {
+        "chave": "LIDER",
+        "valor": "LIDER"
+    },
+    {
+        "chave": "LIESS",
+        "valor": "LIESS"
+    },
+    {
+        "chave": "LINSHALM",
+        "valor": "LINSHALM"
+    },
+    {
+        "chave": "LUNA",
+        "valor": "LUNA"
+    },
+    {
+        "chave": "ALEM",
+        "valor": "ALEM"
+    },
+    {
+        "chave": "MAM",
+        "valor": "MAM"
+    },
+    {
+        "chave": "MRL",
+        "valor": "MRL"
+    },
+    {
+        "chave": "MACK",
+        "valor": "MACK"
+    },
+    {
+        "chave": "MAGIRUS",
+        "valor": "MAGIRUS"
+    },
+    {
+        "chave": "MAN",
+        "valor": "MAN"
+    },
+    {
+        "chave": "MARCOFRIGO",
+        "valor": "MARCOFRIGO"
+    },
+    {
+        "chave": "MARGOTTI",
+        "valor": "MARGOTTI"
+    },
+    {
+        "chave": "MARINGA",
+        "valor": "MARINGA"
+    },
+    {
+        "chave": "MARRARA",
+        "valor": "MARRARA"
+    },
+    {
+        "chave": "MARUTI",
+        "valor": "MARUTI"
+    },
+    {
+        "chave": "MASA",
+        "valor": "MASA"
+    },
+    {
+        "chave": "MASSARI",
+        "valor": "MASSARI"
+    },
+    {
+        "chave": "MATRANS",
+        "valor": "MATRANS"
+    },
+    {
+        "chave": "MERCEDES",
+        "valor": "MERCEDES"
+    },
+    {
+        "chave": "MEROLA",
+        "valor": "MEROLA"
+    },
+    {
+        "chave": "METAL",
+        "valor": "METAL"
+    },
+    {
+        "chave": "METALCAR",
+        "valor": "METALCAR"
+    },
+    {
+        "chave": "METALESP",
+        "valor": "METALESP"
+    },
+    {
+        "chave": "METALPI",
+        "valor": "METALPI"
+    },
+    {
+        "chave": "MIC",
+        "valor": "MIC"
+    },
+    {
+        "chave": "MILEI",
+        "valor": "MILEI"
+    },
+    {
+        "chave": "MINUANO",
+        "valor": "MINUANO"
+    },
+    {
+        "chave": "MIRA",
+        "valor": "MIRA"
+    },
+    {
+        "chave": "MITSUBISHI",
+        "valor": "MITSUBISHI"
+    },
+    {
+        "chave": "MON/PROTOTIPO",
+        "valor": "MON/PROTOTIPO"
+    },
+    {
+        "chave": "MORRIS",
+        "valor": "MORRIS"
+    },
+    {
+        "chave": "MUTIRAO",
+        "valor": "MUTIRAO"
+    },
+    {
+        "chave": "NAO",
+        "valor": "NAO"
+    },
+    {
+        "chave": "NAVISTAR",
+        "valor": "NAVISTAR"
+    },
+    {
+        "chave": "NICOLAS",
+        "valor": "NICOLAS"
+    },
+    {
+        "chave": "NIJU",
+        "valor": "NIJU"
+    },
+    {
+        "chave": "NISSAN",
+        "valor": "NISSAN"
+    },
+    {
+        "chave": "NOMA",
+        "valor": "NOMA"
+    },
+    {
+        "chave": "OSHKOSH",
+        "valor": "OSHKOSH"
+    },
+    {
+        "chave": "OUTRAS",
+        "valor": "OUTRAS"
+    },
+    {
+        "chave": "PASTRE",
+        "valor": "PASTRE"
+    },
+    {
+        "chave": "PEUGEOT",
+        "valor": "PEUGEOT"
+    },
+    {
+        "chave": "PITSPORT",
+        "valor": "PITSPORT"
+    },
+    {
+        "chave": "PROPRIA",
+        "valor": "PROPRIA"
+    },
+    {
+        "chave": "PROTOTIPO",
+        "valor": "PROTOTIPO"
+    },
+    {
+        "chave": "RADISUR",
+        "valor": "RADISUR"
+    },
+    {
+        "chave": "RAMBO",
+        "valor": "RAMBO"
+    },
+    {
+        "chave": "RANDON",
+        "valor": "RANDON"
+    },
+    {
+        "chave": "RANGEL",
+        "valor": "RANGEL"
+    },
+    {
+        "chave": "REAL",
+        "valor": "REAL"
+    },
+    {
+        "chave": "REBOQUE",
+        "valor": "REBOQUE"
+    },
+    {
+        "chave": "REBOX",
+        "valor": "REBOX"
+    },
+    {
+        "chave": "RECRUSUL",
+        "valor": "RECRUSUL"
+    },
+    {
+        "chave": "RENAULT",
+        "valor": "RENAULT"
+    },
+    {
+        "chave": "RENE",
+        "valor": "RENE"
+    },
+    {
+        "chave": "RIVAL",
+        "valor": "RIVAL"
+    },
+    {
+        "chave": "ROCONGU",
+        "valor": "ROCONGU"
+    },
+    {
+        "chave": "RODINE",
+        "valor": "RODINE"
+    },
+    {
+        "chave": "RODOFORT",
+        "valor": "RODOFORT"
+    },
+    {
+        "chave": "RODOVIA",
+        "valor": "RODOVIA"
+    },
+    {
+        "chave": "RODOVIARIA",
+        "valor": "RODOVIARIA"
+    },
+    {
+        "chave": "ROLON",
+        "valor": "ROLON"
+    },
+    {
+        "chave": "ROSSETTI",
+        "valor": "ROSSETTI"
+    },
+    {
+        "chave": "SRCS",
+        "valor": "SRCS"
+    },
+    {
+        "chave": "SALTO",
+        "valor": "SALTO"
+    },
+    {
+        "chave": "SAMI",
+        "valor": "SAMI"
+    },
+    {
+        "chave": "SAN",
+        "valor": "SAN"
+    },
+    {
+        "chave": "SANVAS",
+        "valor": "SANVAS"
+    },
+    {
+        "chave": "SARACENO",
+        "valor": "SARACENO"
+    },
+    {
+        "chave": "SCANIA",
+        "valor": "SCANIA"
+    },
+    {
+        "chave": "SCHIFFER",
+        "valor": "SCHIFFER"
+    },
+    {
+        "chave": "SCHLATTER",
+        "valor": "SCHLATTER"
+    },
+    {
+        "chave": "SEM",
+        "valor": "SEM"
+    },
+    {
+        "chave": "SEMIRR",
+        "valor": "SEMIRR"
+    },
+    {
+        "chave": "SERRATO",
+        "valor": "SERRATO"
+    },
+    {
+        "chave": "SHIFFER",
+        "valor": "SHIFFER"
+    },
+    {
+        "chave": "SIDERSUL",
+        "valor": "SIDERSUL"
+    },
+    {
+        "chave": "SINUELO",
+        "valor": "SINUELO"
+    },
+    {
+        "chave": "STEEL",
+        "valor": "STEEL"
+    },
+    {
+        "chave": "SUZUKI",
+        "valor": "SUZUKI"
+    },
+    {
+        "chave": "TANDEN",
+        "valor": "TANDEN"
+    },
+    {
+        "chave": "TANESFIL",
+        "valor": "TANESFIL"
+    },
+    {
+        "chave": "TEC.IND.BRASIL",
+        "valor": "TEC.IND.BRASIL"
+    },
+    {
+        "chave": "TECTRAN",
+        "valor": "TECTRAN"
+    },
+    {
+        "chave": "TENDEN",
+        "valor": "TENDEN"
+    },
+    {
+        "chave": "TITAN",
+        "valor": "TITAN"
+    },
+    {
+        "chave": "TOYOTA",
+        "valor": "TOYOTA"
+    },
+    {
+        "chave": "TRAILER",
+        "valor": "TRAILER"
+    },
+    {
+        "chave": "THREE",
+        "valor": "THREE"
+    },
+    {
+        "chave": "TRIOARTE",
+        "valor": "TRIOARTE"
+    },
+    {
+        "chave": "TRIVELLATO",
+        "valor": "TRIVELLATO"
+    },
+    {
+        "chave": "TRUCK",
+        "valor": "TRUCK"
+    },
+    {
+        "chave": "UMICARR",
+        "valor": "UMICARR"
+    },
+    {
+        "chave": "UNICARR",
+        "valor": "UNICARR"
+    },
+    {
+        "chave": "UTILITY",
+        "valor": "UTILITY"
+    },
+    {
+        "chave": "VITAL",
+        "valor": "VITAL"
+    },
+    {
+        "chave": "VOLTOLINI",
+        "valor": "VOLTOLINI"
+    },
+    {
+        "chave": "VOLVO",
+        "valor": "VOLVO"
+    },
+    {
+        "chave": "WABASH",
+        "valor": "WABASH"
+    },
+    {
+        "chave": "WHITE",
+        "valor": "WHITE"
+    },
+    {
+        "chave": "PPL",
+        "valor": "PPL"
+    },
+    {
+        "chave": "AFF",
+        "valor": "AFF"
+    },
+    {
+        "chave": "CHAMA",
+        "valor": "CHAMA"
+    },
+    {
+        "chave": "CGB",
+        "valor": "CGB"
+    },
+    {
+        "chave": "IVESA",
+        "valor": "IVESA"
+    },
+    {
+        "chave": "BELGRANO",
+        "valor": "BELGRANO"
+    },
+    {
+        "chave": "HERMANN",
+        "valor": "HERMANN"
+    },
+    {
+        "chave": "FRANCK",
+        "valor": "FRANCK"
+    },
+    {
+        "chave": "OVID",
+        "valor": "OVID"
+    },
+    {
+        "chave": "RR",
+        "valor": "RR"
+    },
+    {
+        "chave": "SKODA",
+        "valor": "SKODA"
+    },
+    {
+        "chave": "VHE",
+        "valor": "VHE"
+    },
+    {
+        "chave": "SANTOS",
+        "valor": "SANTOS"
+    },
+    {
+        "chave": "ULTRANS",
+        "valor": "ULTRANS"
+    },
+    {
+        "chave": "SOLA",
+        "valor": "SOLA"
+    },
+    {
+        "chave": "MALDONADO",
+        "valor": "MALDONADO"
+    },
+    {
+        "chave": "HELVETICA",
+        "valor": "HELVETICA"
+    },
+    {
+        "chave": "MONTENEGRO",
+        "valor": "MONTENEGRO"
+    },
+    {
+        "chave": "GREAT",
+        "valor": "GREAT"
+    },
+    {
+        "chave": "RHODOSS",
+        "valor": "RHODOSS"
+    },
+    {
+        "chave": "RODOLINEA",
+        "valor": "RODOLINEA"
+    },
+    {
+        "chave": "TRIEL-HT",
+        "valor": "TRIEL-HT"
+    },
+    {
+        "chave": "RODOCEG",
+        "valor": "RODOCEG"
+    },
+    {
+        "chave": "JOTAK",
+        "valor": "JOTAK"
+    },
+    {
+        "chave": "NEGO",
+        "valor": "NEGO"
+    },
+    {
+        "chave": "BERCO",
+        "valor": "BERCO"
+    },
+    {
+        "chave": "RODOTECNICA",
+        "valor": "RODOTECNICA"
+    },
+    {
+        "chave": "GRIMALDI",
+        "valor": "GRIMALDI"
+    },
+    {
+        "chave": "XCMG",
+        "valor": "XCMG"
+    },
+    {
+        "chave": "BETONTECH",
+        "valor": "BETONTECH"
+    },
+    {
+        "chave": "CHANGAN",
+        "valor": "CHANGAN"
+    },
+    {
+        "chave": "FERTILANCE",
+        "valor": "FERTILANCE"
+    },
+    {
+        "chave": "VILA OS",
+        "valor": "VILA OS"
+    },
+    {
+        "chave": "THERMOSUL",
+        "valor": "THERMOSUL"
+    },
+    {
+        "chave": "IBIPOR",
+        "valor": "IBIPOR"
+    },
+    {
+        "chave": "IMAVI",
+        "valor": "IMAVI"
+    },
+    {
+        "chave": "RODOKINHO",
+        "valor": "RODOKINHO"
+    },
+    {
+        "chave": "RODOCLARA",
+        "valor": "RODOCLARA"
+    },
+    {
+        "chave": "HAFEI",
+        "valor": "HAFEI"
+    },
+    {
+        "chave": "BUSA",
+        "valor": "BUSA"
+    },
+    {
+        "chave": "PALMEIRA",
+        "valor": "PALMEIRA"
+    },
+    {
+        "chave": "USICAMP",
+        "valor": "USICAMP"
+    },
+    {
+        "chave": "SINOTRUK",
+        "valor": "SINOTRUK"
+    },
+    {
+        "chave": "Asia",
+        "valor": "Asia"
+    },
+    {
+        "chave": "TURISCAR",
+        "valor": "TURISCAR"
+    },
+    {
+        "chave": "RODOBERCAMP",
+        "valor": "RODOBERCAMP"
+    },
+    {
+        "chave": "RODOVALE",
+        "valor": "RODOVALE"
+    },
+    {
+        "chave": "LABOR",
+        "valor": "LABOR"
+    },
+    {
+        "chave": "MAXFORT",
+        "valor": "MAXFORT"
+    },
+    {
+        "chave": "BOREAL",
+        "valor": "BOREAL"
+    },
+    {
+        "chave": "IBIPORA",
+        "valor": "IBIPORA"
+    },
+    {
+        "chave": "SERPECAS",
+        "valor": "SERPECAS"
+    },
+    {
+        "chave": "SERGOMEL",
+        "valor": "SERGOMEL"
+    },
+    {
+        "chave": "SIEPIESRSKI",
+        "valor": "SIEPIESRSKI"
+    },
+    {
+        "chave": "SOUFER",
+        "valor": "SOUFER"
+    },
+    {
+        "chave": "BRUCAL",
+        "valor": "BRUCAL"
+    },
+    {
+        "chave": "RODOTIC",
+        "valor": "RODOTIC"
+    },
+    {
+        "chave": "SANY",
+        "valor": "SANY"
+    },
+    {
+        "chave": "SIEPIERSKI",
+        "valor": "SIEPIERSKI"
+    },
+    {
+        "chave": "SERNAUTO",
+        "valor": "SERNAUTO"
+    },
+    {
+        "chave": "MULTIFOR A",
+        "valor": "MULTIFOR A"
+    },
+    {
+        "chave": "RODOVAN",
+        "valor": "RODOVAN"
+    },
+    {
+        "chave": "THERMO",
+        "valor": "THERMO"
+    },
+    {
+        "chave": "FURGOBENTO",
+        "valor": "FURGOBENTO"
+    },
+    {
+        "chave": "TANKSPAR",
+        "valor": "TANKSPAR"
+    },
+    {
+        "chave": "manos",
+        "valor": "manos"
+    },
+    {
+        "chave": "REB/THOR",
+        "valor": "REB/THOR"
+    },
+    {
+        "chave": "FOLLE",
+        "valor": "FOLLE"
+    },
+    {
+        "chave": "tecnoceg",
+        "valor": "tecnoceg"
+    },
+    {
+        "chave": "INTERNATIONAL",
+        "valor": "INTERNATIONAL"
+    },
+    {
+        "chave": "RODOEIXO",
+        "valor": "RODOEIXO"
+    },
+    {
+        "chave": "JARDINOX",
+        "valor": "JARDINOX"
+    },
+    {
+        "chave": "IMPERIAL",
+        "valor": "IMPERIAL"
+    },
+    {
+        "chave": "RODOFORTSA",
+        "valor": "RODOFORTSA"
+    },
+    {
+        "chave": "LIEBHERR",
+        "valor": "LIEBHERR"
+    },
+    {
+        "chave": "M.A.",
+        "valor": "M.A."
+    },
+    {
+        "chave": "JMC",
+        "valor": "JMC"
+    },
+    {
+        "chave": "MANOS",
+        "valor": "MANOS"
+    },
+    {
+        "chave": "VIVAN",
+        "valor": "VIVAN"
+    },
+    {
+        "chave": "IRMÃOS",
+        "valor": "IRMÃOS"
+    },
+    {
+        "chave": "MAN/TGX",
+        "valor": "MAN/TGX"
+    },
+    {
+        "chave": "RECLAL",
+        "valor": "RECLAL"
+    },
+    {
+        "chave": "PIKO",
+        "valor": "PIKO"
+    },
+    {
+        "chave": "MORENO",
+        "valor": "MORENO"
+    },
+    {
+        "chave": "PRESIDENTE",
+        "valor": "PRESIDENTE"
+    },
+    {
+        "chave": "JAC",
+        "valor": "JAC"
+    },
+    {
+        "chave": "JINBEI",
+        "valor": "JINBEI"
+    },
+    {
+        "chave": "JOSIELMA",
+        "valor": "JOSIELMA"
+    },
+    {
+        "chave": "Martins",
+        "valor": "Martins"
+    },
+    {
+        "chave": "CAMPERSPORT",
+        "valor": "CAMPERSPORT"
+    },
+    {
+        "chave": "EFFA",
+        "valor": "EFFA"
+    },
+    {
+        "chave": "KROVILLE",
+        "valor": "KROVILLE"
+    },
+    {
+        "chave": "IRMARTINS",
+        "valor": "IRMARTINS"
+    },
+    {
+        "chave": "TERRA",
+        "valor": "TERRA"
+    },
+    {
+        "chave": "RODOMOURA",
+        "valor": "RODOMOURA"
+    },
+    {
+        "chave": "JHV",
+        "valor": "JHV"
+    },
+    {
+        "chave": "BIASI",
+        "valor": "BIASI"
+    },
+    {
+        "chave": "RODOFLEX",
+        "valor": "RODOFLEX"
+    },
+    {
+        "chave": "FOTON",
+        "valor": "FOTON"
+    },
+    {
+        "chave": "MGS",
+        "valor": "MGS"
+    },
+    {
+        "chave": "TECNOX",
+        "valor": "TECNOX"
+    },
+    {
+        "chave": "DAF",
+        "valor": "DAF"
+    },
+    {
+        "chave": "CHICOCIT",
+        "valor": "CHICOCIT"
+    },
+    {
+        "chave": "Rely",
+        "valor": "Rely"
+    },
+    {
+        "chave": "SUPERFORT",
+        "valor": "SUPERFORT"
+    },
+    {
+        "chave": "EGSA",
+        "valor": "EGSA"
+    },
+    {
+        "chave": "SHAANXI",
+        "valor": "SHAANXI"
+    },
+    {
+        "chave": "LIFAN",
+        "valor": "LIFAN"
+    },
+    {
+        "chave": "SR",
+        "valor": "SR"
+    },
+    {
+        "chave": "GELGAS",
+        "valor": "GELGAS"
+    },
+    {
+        "chave": "SEAT",
+        "valor": "SEAT"
+    },
+    {
+        "chave": "RODOKING",
+        "valor": "RODOKING"
+    },
+    {
+        "chave": "RODOTEC",
+        "valor": "RODOTEC"
+    },
+    {
+        "chave": "CAPIL",
+        "valor": "CAPIL"
+    },
+    {
+        "chave": "PERFIMAR",
+        "valor": "PERFIMAR"
+    },
+    {
+        "chave": "SALVARO",
+        "valor": "SALVARO"
+    },
+    {
+        "chave": "VERTRUCKS",
+        "valor": "VERTRUCKS"
+    },
+    {
+        "chave": "FEDERAL",
+        "valor": "FEDERAL"
+    },
+    {
+        "chave": "NORTESUL",
+        "valor": "NORTESUL"
+    },
+    {
+        "chave": "RODOLEVE",
+        "valor": "RODOLEVE"
+    },
+    {
+        "chave": "SUL",
+        "valor": "SUL"
+    },
+    {
+        "chave": "SCHWING",
+        "valor": "SCHWING"
+    },
+    {
+        "chave": "ISIDOC",
+        "valor": "ISIDOC"
+    },
+    {
+        "chave": "JEEP",
+        "valor": "JEEP"
+    },
+    {
+        "chave": "SUBARU",
+        "valor": "SUBARU"
+    },
+    {
+        "chave": "HONDA",
+        "valor": "HONDA"
+    },
+    {
+        "chave": "AUDI",
+        "valor": "AUDI"
+    },
+    {
+        "chave": "KRIGGER",
+        "valor": "KRIGGER"
+    },
+    {
+        "chave": "LAND",
+        "valor": "LAND"
+    },
+    {
+        "chave": "CASE",
+        "valor": "CASE"
+    },
+    {
+        "chave": "REBOCAR",
+        "valor": "REBOCAR"
+    },
+    {
+        "chave": "NOMA",
+        "valor": "NOMA"
+    },
+    {
+        "chave": "THOR",
+        "valor": "THOR"
+    },
+    {
+        "chave": "BEMFORT",
+        "valor": "BEMFORT"
+    },
+    {
+        "chave": "ZOOMLION",
+        "valor": "ZOOMLION"
+    },
+    {
+        "chave": "SE",
+        "valor": "SE"
+    },
+    {
+        "chave": "TRES",
+        "valor": "TRES"
+    },
+    {
+        "chave": "SUL",
+        "valor": "SUL"
+    },
+    {
+        "chave": "LENCOIS",
+        "valor": "LENCOIS"
+    },
+    {
+        "chave": "METANOX",
+        "valor": "METANOX"
+    },
+    {
+        "chave": "CAMAQ",
+        "valor": "CAMAQ"
+    },
+    {
+        "chave": "MELLO",
+        "valor": "MELLO"
+    },
+    {
+        "chave": "JOINVILLE",
+        "valor": "JOINVILLE"
+    },
+    {
+        "chave": "MO",
+        "valor": "MO"
+    },
+    {
+        "chave": "ENOVA",
+        "valor": "ENOVA"
+    },
+    {
+        "chave": "FROTA",
+        "valor": "FROTA"
+    },
+    {
+        "chave": "BUENO",
+        "valor": "BUENO"
+    },
+    {
+        "chave": "VALIN",
+        "valor": "VALIN"
+    },
+    {
+        "chave": "JLRP",
+        "valor": "JLRP"
+    },
+    {
+        "chave": "GF",
+        "valor": "GF"
+    },
+    {
+        "chave": "JOIA",
+        "valor": "JOIA"
+    },
+    {
+        "chave": "SR/ENOVA",
+        "valor": "SR/ENOVA"
+    },
+    {
+        "chave": "DELKA",
+        "valor": "DELKA"
+    },
+    {
+        "chave": "YAMAHA",
+        "valor": "YAMAHA"
+    },
+    {
+        "chave": "ASSUMPCAO",
+        "valor": "ASSUMPCAO"
+    },
+    {
+        "chave": "CAMBE",
+        "valor": "CAMBE"
+    },
+    {
+        "chave": "STIZABEL",
+        "valor": "STIZABEL"
+    },
+    {
+        "chave": "VALE",
+        "valor": "VALE"
+    },
+    {
+        "chave": "CDL",
+        "valor": "CDL"
+    },
+    {
+        "chave": "UNITECNICA",
+        "valor": "UNITECNICA"
+    },
+    {
+        "chave": "MELL",
+        "valor": "MELL"
+    },
+    {
+        "chave": "JBC",
+        "valor": "JBC"
+    },
+    {
+        "chave": "GUAIBA",
+        "valor": "GUAIBA"
+    },
+    {
+        "chave": "RENS",
+        "valor": "RENS"
+    },
+    {
+        "chave": "TEXAS",
+        "valor": "TEXAS"
+    },
+    {
+        "chave": "CHICO",
+        "valor": "CHICO"
+    },
+    {
+        "chave": "AMAZONIA",
+        "valor": "AMAZONIA"
+    },
+    {
+        "chave": "BRAMONT/MAHINDRA",
+        "valor": "BRAMONT/MAHINDRA"
+    },
+    {
+        "chave": "ICON",
+        "valor": "ICON"
+    },
+    {
+        "chave": "TX",
+        "valor": "TX"
+    },
+    {
+        "chave": "MILTON",
+        "valor": "MILTON"
+    },
+    {
+        "chave": "BYD",
+        "valor": "BYD"
+    },
+    {
+        "chave": "UNIDAS",
+        "valor": "UNIDAS"
+    },
+    {
+        "chave": "CAMUZI",
+        "valor": "CAMUZI"
+    },
+    {
+        "chave": "MIMADO",
+        "valor": "MIMADO"
+    },
+    {
+        "chave": "JLF",
+        "valor": "JLF"
+    },
+    {
+        "chave": "EL",
+        "valor": "EL"
+    },
+    {
+        "chave": "CONTANQUI",
+        "valor": "CONTANQUI"
+    },
+    {
+        "chave": "PICOLINO",
+        "valor": "PICOLINO"
+    },
+    {
+        "chave": "LM",
+        "valor": "LM"
+    },
+    {
+        "chave": "FREE",
+        "valor": "FREE"
+    },
+    {
+        "chave": "INOX",
+        "valor": "INOX"
+    },
+    {
+        "chave": "ROMAR",
+        "valor": "ROMAR"
+    },
+    {
+        "chave": "USIMEC",
+        "valor": "USIMEC"
+    },
+    {
+        "chave": "HZM",
+        "valor": "HZM"
+    },
+    {
+        "chave": "CIM",
+        "valor": "CIM"
+    },
+    {
+        "chave": "INDUMIX",
+        "valor": "INDUMIX"
+    },
+    {
+        "chave": "CBN",
+        "valor": "CBN"
+    },
+    {
+        "chave": "INAUTICA",
+        "valor": "INAUTICA"
+    },
+    {
+        "chave": "METSAM",
+        "valor": "METSAM"
+    },
+    {
+        "chave": "WM",
+        "valor": "WM"
+    },
+    {
+        "chave": "TECNISOLDA",
+        "valor": "TECNISOLDA"
+    },
+    {
+        "chave": "MAHL",
+        "valor": "MAHL"
+    },
+    {
+        "chave": "IOWA",
+        "valor": "IOWA"
+    },
+    {
+        "chave": "GARRA",
+        "valor": "GARRA"
+    },
+    {
+        "chave": "JCAPACLE",
+        "valor": "JCAPACLE"
+    },
+    {
+        "chave": "FLIEGL",
+        "valor": "FLIEGL"
+    },
+    {
+        "chave": "GAUCHO",
+        "valor": "GAUCHO"
+    },
+    {
+        "chave": "MEGA",
+        "valor": "MEGA"
+    },
+    {
+        "chave": "HUANGHAI",
+        "valor": "HUANGHAI"
+    },
+    {
+        "chave": "URAL",
+        "valor": "URAL"
+    },
+    {
+        "chave": "M.GONCALVES",
+        "valor": "M.GONCALVES"
+    },
+    {
+        "chave": "SRMA",
+        "valor": "SRMA"
+    },
+    {
+        "chave": "ITATIAIA",
+        "valor": "ITATIAIA"
+    },
+    {
+        "chave": "CHERY",
+        "valor": "CHERY"
+    },
+    {
+        "chave": "MILLENIUM",
+        "valor": "MILLENIUM"
+    },
+    {
+        "chave": "GRAN",
+        "valor": "GRAN"
+    },
+    {
+        "chave": "M.",
+        "valor": "M."
+    },
+    {
+        "chave": "BONDAN",
+        "valor": "BONDAN"
+    },
+    {
+        "chave": "REBOC",
+        "valor": "REBOC"
+    },
+    {
+        "chave": "MJC",
+        "valor": "MJC"
+    },
+    {
+        "chave": "BODE",
+        "valor": "BODE"
+    },
+    {
+        "chave": "ONCA",
+        "valor": "ONCA"
+    },
+    {
+        "chave": "ROSIN",
+        "valor": "ROSIN"
+    },
+    {
+        "chave": "LLA",
+        "valor": "LLA"
+    },
+    {
+        "chave": "BMW",
+        "valor": "BMW"
+    },
+    {
+        "chave": "SECCO",
+        "valor": "SECCO"
+    },
+    {
+        "chave": "CLODOALDO",
+        "valor": "CLODOALDO"
+    },
+    {
+        "chave": "REO",
+        "valor": "REO"
+    },
+    {
+        "chave": "GALVAO",
+        "valor": "GALVAO"
+    },
+    {
+        "chave": "VOLPATO",
+        "valor": "VOLPATO"
+    },
+    {
+        "chave": "JACTO",
+        "valor": "JACTO"
+    },
+    {
+        "chave": "ALX",
+        "valor": "ALX"
+    },
+    {
+        "chave": "DAJIANG",
+        "valor": "DAJIANG"
+    },
+    {
+        "chave": "ZANINI",
+        "valor": "ZANINI"
+    },
+    {
+        "chave": "TRESEIXOS",
+        "valor": "TRESEIXOS"
+    },
+    {
+        "chave": "DAMCAR",
+        "valor": "DAMCAR"
+    },
+    {
+        "chave": "A.V.S.",
+        "valor": "A.V.S."
+    },
+    {
+        "chave": "DOMINIO",
+        "valor": "DOMINIO"
+    },
+    {
+        "chave": "EB",
+        "valor": "EB"
+    },
+    {
+        "chave": "CANCAO",
+        "valor": "CANCAO"
+    },
+    {
+        "chave": "BR",
+        "valor": "BR"
+    },
+    {
+        "chave": "CNHTC",
+        "valor": "CNHTC"
+    },
+    {
+        "chave": "LANA",
+        "valor": "LANA"
+    },
+    {
+        "chave": "ITP",
+        "valor": "ITP"
+    },
+    {
+        "chave": "MJ",
+        "valor": "MJ"
+    },
+    {
+        "chave": "HC",
+        "valor": "HC"
+    },
+    {
+        "chave": "JOTADAN",
+        "valor": "JOTADAN"
+    },
+    {
+        "chave": "NOSTRA",
+        "valor": "NOSTRA"
+    },
+    {
+        "chave": "NOMAD",
+        "valor": "NOMAD"
+    }
+]

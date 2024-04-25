@@ -1,0 +1,84 @@
+ <div class="card rounded shadow-sm">
+ <form [formGroup]="form">
+ 	<div class="p-3">
+        <!-- <p>Form value: {{form.value | json}}</p>
+        <p>Form valid: {{form.status | json}}</p> -->
+ 		<div class="row">
+ 			<div class="mb-3 col-md-2">
+ 				<label>Placa</label>
+ 				<input type="text" class="form-control is-invalid" formControlName="placa" mask="AAA-0A00" style="text-transform:uppercase"
+                [ngClass]="cssValidator(f.placa)">
+                <div *ngIf="f.placa.errors?.required && f.placa.touched" class="invalid-feedback">
+                    Placa é obrigatório
+                </div>
+ 			</div>
+             <div class="mb-3 col-sm-1">
+                <label>Ano</label>
+                <input type="number" class="form-control" formControlName="ano" mask="9999"
+                [ngClass]="cssValidator(f.ano)">
+                <div *ngIf="f.ano.errors?.required && f.ano.touched" class="invalid-feedback">
+                    Ano é obrigatório
+                </div>
+            </div>
+            <div class="mb-3 col-md-3">
+                <label>Marca</label>
+                <select class="form-select" formControlName="marca" [ngClass]="cssValidator(f.marca)">
+                    <option *ngFor="let tipo of marcas" [value]="tipo.chave">{{ tipo.valor }}</option>
+                </select>
+                <div *ngIf="f.marca.errors?.required && f.marca.touched" class="invalid-feedback">
+                Marca é obrigatório
+                </div>
+            </div>
+            <div class="mb-3 col-md-3">
+                <label>Modelo</label>
+                <input type="text" class="form-control"
+                [ngClass]="cssValidator(f.modelo)"
+                 formControlName="modelo">
+                <div *ngIf="f.modelo.errors?.required && f.modelo.touched" class="invalid-feedback">
+                Modelo é obrigatório
+                </div>
+            </div>
+ 		</div>
+ 		<div class="row">
+            <div class="mb-3 col-sm-4">
+                <label>Categoria</label>
+                <select class="form-select" formControlName="categoria" [ngClass]="cssValidator(f.categoria)">
+                    <option *ngFor="let tipo of categorias" [value]="tipo.chave">{{ tipo.valor }}</option>
+                </select>
+                <div *ngIf="f.categoria.errors?.required && f.categoria.touched" class="invalid-feedback">
+                    Categoria é obrigatório
+                </div>
+            </div>
+            <div class="mb-3 col-md-4">
+                <label>Tipo Carroceria</label>
+                <select class="form-select" formControlName="tipoCarroceria" [ngClass]="cssValidator(f.tipoCarroceria)">
+                    <option *ngFor="let tipo of tiposCarroceria" [value]="tipo.chave">{{ tipo.valor }}</option>
+                </select>
+                <div *ngIf="f.tipoCarroceria.errors?.required && f.tipoCarroceria.touched" class="invalid-feedback">
+                    Tipo Carroceria é obrigatório
+                </div>
+            </div>
+            <div class="mb-3 col-md-1">
+                <label>Qtd Eixos</label>
+                <input type="number" class="form-control"
+                [ngClass]="cssValidator(f.qtdEixos)"
+                 formControlName="qtdEixos">
+                <div *ngIf="f.qtdEixos.errors?.required && f.qtdEixos.touched" class="invalid-feedback">
+                Qtd Eixos é obrigatório
+                </div>
+            </div>           
+ 		</div>        
+ 	</div>
+     <div class="card-footer">
+		<div class="d-flex">
+			<button class="btn btn-outline-secondary me-auto border" onclick="javascript:history.back()">
+				Cancelar Alteração
+			</button>
+            <button class="btn btn-success" [disabled]="!form.valid" (click)="salvarAlteracao()">
+                <!-- <span class="spinner-border spinner-border-sm mr-1"></span> -->
+                Salvar Veiculo
+            </button>
+		</div>
+	</div>
+ </form>
+</div>

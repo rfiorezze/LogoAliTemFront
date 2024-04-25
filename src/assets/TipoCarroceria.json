@@ -1,0 +1,78 @@
+[
+    {
+        "chave": "NÃO SE APLICA",
+        "valor": "NÃO SE APLICA"
+    },
+    {
+        "chave": "PORTA CONTÊINER / PLATAFORMA",
+        "valor": "PORTA CONTÊINER / PLATAFORMA"
+    },
+    {
+        "chave": "CARGA SECA / CARROCERIA ABERTA",
+        "valor": "CARGA SECA / CARROCERIA ABERTA"
+    },
+    {
+        "chave": "BAÚ SIMPLES / CARROCERIA FECHADA",
+        "valor": "BAÚ SIMPLES / CARROCERIA FECHADA"
+    },
+    {
+        "chave": "SILO",
+        "valor": "SILO"
+    },
+    {
+        "chave": "TANQUE",
+        "valor": "TANQUE"
+    },
+    {
+        "chave": "SIDER / LONADO",
+        "valor": "SIDER / LONADO"
+    },
+    {
+        "chave": "BASCULANTE / CAÇAMBA",
+        "valor": "BASCULANTE / CAÇAMBA"
+    },
+    {
+        "chave": "TRANSPORTE DE ANIMAIS",
+        "valor": "TRANSPORTE DE ANIMAIS"
+    },
+    {
+        "chave": "PRANCHA",
+        "valor": "PRANCHA"
+    },
+    {
+        "chave": "TRANSPORTE DE TORAS/POSTES",
+        "valor": "TRANSPORTE DE TORAS/POSTES"
+    },
+    {
+        "chave": "TANQUE PRODUTO PERIGOSO",
+        "valor": "TANQUE PRODUTO PERIGOSO"
+    },
+    {
+        "chave": "FURGÃO",
+        "valor": "FURGÃO"
+    },
+    {
+        "chave": "TRANSPORTE DE VALORES",
+        "valor": "TRANSPORTE DE VALORES"
+    },
+    {
+        "chave": "TRANSPORTE DE GRANITO",
+        "valor": "TRANSPORTE DE GRANITO"
+    },
+    {
+        "chave": "ROLL-ON ROLL-OFF",
+        "valor": "ROLL-ON ROLL-OFF"
+    },
+    {
+        "chave": "MECÂNICO OPERACIONAL",
+        "valor": "MECÂNICO OPERACIONAL"
+    },
+    {
+        "chave": "COMBOIO",
+        "valor": "COMBOIO"
+    },
+    {
+        "chave": "BLINDADA",
+        "valor": "BLINDADA"
+    }
+]

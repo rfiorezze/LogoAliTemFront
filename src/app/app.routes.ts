@@ -10,6 +10,10 @@ import { LoginComponent } from './components/user/login/login.component';
 import { RegistrationComponent } from './components/user/registration/registration.component';
 import { AuthGuard } from './guard/auth.guard';
 import { HomeComponent } from './components/home/home.component';
+import { VeiculoDetalheComponent } from './components/veiculos/veiculo-detalhe/veiculo-detalhe.component';
+import { BuscaVeiculoPorPlacaComponent } from './components/veiculos/busca-veiculo-por-placa/busca-veiculo-por-placa.component';
+import { BuscaVeiculoPorMotoristaComponent } from './components/veiculos/busca-veiculo-por-motorista/busca-veiculo-por-motorista.component';
+import { CadastrarVeiculoMotoristaComponent } from './components/veiculos/cadastrar-veiculo-por-motorista/cadastrar-veiculo-por-motorista.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' }, 
@@ -30,7 +34,18 @@ export const routes: Routes = [
           { path: 'lista', component: MotoristaListaComponent },
         ],
       },
-      { path: 'veiculos', component: VeiculosComponent },
+      { path: 'veiculos', redirectTo: 'veiculos/lista' },
+      {
+        path: 'veiculos',
+        component: VeiculosComponent,
+        children: [
+          { path: 'detalhe/:id', component: VeiculoDetalheComponent },
+          { path: 'detalhe', component: VeiculoDetalheComponent },
+          { path: 'busca-veiculo-por-placa', component: BuscaVeiculoPorPlacaComponent },
+          { path: 'busca-veiculo-por-motorista', component: BuscaVeiculoPorMotoristaComponent },
+          { path: 'cadastrar-veiculo-por-motorista', component: CadastrarVeiculoMotoristaComponent }
+        ],
+      },
       { path: 'dashboard', component: DashboardComponent },
     ],
   },
