@@ -25,7 +25,7 @@ import { Validacoes } from '@app/helpers/Validacoes';
 defineLocale('pt-br', ptBrLocale);
 
 @Component({
-  selector: 'app-Veiculo-detalhe',
+  selector: 'app-veiculo-detalhe',
   standalone: true,
   imports: [
     ReactiveFormsModule,
@@ -33,8 +33,8 @@ defineLocale('pt-br', ptBrLocale);
     BsDatepickerModule,
     NgxMaskDirective,
   ],
-  templateUrl: './Veiculo-detalhe.component.html',
-  styleUrl: './Veiculo-detalhe.component.scss',
+  templateUrl: './veiculo-detalhe.component.html',
+  styleUrl: './veiculo-detalhe.component.scss',
 })
 export class VeiculoDetalheComponent {
   veiculo = {} as Veiculo;
