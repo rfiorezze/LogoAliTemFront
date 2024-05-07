@@ -19,8 +19,6 @@ import { LocalidadeService } from '@app/services/localidade.service';
 import { Estado } from '@app/models/Estado';
 import { Municipio } from '@app/models/Municipio';
 import { NgxMaskDirective } from 'ngx-mask';
-import { Endereco } from '@app/models/Endereco';
-import { Validacoes } from '@app/helpers/Validacoes';
 
 defineLocale('pt-br', ptBrLocale);
 
@@ -131,6 +129,8 @@ export class VeiculoDetalheComponent {
       ano: ['', Validators.required],
       modelo: ['', Validators.required],
       categoria: ['', Validators.required],
+      chassi: ['', Validators.required],
+      renavam: ['', Validators.required],
       tipoCarroceria: ['', Validators.required],
       qtdEixos: ['', Validators.required]
     });
@@ -153,6 +153,8 @@ export class VeiculoDetalheComponent {
           ? { motoristaId: this.motoristaId, ...this.form.value }
           : { id: this.veiculo.id, motoristaId: this.veiculo.motoristaId, ...this.form.value };
 
+      this.veiculo.placa = this.veiculo.placa.toUpperCase();
+      
       this.VeiculoService[this.estadoSalvar](this.veiculo).subscribe(
         () => this.toastr.success('Veiculo salvo com sucesso!', 'Sucesso'),
         (error: any) => {

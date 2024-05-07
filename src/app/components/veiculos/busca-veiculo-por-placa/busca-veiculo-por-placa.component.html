@@ -3,14 +3,14 @@
       <div class="col-sm-3 pe-3">
         <div class="input-group mb-2">
           <div class="input-group-prepend">
-            <div class="input-group-text">Busca: </div>
+            <div class="input-group-text">Busca por placa: </div>
           </div>
           <input
             type="text"
             class="form-control"
             name="placaInserida"
             mask="AAA-0A00"
-            placeholder="Buscar por placa"
+            style="text-transform:uppercase"
             [(ngModel)]="placaInserida"
           />
         </div>
@@ -21,6 +21,7 @@
         <b class="ms-1 d-none d-sm-block">Buscar</b></a>
       </div>
     </div>
+    <div *ngIf="veiculos && veiculos.length">
     <table class="table table-striped table-hover">
       <thead class="table-dark">
         <tr>
@@ -34,10 +35,10 @@
           <th>Opções</th>
         </tr>
       </thead>
-      <tbody *ngIf="veiculos && veiculos.length">
+      <tbody>
         <tr *ngFor="let veiculo of veiculosFiltrados" (click)="detalheveiculo(veiculo.id, veiculo.motoristaId)" style="cursor: pointer;">
           <td>{{ veiculo.id }}</td>
-          <td>{{ veiculo.placa }}</td>
+          <td>{{ veiculo.placa | Placa}}</td>
           <td>{{ veiculo.marca }}</td>
           <td>{{ veiculo.modelo }}</td>
           <td class="d-none d-md-table-cell">{{ veiculo.ano }}</td>
@@ -64,6 +65,7 @@
       </tfoot>
     </table>
   </div>
+</div>
   
   <confirmation-modal
     #confirmationModal

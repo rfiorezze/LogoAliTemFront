@@ -6,6 +6,8 @@ export interface Veiculo {
     modelo: string;
     categoria: string;
     tipoCarroceria: string;
+    chassi: string;
+    renavam: string;
     qtdEixos: number;
     motoristaId: number;
 }

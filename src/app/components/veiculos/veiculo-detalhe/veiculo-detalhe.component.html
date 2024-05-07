@@ -20,7 +20,7 @@
                     Ano é obrigatório
                 </div>
             </div>
-            <div class="mb-3 col-md-3">
+            <div class="mb-3 col-md-2">
                 <label>Marca</label>
                 <select class="form-select" formControlName="marca" [ngClass]="cssValidator(f.marca)">
                     <option *ngFor="let tipo of marcas" [value]="tipo.chave">{{ tipo.valor }}</option>
@@ -36,6 +36,24 @@
                  formControlName="modelo">
                 <div *ngIf="f.modelo.errors?.required && f.modelo.touched" class="invalid-feedback">
                 Modelo é obrigatório
+                </div>
+            </div>
+            <div class="mb-3 col-md-2">
+                <label>Chassi</label>
+                <input type="text" class="form-control"
+                [ngClass]="cssValidator(f.chassi)" mask="AAAAAAAAAAAAAAAAA"
+                 formControlName="chassi">
+                <div *ngIf="f.chassi.errors?.required && f.chassi.touched" class="invalid-feedback">
+                Chasi é obrigatório
+                </div>
+            </div>
+            <div class="mb-3 col-md-2">
+                <label>Renavam</label>
+                <input type="text" class="form-control"
+                [ngClass]="cssValidator(f.renavam)" mask="99999999999"
+                 formControlName="renavam">
+                <div *ngIf="f.renavam.errors?.required && f.renavam.touched" class="invalid-feedback">
+                Renavam é obrigatório
                 </div>
             </div>
  		</div>
@@ -60,7 +78,7 @@
             </div>
             <div class="mb-3 col-md-1">
                 <label>Qtd Eixos</label>
-                <input type="number" class="form-control"
+                <input type="number" class="form-control" min="0" max="4"
                 [ngClass]="cssValidator(f.qtdEixos)"
                  formControlName="qtdEixos">
                 <div *ngIf="f.qtdEixos.errors?.required && f.qtdEixos.touched" class="invalid-feedback">

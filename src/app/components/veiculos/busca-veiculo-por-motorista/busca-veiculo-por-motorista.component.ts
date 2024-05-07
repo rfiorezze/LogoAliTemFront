@@ -14,6 +14,8 @@ import { PhonePipe } from '@app/helpers/phone.pipe';
 import { VeiculoService } from '@app/services/veiculo.service';
 import { Veiculo } from '@app/models/Veiculo';
 import { ConfirmationModalComponent } from '@app/shared/confirmation-modal/confirmation-modal.component';
+import { NgxMaskDirective } from 'ngx-mask';
+import { PlacaPipe } from '@app/helpers/placa.pipe';
 
 @Component({
   selector: 'app-busca-veiculo-por-motorista',
@@ -28,41 +30,20 @@ import { ConfirmationModalComponent } from '@app/shared/confirmation-modal/confi
     TituloComponent,
     RouterModule,
     CPFPipe,
-    PhonePipe
+    PhonePipe,
+    PlacaPipe,
+    NgxMaskDirective
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class BuscaVeiculoPorMotoristaComponent {
-  public motoristas: Motorista[] = [];
-  public motoristasFiltrados: any = [];
+  public motorista: Motorista = null;
+  public motoristaEncontrado: boolean = false;
   public veiculos: Veiculo[] = [];
   public veiculosFiltrados: any = [];
   public motoristaId = 0;
   public veiculoId = 0;
-
-  private _filtroLista: string = '';
-
-  public get filtroLista() {
-    return this._filtroLista;
-  }
-
-  public set filtroLista(value: string) {
-    this._filtroLista = value;
-    this.motoristasFiltrados = this.filtroLista
-      ? this.filtrarMotoristas(this.filtroLista)
-      : this.motoristas;
-  }
-
-  filtrarMotoristas(filtrarPor: string): Motorista[] {
-    filtrarPor = filtrarPor.toLocaleLowerCase();
-
-    return this.motoristas.filter(
-      (motorista: Motorista) =>
-        motorista.nome.toLocaleLowerCase().indexOf(filtrarPor) !== -1 ||
-        motorista.cpf.toLocaleLowerCase().indexOf(filtrarPor) !== -1 ||
-        motorista.numeroCNH.toLocaleLowerCase().indexOf(filtrarPor) !== -1
-    );
-  }
+  public cpfInserido: string = '';
 
   constructor(
     private motoristaService: MotoristaService,
@@ -73,18 +54,31 @@ export class BuscaVeiculoPorMotoristaComponent {
   ) {}
 
   ngOnInit() {
-    this.spinner.show();
-    this.carregarMotoristas();
   }
 
-  public carregarMotoristas(): void {
-    this.motoristaService.getMotoristas().subscribe({
-      next: (_motoristas: Motorista[]) => {
-        this.motoristas = _motoristas;
-        this.motoristasFiltrados = this.motoristas;
+  public carregarMotoristaPorCpf(cpf: string): void {
+    this.spinner.show();    
+    this.motoristaService.getMotoristaByCpf(cpf).subscribe({
+      next: (_motorista: Motorista) => {
+        if(_motorista != null){
+        this.motorista = _motorista;
+        this.carregarVeiculosPorMotorista(this.motorista.id);
+        }
+        else{
+          this.motorista = null;
+          this.veiculos = null;
+          this.veiculosFiltrados = this.veiculos;
+          this.toastr.error(
+            'Motorista não encontrado', 'Não encontrado');
+        }
       },
       error: (error) => {
+        this.motorista = null;
+        this.veiculos = null;
+        this.veiculosFiltrados = this.veiculos;
         this.spinner.hide();
+        this.toastr.error(
+          'Erro ao tentar buscar o motorista', 'Erro');
         console.log(error);
       },
       complete: () => this.spinner.hide(),

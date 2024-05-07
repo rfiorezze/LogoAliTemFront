@@ -11,6 +11,7 @@ import { SharedModule } from '@app/shared/shared.module';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Router, RouterModule } from '@angular/router';
 import { NgxMaskDirective } from 'ngx-mask';
+import { PlacaPipe } from '@app/helpers/placa.pipe';
 
 @Component({
   selector: 'app-busca-veiculo-por-placa',
@@ -24,7 +25,8 @@ import { NgxMaskDirective } from 'ngx-mask';
     SharedModule,
     TituloComponent,
     RouterModule,
-    NgxMaskDirective
+    NgxMaskDirective,
+    PlacaPipe
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

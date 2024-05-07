@@ -22,6 +22,12 @@ export class MotoristaService {
       .pipe(take(1));
   }
 
+  public getMotoristaByCpf(cpf: string): Observable<Motorista>{
+    return this.http
+      .get<Motorista>(`${this.baseURL}/cpf/${cpf}`)
+      .pipe(take(1));
+  }
+
   public getMotoristaById(id: number): Observable<Motorista>{
     return this.http
       .get<Motorista>(`${this.baseURL}/${id}`)

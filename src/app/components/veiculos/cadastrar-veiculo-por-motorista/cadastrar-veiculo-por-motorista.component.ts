@@ -11,6 +11,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { Router, RouterModule } from '@angular/router';
 import { CPFPipe } from '@app/helpers/cpf.pipe';
 import { PhonePipe } from '@app/helpers/phone.pipe';
+import { NgxMaskDirective } from 'ngx-mask';
 
 @Component({
   selector: 'app-cadastrar-veiculo-por-motorista',
@@ -25,38 +26,14 @@ import { PhonePipe } from '@app/helpers/phone.pipe';
     TituloComponent,
     RouterModule,
     CPFPipe,
-    PhonePipe
+    PhonePipe,
+    NgxMaskDirective
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class CadastrarVeiculoMotoristaComponent {
-  public motoristas: Motorista[] = [];
-  public motoristasFiltrados: any = [];
-  public motoristaId = 0;
-
-  private _filtroLista: string = '';
-
-  public get filtroLista() {
-    return this._filtroLista;
-  }
-
-  public set filtroLista(value: string) {
-    this._filtroLista = value;
-    this.motoristasFiltrados = this.filtroLista
-      ? this.filtrarMotoristas(this.filtroLista)
-      : this.motoristas;
-  }
-
-  filtrarMotoristas(filtrarPor: string): Motorista[] {
-    filtrarPor = filtrarPor.toLocaleLowerCase();
-
-    return this.motoristas.filter(
-      (motorista: Motorista) =>
-        motorista.nome.toLocaleLowerCase().indexOf(filtrarPor) !== -1 ||
-        motorista.cpf.toLocaleLowerCase().indexOf(filtrarPor) !== -1 ||
-        motorista.numeroCNH.toLocaleLowerCase().indexOf(filtrarPor) !== -1
-    );
-  }
+  public motorista: Motorista = null;
+  public cpfInserido: string = '';
 
   constructor(
     private motoristaService: MotoristaService,
@@ -66,18 +43,26 @@ export class CadastrarVeiculoMotoristaComponent {
   ) {}
 
   ngOnInit() {
-    this.spinner.show();
-    this.carregarMotoristas();
   }
 
-  public carregarMotoristas(): void {
-    this.motoristaService.getMotoristas().subscribe({
-      next: (_motoristas: Motorista[]) => {
-        this.motoristas = _motoristas;
-        this.motoristasFiltrados = this.motoristas;
+  public carregarMotoristaPorCpf(cpf: string): void {
+    this.spinner.show();    
+    this.motoristaService.getMotoristaByCpf(cpf).subscribe({
+      next: (_motorista: Motorista) => {
+        if(_motorista != null){
+        this.motorista = _motorista;
+        }
+        else{
+          this.motorista = null;
+          this.toastr.error(
+            'Motorista não encontrado', 'Não encontrado');
+        }
       },
       error: (error) => {
+        this.motorista = null;
         this.spinner.hide();
+        this.toastr.error(
+          'Erro ao tentar buscar o motorista', 'Erro');
         console.log(error);
       },
       complete: () => this.spinner.hide(),
@@ -87,7 +72,12 @@ export class CadastrarVeiculoMotoristaComponent {
   detalheveiculo(id: number): void {
     this.router.navigate(
       ['veiculos/detalhe'],
-      { queryParams: { motoristaId: id}}
+      { queryParams: { motoristaId: this.motorista.id}}
     );
+  }
+
+  limparCampos(){
+    this.motorista = null;
+    this.cpfInserido = '';
   }
 }
