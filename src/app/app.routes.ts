@@ -14,6 +14,7 @@ import { VeiculoDetalheComponent } from './components/veiculos/veiculo-detalhe/v
 import { BuscaVeiculoPorPlacaComponent } from './components/veiculos/busca-veiculo-por-placa/busca-veiculo-por-placa.component';
 import { BuscaVeiculoPorMotoristaComponent } from './components/veiculos/busca-veiculo-por-motorista/busca-veiculo-por-motorista.component';
 import { CadastrarVeiculoMotoristaComponent } from './components/veiculos/cadastrar-veiculo-por-motorista/cadastrar-veiculo-por-motorista.component';
+import { BuscaMotoristaPorCpfComponent } from './components/motoristas/busca-motorista-por-cpf/busca-motorista-por-cpf.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' }, 
@@ -31,6 +32,7 @@ export const routes: Routes = [
         children: [
           { path: 'detalhe/:id', component: MotoristaDetalheComponent },
           { path: 'detalhe', component: MotoristaDetalheComponent },
+          { path: 'busca-por-cpf', component: BuscaMotoristaPorCpfComponent },
           { path: 'lista', component: MotoristaListaComponent },
         ],
       },

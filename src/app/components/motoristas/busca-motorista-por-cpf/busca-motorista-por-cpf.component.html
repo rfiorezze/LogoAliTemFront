@@ -1,0 +1,59 @@
+<div class="card rounded shadow-sm p-3">
+  <div class="mb-2 d-flex">
+    <div class="col-sm-3 pe-3">
+      <div class="input-group mb-2">
+        <div class="input-group-prepend">
+          <div class="input-group-text">Busca: </div>
+        </div>
+        <input
+          type="text"
+          class="form-control"
+          name="cpfInserido"
+          mask="000.000.000-00"
+          placeholder="Insira o CPF do Motorista"
+          [(ngModel)]="cpfInserido"
+        />
+      </div>
+    </div>
+    <div>
+      <a (click)="carregarMotoristaPorCpf(cpfInserido)" class="d-flex btn btn-outline-primary">
+        <i class="fa fa-search my-1" aria-hidden="true"></i>  
+      <b class="ms-1 d-none d-sm-block">Buscar</b></a>
+    </div>
+  </div>
+
+  <div *ngIf="motorista != null" style="text-align: center;">
+    <hr/>
+    <h5>Dados do Motorista</h5>
+    <p><b>Nome Completo: </b>{{motorista.nome}}</p>
+    <p><b>CPF: </b>{{motorista.cpf | CPF}}</p>
+    <p><b>CNH: </b>{{motorista.numeroCNH}}<a> | <b> Categoria CNH: </b>{{motorista.categoriaCNH}}</a></p>    
+    <p><b>Telefone: </b>{{motorista.celular | phone}}</p>  
+  <div class="card-footer">
+		<div>
+			<button class="btn btn-outline-danger me-3 border" (click)="limparCampos()">
+				Cancelar
+			</button>
+      <button class="btn btn-outline-danger me-3 border" (click)="open($event, motorista.id)">
+        <i class="fa fa-trash"></i>
+        Excluir
+      </button>
+      <button class="btn btn-outline-primary me-3 border" (click)="detalheMotorista(motorista.id)">
+        Alterar dados
+      </button>
+		</div>
+	</div>
+  </div>
+</div>
+
+<confirmation-modal
+#confirmationModal
+(newConfirmationEvent)="getConfirmationValue($event)"
+[modalStyle]="modalStyle"
+[modalTitle]="modalTitle"
+[modalBody]="'Tem certeza que quer deletar o motorista : '+this.motorista.nome"
+[modalButtonColor]="modalButtonColor"
+></confirmation-modal>
+
+<ngx-spinner type="ball-scale-multiple"></ngx-spinner>
+  

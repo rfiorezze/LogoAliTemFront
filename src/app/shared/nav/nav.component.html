@@ -12,9 +12,26 @@
         <li class="nav-item" routerLinkActive="active">
           <a class="nav-link" aria-current="page" routerLink="dashboard">Dashboard</a>
         </li>
-        <li class="nav-item" routerLinkActive="active">
-          <a class="nav-link" routerLink="motoristas/lista">Motoristas</a>
-        </li>
+        <ul class="navbar-nav">
+          <li class="nav-item dropdown" dropdown>
+            <a dropdownToggle class="nav-link dropdown-toggle" style="cursor: pointer;" id="navbarDropdownMenuLink" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">
+              Motorista
+            </a>
+            <div *dropdownMenu class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+              <a class="dropdown-item" routerLink="motoristas/detalhe">
+                Cadastrar
+              </a>
+              <div role="separator" class="divider"></div>
+              <a class="dropdown-item" routerLink="motoristas/busca-por-cpf">
+                Consultar por CPF
+              </a>
+              <a class="dropdown-item" routerLink="motoristas/busca-por-regiao">
+                Consultar por região
+              </a>
+            </div>
+          </li>
+        </ul>
         <ul class="navbar-nav">
           <li class="nav-item dropdown" dropdown>
             <a dropdownToggle class="nav-link dropdown-toggle" style="cursor: pointer;" id="navbarDropdownMenuLink" data-toggle="dropdown"

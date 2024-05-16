@@ -176,7 +176,11 @@ export class MotoristaDetalheComponent {
           : { id: this.motorista.id, ...this.form.value };
 
       this.motoristaService[this.estadoSalvar](this.motorista).subscribe(
-        () => this.toastr.success('Motorista salvo com sucesso!', 'Sucesso'),
+        () => {
+          this.toastr.success('Motorista salvo com sucesso!', 'Sucesso');
+          if(this.estadoSalvar === 'post')
+            this.resetForm();
+        },
         (error: any) => {
           console.error(error);
           this.spinner.hide();
