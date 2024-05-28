@@ -15,6 +15,7 @@ import { BuscaVeiculoPorPlacaComponent } from './components/veiculos/busca-veicu
 import { BuscaVeiculoPorMotoristaComponent } from './components/veiculos/busca-veiculo-por-motorista/busca-veiculo-por-motorista.component';
 import { CadastrarVeiculoMotoristaComponent } from './components/veiculos/cadastrar-veiculo-por-motorista/cadastrar-veiculo-por-motorista.component';
 import { BuscaMotoristaPorCpfComponent } from './components/motoristas/busca-motorista-por-cpf/busca-motorista-por-cpf.component';
+import { BuscaMotoristaPorLocalidadeComponent } from './components/motoristas/busca-motorista-por-localidade/busca-motorista-por-localidade.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' }, 
@@ -33,6 +34,7 @@ export const routes: Routes = [
           { path: 'detalhe/:id', component: MotoristaDetalheComponent },
           { path: 'detalhe', component: MotoristaDetalheComponent },
           { path: 'busca-por-cpf', component: BuscaMotoristaPorCpfComponent },
+          { path: 'busca-por-regiao', component: BuscaMotoristaPorLocalidadeComponent },
           { path: 'lista', component: MotoristaListaComponent },
         ],
       },

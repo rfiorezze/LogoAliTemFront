@@ -22,6 +22,12 @@ export class MotoristaService {
       .pipe(take(1));
   }
 
+  public getMotoristasByLocalidade(estado: string, cidade: string): Observable<Motorista[]>{
+    return this.http
+      .get<Motorista[]>(`${this.baseURL}/localidade/${estado}/${cidade}`)
+      .pipe(take(1));
+  }
+
   public getMotoristaByCpf(cpf: string): Observable<Motorista>{
     return this.http
       .get<Motorista>(`${this.baseURL}/cpf/${cpf}`)
