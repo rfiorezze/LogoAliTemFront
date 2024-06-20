@@ -3,7 +3,7 @@ import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { VeiculosComponent } from './components/veiculos/veiculos.component';
 import { MotoristasComponent } from './components/motoristas/motoristas.component';
-import { HttpClientModule } from '@angular/common/http';
+import {} from '@angular/common/http';
 import { NavComponent } from './shared/nav/nav.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MotoristaService } from './services/motorista.service';
@@ -24,7 +24,11 @@ import { VeiculoService } from './services/veiculo.service';
     RouterOutlet,
     VeiculosComponent,
     MotoristasComponent,
-    HttpClientModule,
+    
+// TODO: `HttpClientModule` should not be imported into a component directly.
+// Please refactor the code to add `provideHttpClient()` call to the provider list in the
+// application bootstrap logic and remove the `HttpClientModule` import from this component.
+HttpClientModule,
     NavComponent,
     NgbModule,
     PerfilComponent,
