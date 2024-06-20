@@ -1,4 +1,4 @@
 export const environment = {
     production: true,
-    apiURL: 'https://logoalitemapi-2gxdtwfgaa-uc.a.run.app/'
+    apiURL: 'http://104.234.65.143:2030/'
   };
