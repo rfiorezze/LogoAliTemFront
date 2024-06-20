@@ -10,7 +10,7 @@ import {
 import { BsDatepickerModule, BsLocaleService } from 'ngx-bootstrap/datepicker';
 import { defineLocale } from 'ngx-bootstrap/chronos';
 import { ptBrLocale } from 'ngx-bootstrap/locale';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MotoristaService } from '@app/services/motorista.service';
 import { Motorista } from '@app/models/Motorista';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -20,7 +20,6 @@ import { Estado } from '@app/models/Estado';
 import { Municipio } from '@app/models/Municipio';
 import { NgxMaskDirective } from 'ngx-mask';
 import { Endereco } from '@app/models/Endereco';
-import { Validacoes } from '@app/helpers/Validacoes';
 
 defineLocale('pt-br', ptBrLocale);
 
@@ -31,7 +30,7 @@ defineLocale('pt-br', ptBrLocale);
     ReactiveFormsModule,
     CommonModule,
     BsDatepickerModule,
-    NgxMaskDirective,
+    NgxMaskDirective
   ],
   templateUrl: './motorista-detalhe.component.html',
   styleUrl: './motorista-detalhe.component.scss',
@@ -95,7 +94,8 @@ export class MotoristaDetalheComponent {
     private motoristaService: MotoristaService,
     private spinner: NgxSpinnerService,
     private toastr: ToastrService,
-    private localidadeService: LocalidadeService
+    private localidadeService: LocalidadeService,
+    private route: Router
   ) {
     this.localeService.use('pt-br');
   }
@@ -176,10 +176,14 @@ export class MotoristaDetalheComponent {
           : { id: this.motorista.id, ...this.form.value };
 
       this.motoristaService[this.estadoSalvar](this.motorista).subscribe(
-        () => {
+        (_motorista: Motorista) => {
           this.toastr.success('Motorista salvo com sucesso!', 'Sucesso');
           if(this.estadoSalvar === 'post')
             this.resetForm();
+          this.route.navigate(
+            ['veiculos/detalhe'],
+            { queryParams: { motoristaId: _motorista.id}}
+          );
         },
         (error: any) => {
           console.error(error);
