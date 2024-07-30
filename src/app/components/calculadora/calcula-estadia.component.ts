@@ -3,7 +3,6 @@ import { Component} from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { BsDatepickerModule, BsLocaleService } from 'ngx-bootstrap/datepicker';
 import { TituloComponent } from '@app/shared/titulo/titulo.component';
-import { NgbTimepickerModule } from '@ng-bootstrap/ng-bootstrap';
 import { ActivatedRoute, RouterOutlet } from '@angular/router';
 import { NgxMaskDirective } from 'ngx-mask';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -30,7 +29,6 @@ defineLocale('pt-br', ptBrLocale);
 })
 export class CalculaEstadiaComponent {
   form!: FormGroup;
-  time = { hour: 13, minute: 30 };
 
   get f(): any {
     return this.form.controls;
