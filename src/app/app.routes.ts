@@ -16,6 +16,7 @@ import { BuscaVeiculoPorMotoristaComponent } from './components/veiculos/busca-v
 import { CadastrarVeiculoMotoristaComponent } from './components/veiculos/cadastrar-veiculo-por-motorista/cadastrar-veiculo-por-motorista.component';
 import { BuscaMotoristaPorCpfComponent } from './components/motoristas/busca-motorista-por-cpf/busca-motorista-por-cpf.component';
 import { BuscaMotoristaPorLocalidadeComponent } from './components/motoristas/busca-motorista-por-localidade/busca-motorista-por-localidade.component';
+import { CalculaEstadiaComponent } from './components/calculadora/calcula-estadia.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' }, 
@@ -35,7 +36,7 @@ export const routes: Routes = [
           { path: 'detalhe', component: MotoristaDetalheComponent },
           { path: 'busca-por-cpf', component: BuscaMotoristaPorCpfComponent },
           { path: 'busca-por-regiao', component: BuscaMotoristaPorLocalidadeComponent },
-          { path: 'lista', component: MotoristaListaComponent },
+          { path: 'lista', component: MotoristaListaComponent }
         ],
       },
       { path: 'veiculos', redirectTo: 'veiculos/lista' },
@@ -50,6 +51,7 @@ export const routes: Routes = [
           { path: 'cadastrar-veiculo-por-motorista', component: CadastrarVeiculoMotoristaComponent }
         ],
       },
+      { path: 'calcula-estadia', component: CalculaEstadiaComponent },
       { path: 'dashboard', component: DashboardComponent },
     ],
   },

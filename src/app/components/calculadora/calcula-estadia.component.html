@@ -1,0 +1,88 @@
+<app-titulo
+  [titulo]="'Calculadora de estadia'"
+  [subtitulo]="'Calcule sua estadia aqui'"
+  [iconClass]="'fa fa-calculator'"
+  [botaoListar]="false"
+></app-titulo>
+<div class="card rounded shadow-sm">
+  <form [formGroup]="form">
+    <div class="p-3">
+         <!-- <p>Form value: {{form.value | json}}</p>
+         <p>Form valid: {{form.status | json}}</p> -->
+      <div class="row">
+        <div class="mb-3 col-md-2">
+          <label>Data de Chegada</label>
+          <input type="text" class="form-control"
+          [ngClass]="cssValidator(f.dataHoraChegada)"
+          bsDatepicker
+          [bsConfig] = "bsConfig"
+          formControlName="dataHoraChegada" placeholder="">
+      </div>
+      <ngb-timepicker [(ngModel)]="time" />
+      <hr />
+      <pre>Selected time: {{ time | json }}</pre>
+      <div class="mb-3 col-md-2">
+        <label>Hora de chegada</label>
+        <input type="text" class="form-control"
+        [ngClass]="cssValidator(f.horaChegada)"
+         formControlName="horaChegada">
+        <div *ngIf="f.horaChegada.errors?.required && f.horaChegada.touched" class="invalid-feedback">
+        Hora de Chegada é obrigatório
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="mb-3 col-md-2">
+          <label>Data de Saída</label>
+          <input type="text" class="form-control"
+          [ngClass]="cssValidator(f.dataHoraChegada)"
+          bsDatepicker
+          [bsConfig] = "bsConfig"
+          formControlName="dataHoraChegada" placeholder="">
+      </div>
+
+      <div class="mb-3 col-md-2">
+        <label>Hora de Saída</label>
+        <input type="text" class="form-control"
+        [ngClass]="cssValidator(f.horaSaida)"
+         formControlName="horaSaida">
+        <div *ngIf="f.horaSaida.errors?.required && f.horaSaida.touched" class="invalid-feedback">
+        Hora de Saída é obrigatório
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="mb-3 col-md-3">
+          <label>Capacidade de Carga do Veículo ( t )</label>
+          <input type="number" class="form-control"
+          [ngClass]="cssValidator(f.capacidadeCargaVeiculo)"
+          bsDatepicker
+          [bsConfig] = "bsConfig"
+          formControlName="capacidadeCargaVeiculo" placeholder="">
+          <div *ngIf="f.capacidadeCargaVeiculo.errors?.required && f.capacidadeCargaVeiculo.touched" class="invalid-feedback">
+            Capacidade de Carga é obrigatório
+              </div>
+      </div>
+      <div class="mb-3 col-md-2">
+        <label>Valor da Hora</label>
+        <input type="text" class="form-control" value="2,29">
+        </div>
+      </div>
+
+    </div>
+      <div class="card-footer">
+     <div class="d-flex">
+       <button class="btn btn-outline-secondary me-auto border" onclick="javascript:history.back()">
+         Cancelar Alteração
+       </button>
+             <button class="btn btn-success" [disabled]="!form.valid">
+                 <!-- <span class="spinner-border spinner-border-sm mr-1"></span> -->
+                 Salvar Veiculo
+             </button>
+     </div>
+   </div>
+  </form>
+ </div>
+ 

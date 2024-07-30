@@ -52,6 +52,9 @@
             </div>
           </li>
         </ul>
+        <li class="nav-item" routerLinkActive="active">
+          <a class="nav-link" aria-current="page" routerLink="calcula-estadia">Calcula estadia</a>
+        </li>
       </ng-container>
       </ul>
       <div *ngIf="(accountService.currentUser$ | async) === null" class="navbar-nav me-3 d-xs-none d-none d-md-block">
