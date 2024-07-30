@@ -3,13 +3,13 @@ import {
   TooltipModule
 } from "./chunk-V2E7VNHM.js";
 import {
-  ComponentLoaderFactory,
-  PositioningService
-} from "./chunk-PMWPW6ZU.js";
-import {
   NG_VALIDATORS,
   NG_VALUE_ACCESSOR
 } from "./chunk-KXJYOOIR.js";
+import {
+  ComponentLoaderFactory,
+  PositioningService
+} from "./chunk-PMWPW6ZU.js";
 import {
   animate,
   state,
@@ -85,10 +85,10 @@ import {
   ɵɵtextInterpolate1,
   ɵɵviewQuery
 } from "./chunk-3KPMP475.js";
-import "./chunk-B3JNXOAZ.js";
 import {
   queueScheduler
 } from "./chunk-P7ZDC46N.js";
+import "./chunk-B3JNXOAZ.js";
 import {
   BehaviorSubject,
   Observable,

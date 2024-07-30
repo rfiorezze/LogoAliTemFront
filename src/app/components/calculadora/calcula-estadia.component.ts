@@ -1,6 +1,6 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, JsonPipe } from '@angular/common';
 import { Component} from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { BsDatepickerModule, BsLocaleService } from 'ngx-bootstrap/datepicker';
 import { TituloComponent } from '@app/shared/titulo/titulo.component';
 import { ActivatedRoute, RouterOutlet } from '@angular/router';
@@ -9,6 +9,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { defineLocale } from 'ngx-bootstrap/chronos';
 import { ptBrLocale } from 'ngx-bootstrap/locale';
+import { NgbTimepickerModule } from '@ng-bootstrap/ng-bootstrap';
 
 defineLocale('pt-br', ptBrLocale);
 
@@ -24,7 +25,10 @@ defineLocale('pt-br', ptBrLocale);
     ReactiveFormsModule,
     CommonModule,
     BsDatepickerModule,
-    NgxMaskDirective
+    NgxMaskDirective,
+    NgbTimepickerModule, 
+    FormsModule,
+    JsonPipe
   ]
 })
 export class CalculaEstadiaComponent {

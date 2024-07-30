@@ -1,9 +1,5 @@
 import { createRequire } from 'module';const require = createRequire(import.meta.url);
 import {
-  BrowserModule,
-  DomRendererFactory2
-} from "./chunk-UEIX5FX3.js";
-import {
   AUTO_STYLE,
   AnimationGroupPlayer,
   AnimationMetadataType,
@@ -11,10 +7,14 @@ import {
   sequence,
   style,
   ɵPRE_STYLE
-} from "./chunk-JKP24NGH.js";
+} from "./chunk-DV3MCI2B.js";
+import {
+  BrowserModule,
+  DomRendererFactory2
+} from "./chunk-TFMWNNDL.js";
 import {
   DOCUMENT
-} from "./chunk-QSS6ZONJ.js";
+} from "./chunk-H3YJVHCF.js";
 import {
   ANIMATION_MODULE_TYPE,
   Inject,
@@ -29,7 +29,7 @@ import {
   ɵɵdefineInjector,
   ɵɵdefineNgModule,
   ɵɵinject
-} from "./chunk-WTIL7ZJR.js";
+} from "./chunk-KSWH2UKJ.js";
 import {
   __objRest,
   __spreadValues
@@ -4116,4 +4116,4 @@ export {
    * License: MIT
    *)
 */
-//# sourceMappingURL=chunk-2CHDN5JN.js.map
+//# sourceMappingURL=chunk-KOCZL4PD.js.map

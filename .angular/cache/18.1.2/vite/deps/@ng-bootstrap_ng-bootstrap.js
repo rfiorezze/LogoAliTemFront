@@ -4,14 +4,9 @@ import {
 } from "./chunk-KXJYOOIR.js";
 import {
   DOCUMENT,
-  FormStyle,
   NgTemplateOutlet,
   PercentPipe,
-  TranslationWidth,
   formatDate,
-  getLocaleDayNames,
-  getLocaleDayPeriods,
-  getLocaleMonthNames,
   isPlatformBrowser
 } from "./chunk-BI3EF5MD.js";
 import {
@@ -27,7 +22,6 @@ import {
   ElementRef,
   EnvironmentInjector,
   EventEmitter,
-  HostBinding,
   Injectable,
   InjectionToken,
   Injector,
@@ -93,6 +87,7 @@ import {
   ɵɵrepeater,
   ɵɵrepeaterCreate,
   ɵɵrepeaterTrackByIdentity,
+  ɵɵrepeaterTrackByIndex,
   ɵɵresetView,
   ɵɵrestoreView,
   ɵɵstyleProp,
@@ -103,12 +98,12 @@ import {
   ɵɵtextInterpolate1,
   ɵɵviewQuery
 } from "./chunk-3KPMP475.js";
-import "./chunk-B3JNXOAZ.js";
 import {
   NEVER,
   fromEvent,
   merge
 } from "./chunk-P7ZDC46N.js";
+import "./chunk-B3JNXOAZ.js";
 import {
   BehaviorSubject,
   EMPTY,
@@ -1822,7 +1817,7 @@ function NgbDatepickerMonth_Conditional_0_Template(rf, ctx) {
   if (rf & 1) {
     ɵɵelementStart(0, "div", 0);
     ɵɵtemplate(1, NgbDatepickerMonth_Conditional_0_Conditional_1_Template, 2, 1, "div", 1);
-    ɵɵrepeaterCreate(2, NgbDatepickerMonth_Conditional_0_For_3_Template, 2, 1, "div", 2, ɵɵrepeaterTrackByIdentity);
+    ɵɵrepeaterCreate(2, NgbDatepickerMonth_Conditional_0_For_3_Template, 2, 1, "div", 2, ɵɵrepeaterTrackByIndex);
     ɵɵelementEnd();
   }
   if (rf & 2) {
@@ -2140,7 +2135,7 @@ function NgbPagination_ng_template_12_For_1_Template(rf, ctx) {
 }
 function NgbPagination_ng_template_12_Template(rf, ctx) {
   if (rf & 1) {
-    ɵɵrepeaterCreate(0, NgbPagination_ng_template_12_For_1_Template, 3, 6, "li", 14, ɵɵrepeaterTrackByIdentity);
+    ɵɵrepeaterCreate(0, NgbPagination_ng_template_12_For_1_Template, 3, 6, "li", 14, ɵɵrepeaterTrackByIndex);
   }
   if (rf & 2) {
     const pages_r10 = ctx.pages;
@@ -2635,9 +2630,9 @@ function NgbTypeaheadWindow_For_3_Template(rf, ctx) {
     const _r4 = ɵɵgetCurrentView();
     ɵɵelementStart(0, "button", 3);
     ɵɵlistener("mouseenter", function NgbTypeaheadWindow_For_3_Template_button_mouseenter_0_listener() {
-      const ɵ$index_5_r5 = ɵɵrestoreView(_r4).$index;
+      const $index_r5 = ɵɵrestoreView(_r4).$index;
       const ctx_r5 = ɵɵnextContext();
-      return ɵɵresetView(ctx_r5.markActive(ɵ$index_5_r5));
+      return ɵɵresetView(ctx_r5.markActive($index_r5));
     })("click", function NgbTypeaheadWindow_For_3_Template_button_click_0_listener() {
       const result_r7 = ɵɵrestoreView(_r4).$implicit;
       const ctx_r5 = ɵɵnextContext();
@@ -2648,11 +2643,11 @@ function NgbTypeaheadWindow_For_3_Template(rf, ctx) {
   }
   if (rf & 2) {
     const result_r7 = ctx.$implicit;
-    const ɵ$index_5_r5 = ctx.$index;
+    const $index_r5 = ctx.$index;
     const ctx_r5 = ɵɵnextContext();
     const rt_r8 = ɵɵreference(1);
-    ɵɵclassProp("active", ɵ$index_5_r5 === ctx_r5.activeIdx);
-    ɵɵproperty("id", ctx_r5.id + "-" + ɵ$index_5_r5);
+    ɵɵclassProp("active", $index_r5 === ctx_r5.activeIdx);
+    ɵɵproperty("id", ctx_r5.id + "-" + $index_r5);
     ɵɵadvance();
     ɵɵproperty("ngTemplateOutlet", ctx_r5.resultTemplate || rt_r8)("ngTemplateOutletContext", ɵɵpureFunction3(5, _c14, result_r7, ctx_r5.term, ctx_r5.formatter));
   }
@@ -2890,9 +2885,7 @@ var ngbCollapsingTransition = (element, animation, context) => {
     maxSize = measureCollapsingElementDimensionPx(element, dimension);
     context.maxSize = maxSize;
     element.style[dimension] = direction !== "show" ? maxSize : "0px";
-    classList.remove("collapse");
-    classList.remove("collapsing");
-    classList.remove("show");
+    classList.remove("collapse", "collapsing", "show");
     reflow(element);
     classList.add("collapsing");
   }
@@ -3072,10 +3065,8 @@ var _NgbAccordionBody = class _NgbAccordionBody {
     this._destroyViewIfExists();
   }
   _destroyViewIfExists() {
-    if (this._viewRef) {
-      this._viewRef.destroy();
-      this._viewRef = null;
-    }
+    this._viewRef?.destroy();
+    this._viewRef = null;
   }
   _createViewIfNotExists() {
     if (!this._viewRef) {
@@ -3102,12 +3093,7 @@ _NgbAccordionBody.ɵdir = ɵɵdefineDirective({
       ɵɵqueryRefresh(_t = ɵɵloadQuery()) && (ctx._bodyTpl = _t.first);
     }
   },
-  hostVars: 2,
-  hostBindings: function NgbAccordionBody_HostBindings(rf, ctx) {
-    if (rf & 2) {
-      ɵɵclassProp("accordion-body", true);
-    }
-  },
+  hostAttrs: [1, "accordion-body"],
   standalone: true
 });
 var NgbAccordionBody = _NgbAccordionBody;
@@ -3118,7 +3104,7 @@ var NgbAccordionBody = _NgbAccordionBody;
       selector: "[ngbAccordionBody]",
       standalone: true,
       host: {
-        "[class.accordion-body]": "true"
+        class: "accordion-body"
       }
     }]
   }], null, {
@@ -3142,13 +3128,12 @@ _NgbAccordionCollapse.ɵfac = function NgbAccordionCollapse_Factory(t) {
 _NgbAccordionCollapse.ɵdir = ɵɵdefineDirective({
   type: _NgbAccordionCollapse,
   selectors: [["", "ngbAccordionCollapse", ""]],
-  hostAttrs: ["role", "region"],
-  hostVars: 4,
+  hostAttrs: ["role", "region", 1, "accordion-collapse"],
+  hostVars: 2,
   hostBindings: function NgbAccordionCollapse_HostBindings(rf, ctx) {
     if (rf & 2) {
       ɵɵhostProperty("id", ctx.item.collapseId);
       ɵɵattribute("aria-labelledby", ctx.item.toggleId);
-      ɵɵclassProp("accordion-collapse", true);
     }
   },
   exportAs: ["ngbAccordionCollapse"],
@@ -3165,7 +3150,7 @@ var NgbAccordionCollapse = _NgbAccordionCollapse;
       selector: "[ngbAccordionCollapse]",
       host: {
         role: "region",
-        "[class.accordion-collapse]": "true",
+        class: "accordion-collapse",
         "[id]": "item.collapseId",
         "[attr.aria-labelledby]": "item.toggleId"
       },
@@ -3228,12 +3213,11 @@ _NgbAccordionButton.ɵfac = function NgbAccordionButton_Factory(t) {
 _NgbAccordionButton.ɵdir = ɵɵdefineDirective({
   type: _NgbAccordionButton,
   selectors: [["button", "ngbAccordionButton", ""]],
-  hostAttrs: ["type", "button"],
-  hostVars: 3,
+  hostAttrs: ["type", "button", 1, "accordion-button"],
+  hostVars: 1,
   hostBindings: function NgbAccordionButton_HostBindings(rf, ctx) {
     if (rf & 2) {
       ɵɵhostProperty("disabled", ctx.item.disabled);
-      ɵɵclassProp("accordion-button", true);
     }
   },
   standalone: true,
@@ -3248,7 +3232,7 @@ var NgbAccordionButton = _NgbAccordionButton;
       standalone: true,
       host: {
         "[disabled]": "item.disabled",
-        "[class.accordion-button]": "true",
+        class: "accordion-button",
         type: "button"
       },
       hostDirectives: [NgbAccordionToggle]
@@ -3266,11 +3250,11 @@ _NgbAccordionHeader.ɵfac = function NgbAccordionHeader_Factory(t) {
 _NgbAccordionHeader.ɵdir = ɵɵdefineDirective({
   type: _NgbAccordionHeader,
   selectors: [["", "ngbAccordionHeader", ""]],
-  hostAttrs: ["role", "heading"],
-  hostVars: 4,
+  hostAttrs: ["role", "heading", 1, "accordion-header"],
+  hostVars: 2,
   hostBindings: function NgbAccordionHeader_HostBindings(rf, ctx) {
     if (rf & 2) {
-      ɵɵclassProp("accordion-header", true)("collapsed", ctx.item.collapsed);
+      ɵɵclassProp("collapsed", ctx.item.collapsed);
     }
   },
   standalone: true
@@ -3284,7 +3268,7 @@ var NgbAccordionHeader = _NgbAccordionHeader;
       standalone: true,
       host: {
         role: "heading",
-        "[class.accordion-header]": "true",
+        class: "accordion-header",
         "[class.collapsed]": "item.collapsed"
       }
     }]
@@ -3422,11 +3406,11 @@ _NgbAccordionItem.ɵdir = ɵɵdefineDirective({
       ɵɵqueryRefresh(_t = ɵɵloadQuery()) && (ctx._collapse = _t.first);
     }
   },
-  hostVars: 3,
+  hostAttrs: [1, "accordion-item"],
+  hostVars: 1,
   hostBindings: function NgbAccordionItem_HostBindings(rf, ctx) {
     if (rf & 2) {
       ɵɵhostProperty("id", ctx.id);
-      ɵɵclassProp("accordion-item", true);
     }
   },
   inputs: {
@@ -3453,8 +3437,8 @@ var NgbAccordionItem = _NgbAccordionItem;
       exportAs: "ngbAccordionItem",
       standalone: true,
       host: {
-        "[class.accordion-item]": "true",
-        "[id]": "id"
+        "[id]": "id",
+        class: "accordion-item"
       }
     }]
   }], null, {
@@ -3605,12 +3589,7 @@ _NgbAccordionDirective.ɵdir = ɵɵdefineDirective({
       ɵɵqueryRefresh(_t = ɵɵloadQuery()) && (ctx._items = _t);
     }
   },
-  hostVars: 2,
-  hostBindings: function NgbAccordionDirective_HostBindings(rf, ctx) {
-    if (rf & 2) {
-      ɵɵclassProp("accordion", true);
-    }
-  },
+  hostAttrs: [1, "accordion"],
   inputs: {
     animation: "animation",
     closeOthers: "closeOthers",
@@ -3634,7 +3613,7 @@ var NgbAccordionDirective = _NgbAccordionDirective;
       standalone: true,
       exportAs: "ngbAccordion",
       host: {
-        "[class.accordion]": "true"
+        class: "accordion"
       }
     }]
   }], null, {
@@ -3918,13 +3897,11 @@ var isBeingAnimated = ({
   return classList.contains("carousel-item-start") || classList.contains("carousel-item-end");
 };
 var removeDirectionClasses = (classList) => {
-  classList.remove("carousel-item-start");
-  classList.remove("carousel-item-end");
+  classList.remove("carousel-item-start", "carousel-item-end");
 };
 var removeClasses = (classList) => {
   removeDirectionClasses(classList);
-  classList.remove("carousel-item-prev");
-  classList.remove("carousel-item-next");
+  classList.remove("carousel-item-prev", "carousel-item-next");
 };
 var ngbCarouselTransitionIn = (element, animation, {
   direction
@@ -3933,7 +3910,6 @@ var ngbCarouselTransitionIn = (element, animation, {
     classList
   } = element;
   if (!animation) {
-    removeDirectionClasses(classList);
     removeClasses(classList);
     classList.add("active");
     return;
@@ -3957,7 +3933,6 @@ var ngbCarouselTransitionOut = (element, animation, {
     classList
   } = element;
   if (!animation) {
-    removeDirectionClasses(classList);
     removeClasses(classList);
     classList.remove("active");
     return;
@@ -4969,11 +4944,17 @@ var _NgbDatepickerI18nDefault = class _NgbDatepickerI18nDefault extends NgbDatep
   constructor() {
     super(...arguments);
     this._locale = inject(LOCALE_ID);
-    this._monthsShort = getLocaleMonthNames(this._locale, FormStyle.Standalone, TranslationWidth.Abbreviated);
-    this._monthsFull = getLocaleMonthNames(this._locale, FormStyle.Standalone, TranslationWidth.Wide);
+    this._monthsShort = [...Array(12).keys()].map((month) => Intl.DateTimeFormat(this._locale, {
+      month: "short"
+    }).format(new Date(2e3, month)));
+    this._monthsFull = [...Array(12).keys()].map((month) => Intl.DateTimeFormat(this._locale, {
+      month: "long"
+    }).format(new Date(2e3, month)));
   }
-  getWeekdayLabel(weekday, width) {
-    const weekdaysStartingOnSunday = getLocaleDayNames(this._locale, FormStyle.Standalone, width === void 0 ? TranslationWidth.Short : width);
+  getWeekdayLabel(weekday, width = "narrow") {
+    const weekdaysStartingOnSunday = [...Array(7).keys()].map((day) => Intl.DateTimeFormat(this._locale, {
+      weekday: width
+    }).format(new Date(Date.UTC(2021, 5, day - 1))));
     const weekdays = weekdaysStartingOnSunday.map((day, index) => weekdaysStartingOnSunday[(index + 1) % 7]);
     return weekdays[weekday - 1] || "";
   }
@@ -5082,7 +5063,7 @@ var _NgbDatepickerService = class _NgbDatepickerService {
         }
       },
       weekdays: (weekdays) => {
-        const weekdayWidth = weekdays === true || weekdays === false ? TranslationWidth.Short : weekdays;
+        const weekdayWidth = weekdays === true || weekdays === false ? "narrow" : weekdays;
         const weekdaysVisible = weekdays === true || weekdays === false ? weekdays : true;
         if (this._state.weekdayWidth !== weekdayWidth || this._state.weekdaysVisible !== weekdaysVisible) {
           return {
@@ -5118,7 +5099,7 @@ var _NgbDatepickerService = class _NgbDatepickerService {
         years: [],
         months: []
       },
-      weekdayWidth: TranslationWidth.Short,
+      weekdayWidth: "narrow",
       weekdaysVisible: true
     };
   }
@@ -5312,7 +5293,7 @@ var _NgbDatepickerConfig = class _NgbDatepickerConfig {
     this.navigation = "select";
     this.outsideDays = "visible";
     this.showWeekNumbers = false;
-    this.weekdays = TranslationWidth.Short;
+    this.weekdays = "narrow";
   }
 };
 _NgbDatepickerConfig.ɵfac = function NgbDatepickerConfig_Factory(t) {
@@ -5393,21 +5374,6 @@ var NgbDateStructAdapter = _NgbDateStructAdapter;
     type: Injectable
   }], null, null);
 })();
-var Key;
-(function(Key2) {
-  Key2[Key2["Tab"] = 9] = "Tab";
-  Key2[Key2["Enter"] = 13] = "Enter";
-  Key2[Key2["Escape"] = 27] = "Escape";
-  Key2[Key2["Space"] = 32] = "Space";
-  Key2[Key2["PageUp"] = 33] = "PageUp";
-  Key2[Key2["PageDown"] = 34] = "PageDown";
-  Key2[Key2["End"] = 35] = "End";
-  Key2[Key2["Home"] = 36] = "Home";
-  Key2[Key2["ArrowLeft"] = 37] = "ArrowLeft";
-  Key2[Key2["ArrowUp"] = 38] = "ArrowUp";
-  Key2[Key2["ArrowRight"] = 39] = "ArrowRight";
-  Key2[Key2["ArrowDown"] = 40] = "ArrowDown";
-})(Key || (Key = {}));
 var _NgbDatepickerKeyboardService = class _NgbDatepickerKeyboardService {
   /**
    * Processes a keyboard event.
@@ -5417,33 +5383,33 @@ var _NgbDatepickerKeyboardService = class _NgbDatepickerKeyboardService {
       state,
       calendar
     } = datepicker;
-    switch (event.which) {
-      case Key.PageUp:
+    switch (event.key) {
+      case "PageUp":
         datepicker.focusDate(calendar.getPrev(state.focusedDate, event.shiftKey ? "y" : "m", 1));
         break;
-      case Key.PageDown:
+      case "PageDown":
         datepicker.focusDate(calendar.getNext(state.focusedDate, event.shiftKey ? "y" : "m", 1));
         break;
-      case Key.End:
+      case "End":
         datepicker.focusDate(event.shiftKey ? state.maxDate : state.lastDate);
         break;
-      case Key.Home:
+      case "Home":
         datepicker.focusDate(event.shiftKey ? state.minDate : state.firstDate);
         break;
-      case Key.ArrowLeft:
+      case "ArrowLeft":
         datepicker.focusDate(calendar.getPrev(state.focusedDate, "d", 1));
         break;
-      case Key.ArrowUp:
+      case "ArrowUp":
         datepicker.focusDate(calendar.getPrev(state.focusedDate, "d", calendar.getDaysPerWeek()));
         break;
-      case Key.ArrowRight:
+      case "ArrowRight":
         datepicker.focusDate(calendar.getNext(state.focusedDate, "d", 1));
         break;
-      case Key.ArrowDown:
+      case "ArrowDown":
         datepicker.focusDate(calendar.getNext(state.focusedDate, "d", calendar.getDaysPerWeek()));
         break;
-      case Key.Enter:
-      case Key.Space:
+      case "Enter":
+      case " ":
         datepicker.focusSelect();
         break;
       default:
@@ -6049,7 +6015,7 @@ var NgbDatepickerMonth = _NgbDatepickerMonth;
 				@if (datepicker.showWeekNumbers) {
 					<div class="ngb-dp-weekday ngb-dp-showweek small">{{ i18n.getWeekLabel() }}</div>
 				}
-				@for (weekday of viewModel.weekdays; track weekday) {
+				@for (weekday of viewModel.weekdays; track $index) {
 					<div class="ngb-dp-weekday small" role="columnheader">{{ weekday }}</div>
 				}
 			</div>
@@ -6420,7 +6386,7 @@ var NgbDatepicker = _NgbDatepicker;
 		</ng-template>
 
 		<ng-template #defaultContentTemplate>
-			@for (month of model.months; track month; let i = $index) {
+			@for (month of model.months; track month) {
 				<div class="ngb-dp-month">
 					@if (navigation === 'none' || (displayMonths > 1 && navigation === 'select')) {
 						<div class="ngb-dp-month-name">
@@ -6558,12 +6524,7 @@ function ngbAutoClose(zone, document2, type, close, closed$, insideElements, ign
           return matchesSelectorIfAny(element, insideSelector) || !isContainedIn(element, insideElements);
         }
       };
-      const escapes$ = fromEvent(document2, "keydown").pipe(
-        takeUntil(closed$),
-        /* eslint-disable-next-line deprecation/deprecation */
-        filter((e) => e.which === Key.Escape),
-        tap((e) => e.preventDefault())
-      );
+      const escapes$ = fromEvent(document2, "keydown").pipe(takeUntil(closed$), filter((e) => e.key === "Escape"), tap((e) => e.preventDefault()));
       const mouseDowns$ = fromEvent(document2, "mousedown").pipe(map(shouldCloseOnClick), takeUntil(closed$));
       const closeableClicks$ = fromEvent(document2, "mouseup").pipe(withLatestFrom(mouseDowns$), filter(([_, shouldClose]) => shouldClose), delay(0), takeUntil(closed$));
       race([escapes$.pipe(map(
@@ -6584,12 +6545,7 @@ function getFocusableBoundaryElements(element) {
 var ngbFocusTrap = (zone, element, stopFocusTrap$, refocusOnClick = false) => {
   zone.runOutsideAngular(() => {
     const lastFocusedElement$ = fromEvent(element, "focusin").pipe(takeUntil(stopFocusTrap$), map((e) => e.target));
-    fromEvent(element, "keydown").pipe(
-      takeUntil(stopFocusTrap$),
-      /* eslint-disable-next-line deprecation/deprecation */
-      filter((e) => e.which === Key.Tab),
-      withLatestFrom(lastFocusedElement$)
-    ).subscribe(([tabEvent, focusedElement]) => {
+    fromEvent(element, "keydown").pipe(takeUntil(stopFocusTrap$), filter((e) => e.key === "Tab"), withLatestFrom(lastFocusedElement$)).subscribe(([tabEvent, focusedElement]) => {
       const [first, last] = getFocusableBoundaryElements(element);
       if ((focusedElement === first || focusedElement === element) && tabEvent.shiftKey) {
         last.focus();
@@ -7027,7 +6983,6 @@ var _NgbInputDatepicker = class _NgbInputDatepicker {
             hostElement,
             targetElement: this._cRef.location.nativeElement,
             placement: this.placement,
-            appendToBody: this.container === "body",
             updatePopperOptions: (options) => this.popperOptions(addPopperOffset([0, 2])(options))
           });
           this._zoneSubscription = this._ngZone.onStable.subscribe(() => this._positioning.update());
@@ -7041,7 +6996,7 @@ var _NgbInputDatepicker = class _NgbInputDatepicker {
    */
   close() {
     if (this.isOpen()) {
-      this._vcRef.remove(this._vcRef.indexOf(this._cRef.hostView));
+      this._cRef?.destroy();
       this._cRef = null;
       this._positioning.destroy();
       this._zoneSubscription?.unsubscribe();
@@ -9084,7 +9039,8 @@ _NgbDropdownMenu.ɵdir = ɵɵdefineDirective({
       ɵɵqueryRefresh(_t = ɵɵloadQuery()) && (ctx.menuItems = _t);
     }
   },
-  hostVars: 4,
+  hostAttrs: [1, "dropdown-menu"],
+  hostVars: 2,
   hostBindings: function NgbDropdownMenu_HostBindings(rf, ctx) {
     if (rf & 1) {
       ɵɵlistener("keydown.ArrowUp", function NgbDropdownMenu_keydown_ArrowUp_HostBindingHandler($event) {
@@ -9106,7 +9062,7 @@ _NgbDropdownMenu.ɵdir = ɵɵdefineDirective({
       });
     }
     if (rf & 2) {
-      ɵɵclassProp("dropdown-menu", true)("show", ctx.dropdown.isOpen());
+      ɵɵclassProp("show", ctx.dropdown.isOpen());
     }
   },
   standalone: true
@@ -9119,7 +9075,7 @@ var NgbDropdownMenu = _NgbDropdownMenu;
       selector: "[ngbDropdownMenu]",
       standalone: true,
       host: {
-        "[class.dropdown-menu]": "true",
+        class: "dropdown-menu",
         "[class.show]": "dropdown.isOpen()",
         "(keydown.ArrowUp)": "dropdown.onKeyDown($event)",
         "(keydown.ArrowDown)": "dropdown.onKeyDown($event)",
@@ -9281,8 +9237,7 @@ var _NgbDropdown = class _NgbDropdown {
       this._positioning.setOptions({
         hostElement: this._anchor.nativeElement,
         targetElement: this._bodyContainer || this._menu.nativeElement,
-        placement: this.placement,
-        appendToBody: this.container === "body"
+        placement: this.placement
       });
       this._applyPlacementClasses();
     }
@@ -9321,7 +9276,6 @@ var _NgbDropdown = class _NgbDropdown {
               hostElement: this._anchor.nativeElement,
               targetElement: this._bodyContainer || this._menu.nativeElement,
               placement: this.placement,
-              appendToBody: this.container === "body",
               updatePopperOptions: (options) => this.popperOptions(addPopperOffset([0, 2])(options))
             });
             this._applyPlacementClasses();
@@ -9368,7 +9322,9 @@ var _NgbDropdown = class _NgbDropdown {
     this.close();
   }
   onKeyDown(event) {
-    const key = event.which;
+    const {
+      key
+    } = event;
     const itemElements = this._getMenuElements();
     let position = -1;
     let itemElement = null;
@@ -9383,13 +9339,13 @@ var _NgbDropdown = class _NgbDropdown {
         }
       });
     }
-    if (key === Key.Space || key === Key.Enter) {
+    if (key === " " || key === "Enter") {
       if (itemElement && (this.autoClose === true || this.autoClose === "inside")) {
         fromEvent(itemElement, "click").pipe(take(1)).subscribe(() => this.close());
       }
       return;
     }
-    if (key === Key.Tab) {
+    if (key === "Tab") {
       if (event.target && this.isOpen() && this.autoClose) {
         if (this._anchor.nativeElement === event.target) {
           if (this.container === "body" && !event.shiftKey) {
@@ -9425,20 +9381,20 @@ var _NgbDropdown = class _NgbDropdown {
       this.open();
       if (itemElements.length) {
         switch (key) {
-          case Key.ArrowDown:
+          case "ArrowDown":
             position = Math.min(position + 1, itemElements.length - 1);
             break;
-          case Key.ArrowUp:
+          case "ArrowUp":
             if (this._isDropup() && position === -1) {
               position = itemElements.length - 1;
               break;
             }
             position = Math.max(position - 1, 0);
             break;
-          case Key.Home:
+          case "Home":
             position = 0;
             break;
-          case Key.End:
+          case "End":
             position = itemElements.length - 1;
             break;
         }
@@ -9721,15 +9677,10 @@ var PopupService = class {
       animation,
       runningTransition: "stop"
     }).pipe(tap(() => {
-      if (this._windowRef) {
-        this._viewContainerRef.remove(this._viewContainerRef.indexOf(this._windowRef.hostView));
-        this._windowRef = null;
-      }
-      if (this._contentRef?.viewRef) {
-        this._applicationRef.detachView(this._contentRef.viewRef);
-        this._contentRef.viewRef.destroy();
-        this._contentRef = null;
-      }
+      this._windowRef?.destroy();
+      this._contentRef?.viewRef?.destroy();
+      this._windowRef = null;
+      this._contentRef = null;
     }));
   }
   _getContentRef(content, templateContext) {
@@ -10045,9 +9996,7 @@ var NgbModalRef = class {
       } = this._windowCmptRef.location;
       nativeElement.parentNode.removeChild(nativeElement);
       this._windowCmptRef.destroy();
-      if (this._contentRef && this._contentRef.viewRef) {
-        this._contentRef.viewRef.destroy();
-      }
+      this._contentRef?.viewRef?.destroy();
       this._windowCmptRef = null;
       this._contentRef = null;
     });
@@ -10145,11 +10094,7 @@ var _NgbModalWindow = class _NgbModalWindow {
       nativeElement
     } = this._elRef;
     this._zone.runOutsideAngular(() => {
-      fromEvent(nativeElement, "keydown").pipe(
-        takeUntil(this._closed$),
-        /* eslint-disable-next-line deprecation/deprecation */
-        filter((e) => e.which === Key.Escape)
-      ).subscribe((event) => {
+      fromEvent(nativeElement, "keydown").pipe(takeUntil(this._closed$), filter((e) => e.key === "Escape")).subscribe((event) => {
         if (this.keyboard) {
           requestAnimationFrame(() => {
             if (!event.defaultPrevented) {
@@ -10763,9 +10708,6 @@ var _NgbNavItem = class _NgbNavItem {
     this.shown = new EventEmitter();
     this.hidden = new EventEmitter();
   }
-  ngAfterContentChecked() {
-    this.contentTpl = this.contentTpls.first;
-  }
   ngOnInit() {
     if (!isDefined(this.domId)) {
       this.domId = `ngb-nav-${navCounter++}`;
@@ -10802,15 +10744,10 @@ _NgbNavItem.ɵdir = ɵɵdefineDirective({
     }
     if (rf & 2) {
       let _t;
-      ɵɵqueryRefresh(_t = ɵɵloadQuery()) && (ctx.contentTpls = _t);
+      ɵɵqueryRefresh(_t = ɵɵloadQuery()) && (ctx.contentTpl = _t.first);
     }
   },
-  hostVars: 2,
-  hostBindings: function NgbNavItem_HostBindings(rf, ctx) {
-    if (rf & 2) {
-      ɵɵclassProp("nav-item", true);
-    }
-  },
+  hostAttrs: [1, "nav-item"],
   inputs: {
     destroyOnHide: "destroyOnHide",
     disabled: "disabled",
@@ -10833,7 +10770,7 @@ var NgbNavItem = _NgbNavItem;
       exportAs: "ngbNavItem",
       standalone: true,
       host: {
-        "[class.nav-item]": "true"
+        class: "nav-item"
       }
     }]
   }], null, {
@@ -10856,8 +10793,8 @@ var NgbNavItem = _NgbNavItem;
     hidden: [{
       type: Output
     }],
-    contentTpls: [{
-      type: ContentChildren,
+    contentTpl: [{
+      type: ContentChild,
       args: [NgbNavContent, {
         descendants: false
       }]
@@ -10900,7 +10837,6 @@ var _NgbNav = class _NgbNav {
     if (this.roles !== "tablist" || !this.keyboard) {
       return;
     }
-    const key = event.which;
     const enabledLinks = this.links.filter((link) => !link.navItem.disabled);
     const {
       length
@@ -10912,19 +10848,19 @@ var _NgbNav = class _NgbNav {
       }
     });
     if (length) {
-      switch (key) {
-        case Key.ArrowUp:
-        case Key.ArrowLeft:
+      switch (event.key) {
+        case "ArrowUp":
+        case "ArrowLeft":
           position = (position - 1 + length) % length;
           break;
-        case Key.ArrowRight:
-        case Key.ArrowDown:
+        case "ArrowRight":
+        case "ArrowDown":
           position = (position + 1) % length;
           break;
-        case Key.Home:
+        case "Home":
           position = 0;
           break;
-        case Key.End:
+        case "End":
           position = length - 1;
           break;
       }
@@ -11003,7 +10939,8 @@ _NgbNav.ɵdir = ɵɵdefineDirective({
       ɵɵqueryRefresh(_t = ɵɵloadQuery()) && (ctx.links = _t);
     }
   },
-  hostVars: 6,
+  hostAttrs: [1, "nav"],
+  hostVars: 4,
   hostBindings: function NgbNav_HostBindings(rf, ctx) {
     if (rf & 1) {
       ɵɵlistener("keydown.arrowLeft", function NgbNav_keydown_arrowLeft_HostBindingHandler($event) {
@@ -11024,7 +10961,7 @@ _NgbNav.ɵdir = ɵɵdefineDirective({
     }
     if (rf & 2) {
       ɵɵattribute("aria-orientation", ctx.orientation === "vertical" && ctx.roles === "tablist" ? "vertical" : void 0)("role", ctx.role ? ctx.role : ctx.roles ? "tablist" : void 0);
-      ɵɵclassProp("nav", true)("flex-column", ctx.orientation === "vertical");
+      ɵɵclassProp("flex-column", ctx.orientation === "vertical");
     }
   },
   inputs: {
@@ -11054,7 +10991,7 @@ var NgbNav = _NgbNav;
       exportAs: "ngbNav",
       standalone: true,
       host: {
-        "[class.nav]": "true",
+        class: "nav",
         "[class.flex-column]": `orientation === 'vertical'`,
         "[attr.aria-orientation]": `orientation === 'vertical' && roles === 'tablist' ? 'vertical' : undefined`,
         "[attr.role]": `role ? role : roles ? 'tablist' : undefined`,
@@ -11139,12 +11076,13 @@ _NgbNavLinkBase.ɵfac = function NgbNavLinkBase_Factory(t) {
 _NgbNavLinkBase.ɵdir = ɵɵdefineDirective({
   type: _NgbNavLinkBase,
   selectors: [["", "ngbNavLink", ""]],
-  hostVars: 14,
+  hostAttrs: [1, "nav-link"],
+  hostVars: 12,
   hostBindings: function NgbNavLinkBase_HostBindings(rf, ctx) {
     if (rf & 2) {
       ɵɵhostProperty("id", ctx.navItem.domId);
       ɵɵattribute("role", ctx.role ? ctx.role : ctx.nav.roles ? "tab" : void 0)("tabindex", ctx.tabindex)("aria-controls", ctx.navItem.isPanelInDom() ? ctx.navItem.panelDomId : null)("aria-selected", ctx.navItem.active)("aria-disabled", ctx.navItem.disabled);
-      ɵɵclassProp("nav-link", true)("nav-item", ctx.navItem.isNgContainer())("active", ctx.navItem.active)("disabled", ctx.navItem.disabled);
+      ɵɵclassProp("nav-item", ctx.navItem.isNgContainer())("active", ctx.navItem.active)("disabled", ctx.navItem.disabled);
     }
   },
   standalone: true
@@ -11158,7 +11096,7 @@ var NgbNavLinkBase = _NgbNavLinkBase;
       standalone: true,
       host: {
         "[id]": "navItem.domId",
-        "[class.nav-link]": "true",
+        class: "nav-link",
         "[class.nav-item]": "navItem.isNgContainer()",
         "[attr.role]": `role ? role : nav.roles ? 'tab' : undefined`,
         "[class.active]": "navItem.active",
@@ -11364,8 +11302,7 @@ var _NgbNavOutlet = class _NgbNavOutlet {
   }
   _updateActivePane() {
     this._activePane = this._getActivePane();
-    this._activePane?.nativeElement.classList.add("show");
-    this._activePane?.nativeElement.classList.add("active");
+    this._activePane?.nativeElement.classList.add("show", "active");
   }
   _getPaneForItem(item) {
     return this._panes && this._panes.find((pane) => pane.item === item) || null;
@@ -11389,12 +11326,7 @@ _NgbNavOutlet.ɵcmp = ɵɵdefineComponent({
       ɵɵqueryRefresh(_t = ɵɵloadQuery()) && (ctx._panes = _t);
     }
   },
-  hostVars: 2,
-  hostBindings: function NgbNavOutlet_HostBindings(rf, ctx) {
-    if (rf & 2) {
-      ɵɵclassProp("tab-content", true);
-    }
-  },
+  hostAttrs: [1, "tab-content"],
   inputs: {
     paneRole: "paneRole",
     nav: [0, "ngbNavOutlet", "nav"]
@@ -11426,7 +11358,7 @@ var NgbNavOutlet = _NgbNavOutlet;
       standalone: true,
       imports: [NgbNavPane, NgTemplateOutlet],
       host: {
-        "[class.tab-content]": "true"
+        class: "tab-content"
       },
       encapsulation: ViewEncapsulation$1.None,
       changeDetection: ChangeDetectionStrategy.OnPush,
@@ -11943,7 +11875,7 @@ var NgbPagination = _NgbPagination;
 		<ng-template #ellipsis>...</ng-template>
 		<ng-template #defaultNumber let-page let-currentPage="currentPage">{{ page }}</ng-template>
 		<ng-template #defaultPages let-page let-pages="pages" let-disabled="disabled">
-			@for (pageNumber of pages; track pageNumber) {
+			@for (pageNumber of pages; track $index) {
 				<li
 					class="page-item"
 					[class.active]="pageNumber === page"
@@ -12404,7 +12336,6 @@ var _NgbPopover = class _NgbPopover {
           hostElement: this._getPositionTargetElement(),
           targetElement: this._windowRef.location.nativeElement,
           placement: this.placement,
-          appendToBody: this.container === "body",
           baseClass: "bs-popover",
           updatePopperOptions: (options) => this.popperOptions(addPopperOffset([0, 8])(options))
         });
@@ -12733,7 +12664,8 @@ var NgbProgressbar = _NgbProgressbar;
         "aria-valuemin": "0",
         "[attr.aria-valuemax]": "max",
         "[attr.aria-label]": "ariaLabel",
-        "[style.width.%]": "stacked ? getPercentValue() : null"
+        "[style.width.%]": "stacked ? getPercentValue() : null",
+        "[style.height]": "height"
       },
       template: `
 		<div
@@ -12781,9 +12713,6 @@ var NgbProgressbar = _NgbProgressbar;
     }],
     height: [{
       type: Input
-    }, {
-      type: HostBinding,
-      args: ["style.height"]
     }]
   });
 })();
@@ -12916,19 +12845,19 @@ var _NgbRating = class _NgbRating {
     }
   }
   handleKeyDown(event) {
-    switch (event.which) {
-      case Key.ArrowDown:
-      case Key.ArrowLeft:
+    switch (event.key) {
+      case "ArrowDown":
+      case "ArrowLeft":
         this.update(this.rate - 1);
         break;
-      case Key.ArrowUp:
-      case Key.ArrowRight:
+      case "ArrowUp":
+      case "ArrowRight":
         this.update(this.rate + 1);
         break;
-      case Key.Home:
+      case "Home":
         this.update(0);
         break;
-      case Key.End:
+      case "End":
         this.update(this.max);
         break;
       default:
@@ -14004,7 +13933,8 @@ var NgbTimepickerI18n = _NgbTimepickerI18n;
 var _NgbTimepickerI18nDefault = class _NgbTimepickerI18nDefault extends NgbTimepickerI18n {
   constructor() {
     super(...arguments);
-    this._periods = getLocaleDayPeriods(inject(LOCALE_ID), FormStyle.Standalone, TranslationWidth.Narrow);
+    this._locale = inject(LOCALE_ID);
+    this._periods = [formatDate(/* @__PURE__ */ new Date(36e5), "a", this._locale, "UTC"), formatDate(new Date(36e5 * 13), "a", this._locale, "UTC")];
   }
   getMorningPeriod() {
     return this._periods[0];
@@ -15141,7 +15071,6 @@ var _NgbTooltip = class _NgbTooltip {
           hostElement: this._getPositionTargetElement(),
           targetElement: this._windowRef.location.nativeElement,
           placement: this.placement,
-          appendToBody: this.container === "body",
           baseClass: "bs-tooltip",
           updatePopperOptions: (options) => this.popperOptions(addPopperOffset([0, 6])(options))
         });
@@ -15357,7 +15286,7 @@ _NgbHighlight.ɵcmp = ɵɵdefineComponent({
   consts: [[3, "class"]],
   template: function NgbHighlight_Template(rf, ctx) {
     if (rf & 1) {
-      ɵɵrepeaterCreate(0, NgbHighlight_For_1_Template, 2, 1, null, null, ɵɵrepeaterTrackByIdentity);
+      ɵɵrepeaterCreate(0, NgbHighlight_For_1_Template, 2, 1, null, null, ɵɵrepeaterTrackByIndex);
     }
     if (rf & 2) {
       ɵɵrepeater(ctx.parts);
@@ -15377,8 +15306,8 @@ var NgbHighlight = _NgbHighlight;
       changeDetection: ChangeDetectionStrategy.OnPush,
       encapsulation: ViewEncapsulation$1.None,
       template: `
-		@for (part of parts; track part; let odd = $odd) {
-			@if (odd) {
+		@for (part of parts; track $index) {
+			@if ($odd) {
 				<span class="{{ highlightClass }}">{{ part }}</span>
 			} @else {
 				<ng-container>{{ part }}</ng-container>
@@ -15584,7 +15513,7 @@ _NgbTypeaheadWindow.ɵcmp = ɵɵdefineComponent({
   template: function NgbTypeaheadWindow_Template(rf, ctx) {
     if (rf & 1) {
       ɵɵtemplate(0, NgbTypeaheadWindow_ng_template_0_Template, 1, 2, "ng-template", null, 0, ɵɵtemplateRefExtractor);
-      ɵɵrepeaterCreate(2, NgbTypeaheadWindow_For_3_Template, 2, 9, "button", 1, ɵɵrepeaterTrackByIdentity);
+      ɵɵrepeaterCreate(2, NgbTypeaheadWindow_For_3_Template, 2, 9, "button", 1, ɵɵrepeaterTrackByIndex);
     }
     if (rf & 2) {
       ɵɵadvance(2);
@@ -15614,14 +15543,14 @@ var NgbTypeaheadWindow = _NgbTypeaheadWindow;
 		<ng-template #rt let-result="result" let-term="term" let-formatter="formatter">
 			<ngb-highlight [result]="formatter(result)" [term]="term" />
 		</ng-template>
-		@for (result of results; track result; let idx = $index) {
+		@for (result of results; track $index) {
 			<button
 				type="button"
 				class="dropdown-item"
 				role="option"
-				[id]="id + '-' + idx"
-				[class.active]="idx === activeIdx"
-				(mouseenter)="markActive(idx)"
+				[id]="id + '-' + $index"
+				[class.active]="$index === activeIdx"
+				(mouseenter)="markActive($index)"
 				(click)="select(result)"
 			>
 				<ng-template
@@ -15755,19 +15684,19 @@ var _NgbTypeahead = class _NgbTypeahead {
     if (!this.isPopupOpen()) {
       return;
     }
-    switch (event.which) {
-      case Key.ArrowDown:
+    switch (event.key) {
+      case "ArrowDown":
         event.preventDefault();
         this._windowRef.instance.next();
         this._showHint();
         break;
-      case Key.ArrowUp:
+      case "ArrowUp":
         event.preventDefault();
         this._windowRef.instance.prev();
         this._showHint();
         break;
-      case Key.Enter:
-      case Key.Tab: {
+      case "Enter":
+      case "Tab": {
         const result = this._windowRef.instance.getActive();
         if (isDefined(result)) {
           event.preventDefault();
@@ -15801,7 +15730,6 @@ var _NgbTypeahead = class _NgbTypeahead {
             hostElement: this._nativeElement,
             targetElement: this._windowRef.location.nativeElement,
             placement: this.placement,
-            appendToBody: this.container === "body",
             updatePopperOptions: (options) => this.popperOptions(addPopperOffset([0, 2])(options))
           });
           this._zoneSubscription = this._ngZone.onStable.subscribe(() => this._positioning.update());
@@ -16204,9 +16132,7 @@ var NgbOffcanvasRef = class {
       } = this._panelCmptRef.location;
       nativeElement.parentNode.removeChild(nativeElement);
       this._panelCmptRef.destroy();
-      if (this._contentRef && this._contentRef.viewRef) {
-        this._contentRef.viewRef.destroy();
-      }
+      this._contentRef?.viewRef?.destroy();
       this._panelCmptRef = null;
       this._contentRef = null;
     });
@@ -16397,11 +16323,7 @@ var _NgbOffcanvasPanel = class _NgbOffcanvasPanel {
       nativeElement
     } = this._elRef;
     this._zone.runOutsideAngular(() => {
-      fromEvent(nativeElement, "keydown").pipe(
-        takeUntil(this._closed$),
-        /* eslint-disable-next-line deprecation/deprecation */
-        filter((e) => e.which === Key.Escape)
-      ).subscribe((event) => {
+      fromEvent(nativeElement, "keydown").pipe(takeUntil(this._closed$), filter((e) => e.key === "Escape")).subscribe((event) => {
         if (this.keyboard) {
           requestAnimationFrame(() => {
             if (!event.defaultPrevented) {
