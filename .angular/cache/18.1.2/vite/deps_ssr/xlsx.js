@@ -1,7 +1,7 @@
 import { createRequire } from 'module';const require = createRequire(import.meta.url);
 import "./chunk-NQ4HTGF6.js";
 
-// node_modules/xlsx/xlsx.mjs
+// ../../../node_modules/xlsx/xlsx.mjs
 var XLSX = {};
 XLSX.version = "0.18.5";
 var current_codepage = 1200;

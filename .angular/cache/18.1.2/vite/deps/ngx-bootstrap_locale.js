@@ -44,8 +44,8 @@ import {
   ukLocale,
   viLocale,
   zhCnLocale
-} from "./chunk-SV5POC5S.js";
-import "./chunk-WDMUDEB6.js";
+} from "./chunk-4BSTKU6Y.js";
+import "./chunk-TXDUYLVM.js";
 export {
   arLocale,
   bgLocale,

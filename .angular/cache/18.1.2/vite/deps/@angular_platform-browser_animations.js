@@ -1,9 +1,4 @@
 import {
-  BrowserModule,
-  DomRendererFactory2
-} from "./chunk-PUPSM2BZ.js";
-import "./chunk-2O556N4M.js";
-import {
   AUTO_STYLE,
   AnimationGroupPlayer,
   AnimationMetadataType,
@@ -11,10 +6,15 @@ import {
   sequence,
   style,
   ɵPRE_STYLE
-} from "./chunk-MLB2SGXS.js";
+} from "./chunk-6ISBRL54.js";
+import {
+  BrowserModule,
+  DomRendererFactory2
+} from "./chunk-QIC2VZCU.js";
+import "./chunk-EFRNDMQL.js";
 import {
   DOCUMENT
-} from "./chunk-BI3EF5MD.js";
+} from "./chunk-ZYXLP3RN.js";
 import {
   ANIMATION_MODULE_TYPE,
   Inject,
@@ -29,16 +29,16 @@ import {
   ɵɵdefineInjector,
   ɵɵdefineNgModule,
   ɵɵinject
-} from "./chunk-3KPMP475.js";
-import "./chunk-P7ZDC46N.js";
-import "./chunk-B3JNXOAZ.js";
-import "./chunk-JH22DTNA.js";
+} from "./chunk-L5FKRCFM.js";
+import "./chunk-CFGLEC6M.js";
+import "./chunk-EPZFY2PC.js";
+import "./chunk-CZOKY4AL.js";
 import {
   __objRest,
   __spreadValues
-} from "./chunk-WDMUDEB6.js";
+} from "./chunk-TXDUYLVM.js";
 
-// node_modules/@angular/animations/fesm2022/browser.mjs
+// ../../../node_modules/@angular/animations/fesm2022/browser.mjs
 var LINE_START = "\n - ";
 function invalidTimingValue(exp) {
   return new RuntimeError(3e3, ngDevMode && `The provided timing value "${exp}" is invalid.`);
@@ -3954,7 +3954,7 @@ var AnimationRendererFactory = class {
   }
 };
 
-// node_modules/@angular/platform-browser/fesm2022/animations.mjs
+// ../../../node_modules/@angular/platform-browser/fesm2022/animations.mjs
 var _InjectableAnimationEngine = class _InjectableAnimationEngine extends AnimationEngine {
   // The `ApplicationRef` is injected here explicitly to force the dependency ordering.
   // Since the `ApplicationRef` should be created earlier before the `AnimationEngine`, they
