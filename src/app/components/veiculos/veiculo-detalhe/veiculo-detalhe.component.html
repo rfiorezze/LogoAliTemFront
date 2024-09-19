@@ -19,6 +19,9 @@
                 <div *ngIf="f.ano.errors?.required && f.ano.touched" class="invalid-feedback">
                     Ano é obrigatório
                 </div>
+                <div *ngIf="f.ano.errors?.anoInvalido && f.ano.touched" class="invalid-feedback">
+                    Ano deve ser um valor entre 1900 e o ano atual
+                </div>                
             </div>
             <div class="mb-3 col-md-2">
                 <label>Marca</label>
@@ -41,12 +44,15 @@
             <div class="mb-3 col-md-2">
                 <label>Chassi</label>
                 <input type="text" class="form-control"
-                [ngClass]="cssValidator(f.chassi)" mask="AAAAAAAAAAAAAAAAA"
-                 formControlName="chassi">
+                  [ngClass]="cssValidator(f.chassi)" mask="AAAAAAAAAAAAAAAAA"
+                  formControlName="chassi" placeholder="Insira o Chassi">
                 <div *ngIf="f.chassi.errors?.required && f.chassi.touched" class="invalid-feedback">
-                Chasi é obrigatório
+                  Chassi é obrigatório
                 </div>
-            </div>
+                <div *ngIf="f.chassi.errors?.minlength && f.chassi.touched" class="invalid-feedback">
+                    Chassi deve ter no mínimo 17 caracteres
+                </div>
+              </div>
             <div class="mb-3 col-md-2">
                 <label>Renavam</label>
                 <input type="text" class="form-control"

@@ -60,7 +60,6 @@ export class PerfilComponent implements OnInit {
     };
 
     this.form = this.fb.group({
-      userName: [''],
       nomeCompleto: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       telefone: ['', [Validators.required]],

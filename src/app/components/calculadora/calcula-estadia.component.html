@@ -46,11 +46,19 @@
           >
             Data de Saída é obrigatório
           </div>
+          <!-- Mensagem de erro para datas inválidas -->
+          <div
+            *ngIf="dataInvalida"
+            class="invalid-feedback"
+            style="display: block"
+          >
+            Data de Saída não pode ser anterior à Data de Chegada
+          </div>
         </div>
       </div>
       <div class="row">
         <div class="mb-3 col-md-2">
-          <label>Hora de chegada</label>
+          <label>Hora de Chegada</label>
           <ngb-timepicker
             formControlName="horaChegada"
             [ngClass]="cssValidator(f.horaChegada)"
@@ -197,16 +205,16 @@
             placeholder="Digite CPF/CNPJ"
             maxlength="18"
           />
-          <div
-            *ngIf="
-              fc.cpfCnpjMotorista.errors?.required &&
-              fc.cpfCnpjMotorista.touched
-            "
-            class="invalid-feedback"
-          >
+          <div *ngIf="fc.cpfCnpjMotorista?.errors?.cpfInvalido && fc.cpfCnpjMotorista.touched" class="invalid-feedback">
+            CPF inválido
+          </div>
+          <div *ngIf="fc.cpfCnpjMotorista?.errors?.cnpjInvalido && fc.cpfCnpjMotorista.touched" class="invalid-feedback">
+            CNPJ inválido
+          </div>
+          <div *ngIf="fc.cpfCnpjMotorista?.errors?.required && fc.cpfCnpjMotorista.touched" class="invalid-feedback">
             CPF/CNPJ é obrigatório
           </div>
-        </div>
+        </div>                
         <div class="mb-3 col-md-3">
           <label>Email</label>
           <input
@@ -317,8 +325,17 @@
             type="text"
             class="form-control"
             formControlName="bairroMotorista"
+            [ngClass]="cssValidator(fc.bairroMotorista)"
             placeholder="Bairro"
           />
+          <div
+            *ngIf="
+              fc.bairroMotorista.errors?.required && fc.bairroMotorista.touched
+            "
+            class="invalid-feedback"
+          >
+            Bairro é obrigatório
+          </div>
         </div>
       </div>
       <div class="row">
@@ -378,9 +395,16 @@
             formControlName="cpfCnpjLocalCarga"
             [value]="formattedValueLocalCarga"
             (input)="onInput($event, 'cpfCnpjLocalCarga')"
+            [ngClass]="cssValidator(fc.cpfCnpjLocalCarga)"
             placeholder="Digite CPF/CNPJ"
             maxlength="18"
           />
+          <div *ngIf="fc.cpfCnpjLocalCarga?.errors?.cpfInvalido && fc.cpfCnpjLocalCarga.touched" class="invalid-feedback">
+            CPF inválido
+          </div>
+          <div *ngIf="fc.cpfCnpjLocalCarga?.errors?.cnpjInvalido && fc.cpfCnpjLocalCarga.touched" class="invalid-feedback">
+            CNPJ inválido
+          </div>
         </div>
         <div class="mb-3 col-md-4">
           <label>Nome do Local de Carga</label>
@@ -513,8 +537,18 @@
             type="text"
             class="form-control"
             formControlName="bairroLocalCarga"
+            [ngClass]="cssValidator(fc.bairroLocalCarga)"
             placeholder="Bairro"
           />
+          <div
+            *ngIf="
+              fc.bairroLocalCarga.errors?.required &&
+              fc.bairroLocalCarga.touched
+            "
+            class="invalid-feedback"
+          >
+            Bairro é obrigatório
+          </div>
         </div>
       </div>
       <div class="row">
@@ -576,9 +610,16 @@
             formControlName="cpfCnpjLocalDescarga"
             [value]="formattedValueLocalDescarga"
             (input)="onInput($event, 'cpfCnpjLocalDescarga')"
+            [ngClass]="cssValidator(fc.cpfCnpjLocalCarga)"
             placeholder="Digite CPF/CNPJ"
             maxlength="18"
           />
+          <div *ngIf="fc.cpfCnpjLocalDescarga?.errors?.cpfInvalido && fc.cpfCnpjLocalDescarga.touched" class="invalid-feedback">
+            CPF inválido
+          </div>
+          <div *ngIf="fc.cpfCnpjLocalDescarga?.errors?.cnpjInvalido && fc.cpfCnpjLocalDescarga.touched" class="invalid-feedback">
+            CNPJ inválido
+          </div>
         </div>
         <div class="mb-3 col-md-4">
           <label>Nome do Local de Descarga</label>
@@ -714,9 +755,19 @@
           <input
             type="text"
             class="form-control"
+            [ngClass]="cssValidator(fc.bairroLocalDescarga)"
             formControlName="bairroLocalDescarga"
             placeholder="Bairro"
           />
+          <div
+            *ngIf="
+              fc.bairroLocalDescarga.errors?.required &&
+              fc.bairroLocalDescarga.touched
+            "
+            class="invalid-feedback"
+          >
+            Bairro é obrigatório
+          </div>
         </div>
       </div>
       <div class="row">
@@ -790,13 +841,13 @@
             placeholder="Digite CPF/CNPJ"
             maxlength="18"
           />
-          <div
-            *ngIf="
-              fc.cpfCnpjContratante.errors?.required &&
-              fc.cpfCnpjContratante.touched
-            "
-            class="invalid-feedback"
-          >
+          <div *ngIf="fc.cpfCnpjContratante?.errors?.cpfInvalido && fc.cpfCnpjContratante.touched" class="invalid-feedback">
+            CPF inválido
+          </div>
+          <div *ngIf="fc.cpfCnpjContratante?.errors?.cnpjInvalido && fc.cpfCnpjContratante.touched" class="invalid-feedback">
+            CNPJ inválido
+          </div>
+          <div *ngIf="fc.cpfCnpjContratante?.errors?.required && fc.cpfCnpjContratante.touched" class="invalid-feedback">
             CPF/CNPJ é obrigatório
           </div>
         </div>
@@ -933,8 +984,18 @@
             type="text"
             class="form-control"
             formControlName="bairroContratante"
+            [ngClass]="cssValidator(fc.bairroContratante)"
             placeholder="Bairro"
           />
+          <div
+            *ngIf="
+              fc.bairroContratante.errors?.required &&
+              fc.bairroContratante.touched
+            "
+            class="invalid-feedback"
+          >
+            Bairro é obrigatório
+          </div>
         </div>
       </div>
       <div class="row">

@@ -1,11 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { AbstractControlOptions, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, AbstractControlOptions, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { ValidatorFields } from '@app/helpers/ValidatorFields';
 import { User } from '@app/models/identity/User';
 import { AccountService } from '@app/services/account.service';
 import { ToastrService } from 'ngx-toastr';
+import { CustomValidators } from '@app/shared/custom-validators'
 
 @Component({
   selector: 'app-registration',
@@ -39,13 +40,13 @@ export class RegistrationComponent implements OnInit {
     this.form = this.fb.group({
       nomeCompleto: ['', Validators.required],
       email: ['',
-        [Validators.required, Validators.email]
+        [Validators.required, Validators.email, CustomValidators.emailDomainValidator]
       ],
-      userName: ['', Validators.required],
       password: ['',
         [Validators.required, Validators.minLength(4)]
       ],
       confirmePassword: ['', Validators.required],
+      termoAceite: ['', Validators.required],
     }, formOptions);
   }
 
@@ -53,7 +54,7 @@ export class RegistrationComponent implements OnInit {
     this.user = {... this.form.value};
     this.accountService.register(this.user).subscribe(
       () => this.router.navigateByUrl('/dashboard'),
-      (error: any) => this.toaster.error(error.error) 
+      (error: any) => this.toaster.error(error.error.mensagem) 
     )
   }
 }

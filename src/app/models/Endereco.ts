@@ -5,4 +5,5 @@ export interface Endereco {
     bairro: string;
     localidade: string;
     uf: string;
+    erro: string;
 }

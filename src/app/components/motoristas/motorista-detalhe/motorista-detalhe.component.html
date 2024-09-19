@@ -1,176 +1,182 @@
- <div class="card rounded shadow-sm">
- <form [formGroup]="form">
- 	<div class="p-3">
-        <!-- <p>Form value: {{form.value | json}}</p>
-        <p>Form valid: {{form.status | json}}</p> -->
- 		<div class="row">
- 			<div class="mb-3 col-md-5">
- 				<label>Nome Completo</label>
- 				<input type="text" class="form-control is-invalid" formControlName="nome"
-                [ngClass]="cssValidator(f.nome)" placeholder="Insira o Nome Completo">
-                <div *ngIf="f.nome.errors?.required && f.nome.touched" class="invalid-feedback">
-                    Nome é obrigatório
-                </div>
- 			</div>
-             <div class="mb-3 col-sm-3">
-                <label>CPF</label>
-                <input type="text" class="form-control" formControlName="cpf" mask="000.000.000-00"
-                [ngClass]="cssValidator(f.cpf)" placeholder="">
-                <div *ngIf="f.cpf.errors?.required && f.cpf.touched" class="invalid-feedback">
-                    CPF é obrigatório
-                </div>
-            </div>
- 		</div>
- 		<div class="row">
-            <div class="mb-3 col-md-3">
-                <label>Numero CNH</label>
-                <input type="text" class="form-control" mask="000000000"
-                [ngClass]="cssValidator(f.numeroCNH)"
-                 formControlName="numeroCNH" placeholder="Insira o número da CNH">
-                <div *ngIf="f.numeroCNH.errors?.required && f.numeroCNH.touched" class="invalid-feedback">
-                CNH é obrigatório
-                </div>
-                <div *ngIf="f.numeroCNH.errors?.minlength && f.numeroCNH.touched" class="invalid-feedback">
-                CNH deve ter no mínimo 9 numeros
-                </div>
-            </div>
-
-             <div class="mb-3 col-sm-2">
-                <label>Categoria CNH</label>
-                <select class="form-select"
-                [ngClass]="cssValidator(f.categoriaCNH)" formControlName="categoriaCNH">
-                    <option value=""></option>
-                    <option value="A">A</option>
-                    <option value="B">B</option>
-                    <option value="C">C</option>
-                    <option value="D">D</option>
-                    <option value="E">E</option>
-                </select>
-                <div *ngIf="f.categoriaCNH.errors?.required && f.categoriaCNH.touched" class="invalid-feedback">
-                    Categoria é obrigatório
-                </div>
-            </div>
-            <div class="mb-3 col-md-2">
-                <label>Data de Vencimento CNH</label>
-                <input type="text" class="form-control"
-                [ngClass]="cssValidator(f.dataVencimentoCNH)"
-                value="{{motorista.dataVencimentoCNH | date: 'dd/MM/yyyy'}}"
-                bsDatepicker
-                [bsConfig] = "bsConfig"
-                formControlName="dataVencimentoCNH" placeholder="">
-            </div>            
- 		</div>
- 		<div class="row">
-            <div class="mb-3 col-md-2">
-                <label>Data de Nascimento</label>
-                <input type="text" class="form-control"
-                [ngClass]="cssValidator(f.dataNascimento)"
-                value="{{motorista.dataNascimento | date: 'dd/MM/yyyy'}}"
-                bsDatepicker
-                [bsConfig] = "bsConfig"
-                formControlName="dataNascimento" placeholder="">
-            <div *ngIf="f.dataNascimento.errors?.required && f.dataNascimento.touched" class="invalid-feedback">
-                Data Nascimento é obrigatório
-            </div>
-            </div>
-            <div class="mb-3 col-sm-2">
-                <label>Sexo</label>
-                <select class="form-select"
-                [ngClass]="cssValidator(f.sexo)" formControlName="sexo">
-                    <option value=""></option>
-                    <option value="M">Masculino</option>
-                    <option value="F">Feminino</option>
-                </select>
-                <div *ngIf="f.sexo.errors?.required && f.sexo.touched" class="invalid-feedback">
-                    Sexo é obrigatório
-                </div>
-            </div>
- 			<div class="mb-3 col-md-2">
- 				<label>Telefone</label>
- 				<input type="text" class="form-control" mask="(00) 0 0000-0000"
-                [ngClass]="cssValidator(f.celular)" formControlName="celular" placeholder="(00) 9 0000-0000">
- 			<div *ngIf="f.celular.errors?.required && f.celular.touched" class="invalid-feedback">
-                Telefone é obrigatório
-            </div>
-            </div>
- 			<div class="mb-3 col-md-6">
- 				<label>Email</label>
- 				<input type="text" class="form-control"
-                [ngClass]="cssValidator(f.email)" formControlName="email" placeholder="e-mail">
- 			    <div *ngIf="f.email.errors?.required && f.email.touched" class="invalid-feedback">
-                Email é obrigatório
-                </div>
-                <div *ngIf="f.email.errors?.email && f.email.touched" class="invalid-feedback">
-                    Deve ser um email é válido
-                </div>
-            </div>
-
- 		</div>
-        <div class="row">
-            <div class="mb-3 col-md-2">
-                <label>CEP</label>
-                <input type="text" class="form-control"
-                [ngClass]="cssValidator(f.cep)" formControlName="cep" [(ngModel)]="cepInserido" (blur)="BuscarPorCep(cepInserido)" placeholder="CEP" mask="00000-000">
-            <div *ngIf="f.cep.errors?.required && f.cep.touched" class="invalid-feedback">
-                CEP é obrigatório
-            </div>
-            </div>            
-            <div class="mb-3 col-md-4">
-                <label>Logradouro</label>
-                <input type="text" class="form-control"
-               [ngClass]="cssValidator(f.logradouro)" formControlName="logradouro" placeholder="Logradouro">
-                <div *ngIf="f.logradouro.errors?.required && f.logradouro.touched" class="invalid-feedback">
-               Logradouro é obrigatório
-               </div>
-           </div>
-           <div class="mb-3 col-md-1">
-                <label>Numero</label>
-                <input type="text" class="form-control" formControlName="numero" placeholder="Ex: 55">
-            </div>
-            <div class="mb-3 col-md-2">
-                <label>Complemento</label>
-                <input type="text" class="form-control" formControlName="complemento" placeholder="Ex: Apartamento 401">
-            </div>
-            <div class="mb-3 col-md-2">
-                <label>Bairro</label>
-                <input type="text" class="form-control" formControlName="bairro" placeholder="Bairro">
-            </div>
+<div class="card rounded shadow-sm">
+  <form [formGroup]="form" (ngSubmit)="salvarAlteracao($event)" (keydown.enter)="$event.preventDefault()">
+    <div class="p-3">
+      <!-- <p>Form value: {{form.value | json}}</p>
+      <p>Form valid: {{form.status | json}}</p> -->
+      <div class="row">
+        <div class="mb-3 col-md-5">
+          <label>Nome Completo</label>
+          <input type="text" class="form-control is-invalid" formControlName="nome" maxlength="50"
+            [ngClass]="cssValidator(f.nome)" placeholder="Insira o Nome Completo">
+          <div *ngIf="f.nome.errors?.required && f.nome.touched" class="invalid-feedback">
+            Nome é obrigatório
+          </div>
         </div>
-        <div class="row">
-            <div class="mb-3 col-sm-2">
-                <label>Estado</label>
-                <select class="form-select"
-                    [ngClass]="cssValidator(f.estado)" formControlName="estado" [(ngModel)]="estadoInserido" (ngModelChange)="FiltrarPorEstado(estadoInserido)">
-                    <option value="" disabled selected>Selecione um estado</option>
-                    <option *ngFor="let item of estados" [ngValue]="item.sigla">{{item.nome}}</option>
-                </select>
-                <div *ngIf="f.estado.errors?.required && f.estado.touched" class="invalid-feedback">
-                    Estado é obrigatório
-                </div>                
-            </div>
-            <div class="mb-3 col-sm-2">
-                <label>Cidade</label>
-                <select class="form-select"
-                [ngClass]="cssValidator(f.cidade)" formControlName="cidade">
-                    <option value="" disabled selected>Selecione uma cidade</option>
-                    <option *ngFor="let item of municipios" [ngValue]="item.nome">{{item.nome}}</option>
-                </select>
-                <div *ngIf="f.cidade.errors?.required && f.cidade.touched" class="invalid-feedback">
-                    Cidade é obrigatório
-                </div>  
-            </div>
+        <div class="mb-3 col-sm-3">
+          <label>CPF</label>
+          <input type="text" class="form-control" formControlName="cpf" mask="000.000.000-00"
+            [ngClass]="cssValidator(f.cpf)" placeholder="">
+          <div *ngIf="f.cpf.errors?.required && f.cpf.touched" class="invalid-feedback">
+            CPF é obrigatório
+          </div>
         </div>
- 	</div>
-     <div class="card-footer">
-		<div class="d-flex">
-			<button class="btn btn-outline-secondary me-auto border" onclick="javascript:history.back()">
-				Cancelar Alteração
-			</button>
-            <button class="btn btn-success" [disabled]="!form.valid" (click)="salvarAlteracao()">
-                <!-- <span class="spinner-border spinner-border-sm mr-1"></span> -->
-                Salvar Motorista
-            </button>
-		</div>
-	</div>
- </form>
+      </div>
+      <div class="row">
+        <div class="mb-3 col-md-3">
+          <label>Numero CNH</label>
+          <input type="text" class="form-control" mask="000000000"
+            [ngClass]="cssValidator(f.numeroCNH)"
+            formControlName="numeroCNH" placeholder="Insira o número da CNH">
+          <div *ngIf="f.numeroCNH.errors?.required && f.numeroCNH.touched" class="invalid-feedback">
+            CNH é obrigatório
+          </div>
+          <div *ngIf="f.numeroCNH.errors?.minlength && f.numeroCNH.touched" class="invalid-feedback">
+            CNH deve ter no mínimo 9 números
+          </div>
+        </div>
+
+        <div class="mb-3 col-sm-2">
+          <label>Categoria CNH</label>
+          <select class="form-select"
+            [ngClass]="cssValidator(f.categoriaCNH)" formControlName="categoriaCNH">
+            <option value=""></option>
+            <option value="A">A</option>
+            <option value="B">B</option>
+            <option value="C">C</option>
+            <option value="D">D</option>
+            <option value="E">E</option>
+          </select>
+          <div *ngIf="f.categoriaCNH.errors?.required && f.categoriaCNH.touched" class="invalid-feedback">
+            Categoria é obrigatória
+          </div>
+        </div>
+        <div class="mb-3 col-md-2">
+          <label>Data de Vencimento CNH</label>
+          <input type="text" class="form-control"
+            [ngClass]="cssValidator(f.dataVencimentoCNH)"
+            [value]="motorista.dataVencimentoCNH | date: 'dd/MM/yyyy'"
+            bsDatepicker
+            [bsConfig]="bsConfig"
+            formControlName="dataVencimentoCNH" placeholder="">
+        </div>            
+      </div>
+      <div class="row">
+        <div class="mb-3 col-md-2">
+          <label>Data de Nascimento</label>
+          <input type="text" class="form-control"
+            [ngClass]="cssValidator(f.dataNascimento)"
+            [value]="motorista.dataNascimento | date: 'dd/MM/yyyy'"
+            bsDatepicker
+            [bsConfig]="bsConfig"
+            formControlName="dataNascimento" placeholder="">
+          <div *ngIf="f.dataNascimento.errors?.required && f.dataNascimento.touched" class="invalid-feedback">
+            Data Nascimento é obrigatória
+          </div>
+          <div *ngIf="f.dataNascimento.errors?.dataFutura && f.dataNascimento.touched" class="invalid-feedback">
+            A data de nascimento não pode ser futura.
+          </div>
+        </div>
+        <div class="mb-3 col-sm-2">
+          <label>Sexo</label>
+          <select class="form-select"
+            [ngClass]="cssValidator(f.sexo)" formControlName="sexo">
+            <option value=""></option>
+            <option value="M">Masculino</option>
+            <option value="F">Feminino</option>
+          </select>
+          <div *ngIf="f.sexo.errors?.required && f.sexo.touched" class="invalid-feedback">
+            Sexo é obrigatório
+          </div>
+        </div>
+        <div class="mb-3 col-md-2">
+          <label>Telefone</label>
+          <input type="text" class="form-control" mask="(00) 0 0000-0000"
+            [ngClass]="cssValidator(f.celular)" formControlName="celular" placeholder="(00) 9 0000-0000">
+          <div *ngIf="f.celular.errors?.required && f.celular.touched" class="invalid-feedback">
+            Telefone é obrigatório
+          </div>
+        </div>
+        <div class="mb-3 col-md-6">
+          <label>Email</label>
+          <input type="text" class="form-control"
+            [ngClass]="cssValidator(f.email)" formControlName="email" placeholder="e-mail">
+          <div *ngIf="f.email.errors?.required && f.email.touched" class="invalid-feedback">
+            Email é obrigatório
+          </div>
+          <div *ngIf="f.email.errors?.email && f.email.touched" class="invalid-feedback">
+            Deve ser um e-mail válido
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="mb-3 col-md-2">
+          <label>CEP</label>
+          <input type="text" class="form-control"
+            [ngClass]="cssValidator(f.cep)" formControlName="cep" [(ngModel)]="cepInserido" (blur)="BuscarPorCep(cepInserido)" placeholder="CEP" mask="00000-000">
+          <div *ngIf="f.cep.errors?.required && f.cep.touched" class="invalid-feedback">
+            CEP é obrigatório
+          </div>
+        </div>            
+        <div class="mb-3 col-md-4">
+          <label>Logradouro</label>
+          <input type="text" class="form-control"
+            [ngClass]="cssValidator(f.logradouro)" formControlName="logradouro" placeholder="Logradouro" [attr.readonly]="isReadonly ? true : null">
+          <div *ngIf="f.logradouro.errors?.required && f.logradouro.touched" class="invalid-feedback">
+            Logradouro é obrigatório
+          </div>
+        </div>
+        <div class="mb-3 col-md-1">
+          <label>Numero</label>
+          <input type="text" class="form-control" formControlName="numero" placeholder="Ex: 55">
+        </div>
+        <div class="mb-3 col-md-2">
+          <label>Complemento</label>
+          <input type="text" class="form-control" formControlName="complemento" placeholder="Ex: Apartamento 401">
+        </div>
+        <div class="mb-3 col-md-2">
+          <label>Bairro</label>
+          <input type="text" class="form-control"
+            [ngClass]="cssValidator(f.bairro)" formControlName="bairro" placeholder="Bairro" [attr.readonly]="isReadonly ? true : null">
+          <div *ngIf="f.bairro.errors?.required && f.bairro.touched" class="invalid-feedback">
+            Bairro é obrigatório
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="mb-3 col-sm-2">
+          <label>Estado</label>
+          <select class="form-select"
+            [ngClass]="cssValidator(f.estado)" formControlName="estado" [(ngModel)]="estadoInserido" (ngModelChange)="FiltrarPorEstado(estadoInserido)" [attr.readonly]="isReadonly ? true : null">
+            <option value="" disabled selected>Selecione um estado</option>
+            <option *ngFor="let item of estados" [ngValue]="item.sigla">{{item.nome}}</option>
+          </select>
+          <div *ngIf="f.estado.errors?.required && f.estado.touched" class="invalid-feedback">
+            Estado é obrigatório
+          </div>                
+        </div>
+        <div class="mb-3 col-sm-2">
+          <label>Cidade</label>
+          <select class="form-select"
+            [ngClass]="cssValidator(f.cidade)" formControlName="cidade" [attr.readonly]="isReadonly ? true : null">
+            <option value="" disabled selected>Selecione uma cidade</option>
+            <option *ngFor="let item of municipios" [ngValue]="item.nome">{{item.nome}}</option>
+          </select>
+          <div *ngIf="f.cidade.errors?.required && f.cidade.touched" class="invalid-feedback">
+            Cidade é obrigatória
+          </div>  
+        </div>
+      </div>
+    </div>
+    <div class="card-footer">
+      <div class="d-flex">
+        <button class="btn btn-outline-secondary me-auto border" onclick="javascript:history.back()">
+          Cancelar Alteração
+        </button>
+        <button type="submit" class="btn btn-success" [disabled]="!form.valid">
+          <!-- <span class="spinner-border spinner-border-sm mr-1"></span> -->
+          Salvar Motorista
+        </button>
+      </div>
+    </div>
+  </form>
 </div>

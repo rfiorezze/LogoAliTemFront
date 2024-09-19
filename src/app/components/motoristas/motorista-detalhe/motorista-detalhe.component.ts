@@ -20,6 +20,7 @@ import { Estado } from '@app/models/Estado';
 import { Municipio } from '@app/models/Municipio';
 import { NgxMaskDirective } from 'ngx-mask';
 import { Endereco } from '@app/models/Endereco';
+import { CustomValidators } from '@app/shared/custom-validators';
 
 defineLocale('pt-br', ptBrLocale);
 
@@ -30,7 +31,7 @@ defineLocale('pt-br', ptBrLocale);
     ReactiveFormsModule,
     CommonModule,
     BsDatepickerModule,
-    NgxMaskDirective
+    NgxMaskDirective,
   ],
   templateUrl: './motorista-detalhe.component.html',
   styleUrl: './motorista-detalhe.component.scss',
@@ -43,6 +44,7 @@ export class MotoristaDetalheComponent {
   municipios: Municipio[];
   public estadoInserido: string = '';
   public cepInserido: string = '';
+  public isReadonly = false; // Definido como false por padrão
 
   public FiltrarPorEstado(value: string) {
     this.localidadeService.getMunicipiosPorUF(value).subscribe(
@@ -59,17 +61,34 @@ export class MotoristaDetalheComponent {
   public BuscarPorCep(value: string) {
     this.localidadeService.getEnderecoPorCep(value).subscribe(
       (endereco: Endereco) => {
-        this.motorista.logradouro = endereco.logradouro;
-        this.motorista.complemento = endereco.complemento;
-        this.motorista.bairro = endereco.bairro;
-        this.motorista.estado = endereco.uf;
-        this.motorista.cidade = endereco.localidade;
-        this.form.patchValue(this.motorista);
+        if (endereco.erro === 'true') {
+          this.toastr.error('CEP não encontrado!', 'Erro');
+        } else {
+          this.motorista.logradouro = endereco.logradouro;
+          this.motorista.complemento = endereco.complemento;
+          this.motorista.bairro = endereco.bairro;
+          this.motorista.estado = endereco.uf;
+          this.motorista.cidade = endereco.localidade;
+          
+          this.isReadonly = true; // Atualiza a propriedade isReadonly
+
+          // Atualiza os valores dos campos e aplica readonly
+          this.form.patchValue({
+            logradouro: this.motorista.logradouro,
+            estado: this.motorista.estado,
+            cidade: this.motorista.cidade,
+            bairro: this.motorista.bairro,
+          });
+
+          this.form.get('logradouro')?.updateValueAndValidity();
+          this.form.get('estado')?.updateValueAndValidity();
+          this.form.get('cidade')?.updateValueAndValidity();
+          this.form.get('bairro')?.updateValueAndValidity();
+        }
       },
       (error: any) => {
-        console.error(error);
-      },
-      () => {}
+        this.toastr.error('CEP não encontrado!', 'Erro');
+      }
     );
   }
 
@@ -108,13 +127,20 @@ export class MotoristaDetalheComponent {
 
       this.motoristaService.getMotoristaById(+motoristaIdParam).subscribe(
         (motorista: Motorista) => {
+          // Convertendo strings de data para objetos Date
+          if (motorista.dataNascimento) {
+            motorista.dataNascimento = new Date(motorista.dataNascimento);
+          }
+          if (motorista.dataVencimentoCNH) {
+            motorista.dataVencimentoCNH = new Date(motorista.dataVencimentoCNH);
+          }
+
           this.motorista = { ...motorista };
           this.form.patchValue(this.motorista);
         },
         (error: any) => {
-          console.error(error);
-        },
-        () => {}
+          this.toastr.error('Erro ao carregar o motorista', 'Erro');
+        }
       );
     }
   }
@@ -142,7 +168,11 @@ export class MotoristaDetalheComponent {
       nome: ['', Validators.required],
       cpf: ['', Validators.required],
       sexo: ['', Validators.required],
-      dataNascimento: ['', Validators.required],
+      dataNascimento: [
+        '',
+        Validators.required,
+        CustomValidators.dataNascimentoValida,
+      ],
       numeroCNH: ['', [Validators.required, Validators.minLength(9)]],
       categoriaCNH: ['', Validators.required],
       dataVencimentoCNH: [],
@@ -166,10 +196,11 @@ export class MotoristaDetalheComponent {
     return { 'is-invalid': campoForm.errors && campoForm.touched };
   }
 
-  public salvarAlteracao(): void {
-    this.spinner.show();
+  public salvarAlteracao(event: Event): void {
+    event.preventDefault();
 
     if (this.form.valid) {
+      this.spinner.show();
       this.motorista =
         this.estadoSalvar === 'post'
           ? { ...this.form.value }
@@ -178,12 +209,10 @@ export class MotoristaDetalheComponent {
       this.motoristaService[this.estadoSalvar](this.motorista).subscribe(
         (_motorista: Motorista) => {
           this.toastr.success('Motorista salvo com sucesso!', 'Sucesso');
-          if(this.estadoSalvar === 'post')
-            this.resetForm();
-          this.route.navigate(
-            ['veiculos/detalhe'],
-            { queryParams: { motoristaId: _motorista.id}}
-          );
+          if (this.estadoSalvar === 'post') this.resetForm();
+          this.route.navigate(['veiculos/detalhe'], {
+            queryParams: { motoristaId: _motorista.id },
+          });
         },
         (error: any) => {
           console.error(error);

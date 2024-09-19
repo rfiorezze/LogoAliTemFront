@@ -18,7 +18,7 @@
       </div>
       <div class="row">
         <div class="mb-3">
-          <label>Nome completo</label>
+          <label>Nome Completo</label>
           <input
             type="text"
             class="form-control"
@@ -32,7 +32,7 @@
         </div>
       </div>
       <div class="mb-3">
-        <label for="">Email:</label>
+        <label for="">E-mail:</label>
         <input
           class="form-control"
           type="text"
@@ -44,7 +44,7 @@
           *ngIf="f.email.errors?.required && f.email.touched"
           class="invalid-feedback"
         >
-          e-mail é obrigatório.
+          E-mail é obrigatório.
         </div>
         <div
           *ngIf="f.email.errors?.email && f.email.touched"
@@ -52,17 +52,12 @@
         >
           Deve ser um e-mail válido.
         </div>
-      </div>
-      <div class="mb-3">
-        <label for="">Usuario:</label>
-        <input
-          class="form-control"
-          type="text"
-          formControlName="userName"
-          [ngClass]="{ 'is-invalid': f.userName.errors && f.userName.touched }"
-          placeholder="Insira o nome de Usuário"
-        />
-        <div class="invalid-feedback">Usuário é obrigatório.</div>
+        <div
+          *ngIf="f.email.errors?.invalidDomain && f.email.touched"
+          class="invalid-feedback"
+        >
+          O domínio do e-mail é inválido.
+        </div>
       </div>
       <div class="row">
         <div class="mb-3 col-sm-6">
@@ -120,6 +115,7 @@
           <input
             type="checkbox"
             class="custom-control-input me-2"
+            formControlName="termoAceite"
             id="customCheck1"
           />
           <label class="custom-control-label"
@@ -129,7 +125,11 @@
       </div>
       <div class="row">
         <div class="d-grid gap-2">
-          <button class="btn btn-lg btn-success btn-block px-5" type="submit" [disabled]="!form.valid">
+          <button
+            class="btn btn-lg btn-success btn-block px-5"
+            type="submit"
+            [disabled]="!form.valid"
+          >
             Registar
           </button>
         </div>

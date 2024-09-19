@@ -19,6 +19,7 @@ import { LocalidadeService } from '@app/services/localidade.service';
 import { Estado } from '@app/models/Estado';
 import { Municipio } from '@app/models/Municipio';
 import { NgxMaskDirective } from 'ngx-mask';
+import { CustomValidators } from '@app/shared/custom-validators';
 
 defineLocale('pt-br', ptBrLocale);
 
@@ -126,10 +127,10 @@ export class VeiculoDetalheComponent {
     this.form = this.fb.group({
       placa: ['', Validators.required],
       marca: ['', Validators.required],
-      ano: ['', Validators.required],
+      ano: ['', [Validators.required, CustomValidators.anoValido]],
       modelo: ['', Validators.required],
       categoria: ['', Validators.required],
-      chassi: ['', Validators.required],
+      chassi: ['', [Validators.required, Validators.minLength(17)]],
       renavam: ['', Validators.required],
       tipoCarroceria: ['', Validators.required],
       qtdEixos: ['', Validators.required]

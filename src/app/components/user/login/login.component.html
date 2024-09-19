@@ -3,14 +3,14 @@
     <form #loginForm="ngForm" class="form-signin" (ngSubmit)="login()">
       <img src="assets/logo.png" height="96">
       <h1 class="h3 mb-3 font-weight-normal">Entrar com</h1>
-      <label for="userName" class="sr-only">Usuário</label>
+      <label for="email" class="sr-only">E-mail</label>
       <input
-        [(ngModel)] ="model.userName"
+        [(ngModel)] ="model.email"
         type="email"
-        id="userName"
+        id="email"
         class="form-control"
-        placeholder="Usuário"
-        name="userName"
+        placeholder="E-mail"
+        name="email"
         required
       />
       <label for="password" class="sr-only">Password</label>
