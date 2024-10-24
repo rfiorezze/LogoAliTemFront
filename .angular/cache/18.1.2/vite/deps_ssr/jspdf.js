@@ -1,16 +1,16 @@
 import { createRequire } from 'module';const require = createRequire(import.meta.url);
 import {
   require_typeof
-} from "./chunk-W7DRVFLR.js";
+} from "./chunk-Q7UOU47C.js";
 import {
   __require,
   __toESM
 } from "./chunk-NQ4HTGF6.js";
 
-// ../../../node_modules/jspdf/dist/jspdf.es.min.js
+// node_modules/jspdf/dist/jspdf.es.min.js
 var import_typeof = __toESM(require_typeof());
 
-// ../../../node_modules/fflate/esm/index.mjs
+// node_modules/fflate/esm/index.mjs
 var Worker;
 var workerAdd = ";var __w=require('worker_threads');__w.parentPort.on('message',function(m){onmessage({data:m})}),postMessage=function(m,t){__w.parentPort.postMessage(m,t)},close=process.exit;self=global";
 try {
@@ -986,7 +986,7 @@ var AsyncDecompress = function() {
   return AsyncDecompress2;
 }();
 
-// ../../../node_modules/jspdf/dist/jspdf.es.min.js
+// node_modules/jspdf/dist/jspdf.es.min.js
 var n = /* @__PURE__ */ function() {
   return "undefined" != typeof window ? window : "undefined" != typeof global ? global : "undefined" != typeof self ? self : this;
 }();
@@ -6267,14 +6267,14 @@ function(t3) {
   }, t3.loadImageFile = t3.loadFile;
 }(E.API), function(e) {
   function r() {
-    return (n.html2canvas ? Promise.resolve(n.html2canvas) : import("./html2canvas.esm-NZKQJE27.js")).catch(function(t3) {
+    return (n.html2canvas ? Promise.resolve(n.html2canvas) : import("./html2canvas.esm-4RGHL7ZP.js")).catch(function(t3) {
       return Promise.reject(new Error("Could not load html2canvas: " + t3));
     }).then(function(t3) {
       return t3.default ? t3.default : t3;
     });
   }
   function i2() {
-    return (n.DOMPurify ? Promise.resolve(n.DOMPurify) : import("./purify.es-MGB2WFLG.js")).catch(function(t3) {
+    return (n.DOMPurify ? Promise.resolve(n.DOMPurify) : import("./purify.es-JL5YHDXZ.js")).catch(function(t3) {
       return Promise.reject(new Error("Could not load dompurify: " + t3));
     }).then(function(t3) {
       return t3.default ? t3.default : t3;
@@ -9807,7 +9807,7 @@ function(t3) {
  */
 function(t3) {
   function e() {
-    return (n.canvg ? Promise.resolve(n.canvg) : import("./index.es-OU63JE43.js")).catch(function(t4) {
+    return (n.canvg ? Promise.resolve(n.canvg) : import("./index.es-DMYWYHGK.js")).catch(function(t4) {
       return Promise.reject(new Error("Could not load canvg: " + t4));
     }).then(function(t4) {
       return t4.default ? t4.default : t4;

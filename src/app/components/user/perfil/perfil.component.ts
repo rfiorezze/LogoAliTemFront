@@ -1,8 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { CUSTOM_ELEMENTS_SCHEMA, Component, OnInit } from '@angular/core';
-import { AbstractControlOptions, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
-import { ValidatorFields } from '@app/helpers/ValidatorFields';
 import { UserUpdate } from '@app/models/identity/UserUpdate';
 import { AccountService } from '@app/services/account.service';
 import { TituloComponent } from '@app/shared/titulo/titulo.component';
@@ -55,18 +54,11 @@ export class PerfilComponent implements OnInit {
   }
 
   private validation(): void {
-    const formOptions: AbstractControlOptions = {
-      validators: ValidatorFields.MustMatch('password', 'confirmePassword')
-    };
-
     this.form = this.fb.group({
       nomeCompleto: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      telefone: ['', [Validators.required]],
-      funcao: ['', Validators.required],
-      password: ['', [Validators.minLength(6), Validators.nullValidator]],
-      confirmePassword: ['', Validators.nullValidator]
-    }, formOptions);
+      telefone: ['', [Validators.required]]
+    });
   }
 
   // Conveniente para pegar um FormField apenas com a letra F
@@ -96,5 +88,4 @@ export class PerfilComponent implements OnInit {
     event.preventDefault();
     this.form.reset();
   }
-
 }

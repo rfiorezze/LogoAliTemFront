@@ -19,6 +19,9 @@
           <div *ngIf="f.cpf.errors?.required && f.cpf.touched" class="invalid-feedback">
             CPF é obrigatório
           </div>
+          <div *ngIf="f.cpf.errors?.cpfInvalido && f.cpf.touched" class="invalid-feedback">
+            CPF inválido
+          </div>          
         </div>
       </div>
       <div class="row">
@@ -97,14 +100,17 @@
           </div>
         </div>
         <div class="mb-3 col-md-6">
-          <label>Email</label>
+          <label>E-mail</label>
           <input type="text" class="form-control"
-            [ngClass]="cssValidator(f.email)" formControlName="email" placeholder="e-mail">
+            [ngClass]="cssValidator(f.email)" formControlName="email" placeholder="E-mail">
           <div *ngIf="f.email.errors?.required && f.email.touched" class="invalid-feedback">
-            Email é obrigatório
+            E-mail é obrigatório
           </div>
           <div *ngIf="f.email.errors?.email && f.email.touched" class="invalid-feedback">
             Deve ser um e-mail válido
+          </div>
+          <div *ngIf="f.email.errors?.invalidDomain && f.email.touched" class="invalid-feedback">
+            O domínio do e-mail é inválido.
           </div>
         </div>
       </div>

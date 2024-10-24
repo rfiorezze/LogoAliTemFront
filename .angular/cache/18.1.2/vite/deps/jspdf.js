@@ -1,9 +1,9 @@
 import {
   _typeof
-} from "./chunk-J7ZBZ2AT.js";
+} from "./chunk-JZCPY7PP.js";
 import "./chunk-TXDUYLVM.js";
 
-// ../../../node_modules/fflate/esm/browser.js
+// node_modules/fflate/esm/browser.js
 var ch2 = {};
 var wk = function(c2, id, msg, transfer, cb) {
   var u2 = ch2[id] || (ch2[id] = URL.createObjectURL(new Blob([c2], {
@@ -960,7 +960,7 @@ var AsyncDecompress = function() {
   return AsyncDecompress2;
 }();
 
-// ../../../node_modules/jspdf/dist/jspdf.es.min.js
+// node_modules/jspdf/dist/jspdf.es.min.js
 var n = /* @__PURE__ */ function() {
   return "undefined" != typeof window ? window : "undefined" != typeof global ? global : "undefined" != typeof self ? self : this;
 }();
@@ -6241,14 +6241,14 @@ function(t2) {
   }, t2.loadImageFile = t2.loadFile;
 }(E.API), function(e) {
   function r() {
-    return (n.html2canvas ? Promise.resolve(n.html2canvas) : import("./html2canvas.esm-VG7ZJ4Y6.js")).catch(function(t2) {
+    return (n.html2canvas ? Promise.resolve(n.html2canvas) : import("./html2canvas.esm-IVH3QR5A.js")).catch(function(t2) {
       return Promise.reject(new Error("Could not load html2canvas: " + t2));
     }).then(function(t2) {
       return t2.default ? t2.default : t2;
     });
   }
   function i2() {
-    return (n.DOMPurify ? Promise.resolve(n.DOMPurify) : import("./purify.es-NBLM2QCZ.js")).catch(function(t2) {
+    return (n.DOMPurify ? Promise.resolve(n.DOMPurify) : import("./purify.es-7734OYTJ.js")).catch(function(t2) {
       return Promise.reject(new Error("Could not load dompurify: " + t2));
     }).then(function(t2) {
       return t2.default ? t2.default : t2;
@@ -9781,7 +9781,7 @@ function(t2) {
  */
 function(t2) {
   function e() {
-    return (n.canvg ? Promise.resolve(n.canvg) : import("./index.es-PBR5SXHJ.js")).catch(function(t3) {
+    return (n.canvg ? Promise.resolve(n.canvg) : import("./index.es-GSWCEL5Y.js")).catch(function(t3) {
       return Promise.reject(new Error("Could not load canvg: " + t3));
     }).then(function(t3) {
       return t3.default ? t3.default : t3;

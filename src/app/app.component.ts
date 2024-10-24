@@ -12,13 +12,14 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { AccountService } from './services/account.service';
 import { User } from './models/identity/User';
 import { VeiculoService } from './services/veiculo.service';
+import { EmailService } from './services/email.service';
 
 @Component({
   selector: 'app-root',
   standalone: true,
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
-  providers: [MotoristaService, VeiculoService],
+  providers: [MotoristaService, VeiculoService, EmailService],
   imports: [
     CommonModule,
     RouterOutlet,

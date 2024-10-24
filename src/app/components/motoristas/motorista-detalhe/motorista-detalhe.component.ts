@@ -63,23 +63,39 @@ export class MotoristaDetalheComponent {
       (endereco: Endereco) => {
         if (endereco.erro === 'true') {
           this.toastr.error('CEP não encontrado!', 'Erro');
+  
+          // Limpa os campos de endereço
+          this.form.patchValue({
+            logradouro: '',
+            estado: '',
+            cidade: '',
+            bairro: '',
+            complemento: ''  // Caso queira limpar o complemento também
+          });
+  
+          this.isReadonly = false;  // Permite que os campos sejam editados manualmente
+          this.form.get('logradouro')?.updateValueAndValidity();
+          this.form.get('estado')?.updateValueAndValidity();
+          this.form.get('cidade')?.updateValueAndValidity();
+          this.form.get('bairro')?.updateValueAndValidity();
         } else {
           this.motorista.logradouro = endereco.logradouro;
           this.motorista.complemento = endereco.complemento;
           this.motorista.bairro = endereco.bairro;
           this.motorista.estado = endereco.uf;
           this.motorista.cidade = endereco.localidade;
-          
-          this.isReadonly = true; // Atualiza a propriedade isReadonly
-
-          // Atualiza os valores dos campos e aplica readonly
+  
+          this.isReadonly = true; // Bloqueia os campos de edição manual
+  
+          // Atualiza os valores dos campos e mantém bloqueados
           this.form.patchValue({
             logradouro: this.motorista.logradouro,
             estado: this.motorista.estado,
             cidade: this.motorista.cidade,
             bairro: this.motorista.bairro,
+            complemento: this.motorista.complemento  // Atualiza também o complemento
           });
-
+  
           this.form.get('logradouro')?.updateValueAndValidity();
           this.form.get('estado')?.updateValueAndValidity();
           this.form.get('cidade')?.updateValueAndValidity();
@@ -88,9 +104,24 @@ export class MotoristaDetalheComponent {
       },
       (error: any) => {
         this.toastr.error('CEP não encontrado!', 'Erro');
+  
+        // Limpa os campos de endereço em caso de erro
+        this.form.patchValue({
+          logradouro: '',
+          estado: '',
+          cidade: '',
+          bairro: '',
+          complemento: ''  // Limpa também o complemento
+        });
+  
+        this.isReadonly = false;  // Permite que os campos sejam editados manualmente
+        this.form.get('logradouro')?.updateValueAndValidity();
+        this.form.get('estado')?.updateValueAndValidity();
+        this.form.get('cidade')?.updateValueAndValidity();
+        this.form.get('bairro')?.updateValueAndValidity();
       }
     );
-  }
+  } 
 
   get f(): any {
     return this.form.controls;
@@ -166,7 +197,7 @@ export class MotoristaDetalheComponent {
   public validation(): void {
     this.form = this.fb.group({
       nome: ['', Validators.required],
-      cpf: ['', Validators.required],
+      cpf: ['', [Validators.required, CustomValidators.validarCPF]],
       sexo: ['', Validators.required],
       dataNascimento: [
         '',
@@ -176,7 +207,14 @@ export class MotoristaDetalheComponent {
       numeroCNH: ['', [Validators.required, Validators.minLength(9)]],
       categoriaCNH: ['', Validators.required],
       dataVencimentoCNH: [],
-      email: ['', [Validators.required, Validators.email]],
+      email: [
+        '',
+        [
+          Validators.required,
+          Validators.email,
+          CustomValidators.emailDomainValidator,
+        ],
+      ],
       celular: ['', Validators.required],
       cep: ['', Validators.required],
       logradouro: ['', Validators.required],

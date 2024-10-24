@@ -1,5 +1,5 @@
 import { CommonModule, JsonPipe } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, Inject, PLATFORM_ID } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -26,6 +26,10 @@ import { Endereco } from '@app/models/Endereco';
 import jsPDF from 'jspdf';
 import { format } from 'date-fns';
 import { CustomValidators } from '@app/shared/custom-validators';
+import { HttpClient } from '@angular/common/http';
+import bootstrap from 'bootstrap';
+import { EmailService } from '@app/services/email.service';
+import { isPlatformBrowser } from '@angular/common';
 
 defineLocale('pt-br', ptBrLocale);
 
@@ -48,6 +52,7 @@ defineLocale('pt-br', ptBrLocale);
   ],
 })
 export class CalculaEstadiaComponent {
+  emailForm!: FormGroup;
   form!: FormGroup;
   formCertidao!: FormGroup;
   valorCalculado: string = '';
@@ -56,7 +61,10 @@ export class CalculaEstadiaComponent {
   formattedValueLocalDescarga: string = ''; // Valor formatado para exibição
   formattedValueContratante: string = ''; // Valor formatado para exibição
   estados: Estado[];
-  municipios: Municipio[];
+  municipiosMotorista: Municipio[];
+  municipiosLocalCarga: Municipio[];
+  municipiosLocalDescarga: Municipio[];
+  municipiosContratante: Municipio[];
   public estadoMotoristaInserido: string = '';
   public cepMotoristaInserido: string = '';
   public estadoLocalCargaInserido: string = '';
@@ -67,6 +75,7 @@ export class CalculaEstadiaComponent {
   public cepContratanteInserido: string = '';
   dadosCertidaoVisivel: boolean = false;
   dataInvalida: boolean = false;
+  isBrowser: boolean;
 
   get f(): any {
     return this.form.controls;
@@ -92,9 +101,13 @@ export class CalculaEstadiaComponent {
     private router: Router,
     private spinner: NgxSpinnerService,
     private toastr: ToastrService,
-    private localidadeService: LocalidadeService
+    private localidadeService: LocalidadeService,
+    private http: HttpClient,
+    private emailService: EmailService,
+    @Inject(PLATFORM_ID) private platformId: object
   ) {
     this.localeService.use('pt-br');
+    this.isBrowser = isPlatformBrowser(this.platformId);
   }
 
   ngOnInit(): void {
@@ -103,6 +116,10 @@ export class CalculaEstadiaComponent {
   }
 
   public validation(): void {
+    this.emailForm = this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
+    });
+
     this.form = this.fb.group({
       dataChegada: ['', Validators.required],
       horaChegada: ['', Validators.required],
@@ -126,7 +143,14 @@ export class CalculaEstadiaComponent {
       complementoMotorista: [''],
       estadoMotorista: ['', Validators.required],
       cidadeMotorista: ['', Validators.required],
-      emailMotorista: ['', Validators.required],
+      emailMotorista: [
+        '',
+        [
+          Validators.required,
+          Validators.email,
+          CustomValidators.emailDomainValidator,
+        ],
+      ],
       telefoneMotorista: ['', Validators.required],
       cpfCnpjLocalCarga: ['', this.validarCPFouCNPJ.bind(this)],
       nomeLocalCarga: ['', Validators.required],
@@ -137,7 +161,14 @@ export class CalculaEstadiaComponent {
       complementoLocalCarga: [''],
       estadoLocalCarga: ['', Validators.required],
       cidadeLocalCarga: ['', Validators.required],
-      emailLocalCarga: ['', Validators.required],
+      emailLocalCarga: [
+        '',
+        [
+          Validators.required,
+          Validators.email,
+          CustomValidators.emailDomainValidator,
+        ],
+      ],
       telefoneLocalCarga: ['', Validators.required],
       cpfCnpjLocalDescarga: ['', this.validarCPFouCNPJ.bind(this)],
       nomeLocalDescarga: ['', Validators.required],
@@ -148,9 +179,16 @@ export class CalculaEstadiaComponent {
       complementoLocalDescarga: [''],
       estadoLocalDescarga: ['', Validators.required],
       cidadeLocalDescarga: ['', Validators.required],
-      emailLocalDescarga: ['', Validators.required],
+      emailLocalDescarga: [
+        '',
+        [
+          Validators.required,
+          Validators.email,
+          CustomValidators.emailDomainValidator,
+        ],
+      ],
       telefoneLocalDescarga: ['', Validators.required],
-      cteCiotContratante: ['', Validators.required],
+      cteCiotContratante: [''],
       cpfCnpjContratante: [
         '',
         [Validators.required, this.validarCPFouCNPJ.bind(this)],
@@ -202,17 +240,29 @@ export class CalculaEstadiaComponent {
     }
   }
 
-  public FiltrarPorEstado(value: string) {
-    this.localidadeService.getMunicipiosPorUF(value).subscribe(
+  public FiltrarPorEstado(estado: string, area: string) {
+    this.localidadeService.getMunicipiosPorUF(estado).subscribe(
       (municipios: Municipio[]) => {
-        this.municipios = municipios;
+        switch(area) {
+          case 'Motorista':
+            this.municipiosMotorista = municipios;
+            break;
+          case 'LocalCarga':
+            this.municipiosLocalCarga = municipios;
+            break;
+          case 'LocalDescarga':
+            this.municipiosLocalDescarga = municipios;
+            break;
+          case 'Contratante':
+            this.municipiosContratante = municipios;
+            break;
+        }
       },
-      (error: any) => {
-        console.error(error);
-      },
-      () => {}
+      (error) => {
+        console.error('Erro ao carregar municípios: ', error);
+      }
     );
-  }
+  }    
 
   public carregarEstados(): void {
     this.localidadeService.getEstados().subscribe(
@@ -229,26 +279,45 @@ export class CalculaEstadiaComponent {
   public BuscarPorCep(value: string, area: string) {
     this.localidadeService.getEnderecoPorCep(value).subscribe(
       (endereco: Endereco) => {
-        this.formCertidao
-          .get('logradouro' + area)
-          ?.setValue(endereco.logradouro);
-        this.formCertidao
-          .get('complemento' + area)
-          ?.setValue(endereco.complemento);
-        this.formCertidao.get('bairro' + area)?.setValue(endereco.bairro);
-        this.formCertidao.get('estado' + area)?.setValue(endereco.uf);
-        this.formCertidao.get('cidade' + area)?.setValue(endereco.localidade);
+        switch(area) {
+          case 'Motorista':
+            this.formCertidao.get('logradouroMotorista')?.setValue(endereco.logradouro);
+            this.formCertidao.get('complementoMotorista')?.setValue(endereco.complemento);
+            this.formCertidao.get('bairroMotorista')?.setValue(endereco.bairro);
+            this.formCertidao.get('estadoMotorista')?.setValue(endereco.uf);
+            this.formCertidao.get('cidadeMotorista')?.setValue(endereco.localidade);
+            break;
+            
+          case 'LocalCarga':
+            this.formCertidao.get('logradouroLocalCarga')?.setValue(endereco.logradouro);
+            this.formCertidao.get('complementoLocalCarga')?.setValue(endereco.complemento);
+            this.formCertidao.get('bairroLocalCarga')?.setValue(endereco.bairro);
+            this.formCertidao.get('estadoLocalCarga')?.setValue(endereco.uf);
+            this.formCertidao.get('cidadeLocalCarga')?.setValue(endereco.localidade);
+            break;
+  
+          case 'LocalDescarga':
+            this.formCertidao.get('logradouroLocalDescarga')?.setValue(endereco.logradouro);
+            this.formCertidao.get('complementoLocalDescarga')?.setValue(endereco.complemento);
+            this.formCertidao.get('bairroLocalDescarga')?.setValue(endereco.bairro);
+            this.formCertidao.get('estadoLocalDescarga')?.setValue(endereco.uf);
+            this.formCertidao.get('cidadeLocalDescarga')?.setValue(endereco.localidade);
+            break;
+  
+          case 'Contratante':
+            this.formCertidao.get('logradouroContratante')?.setValue(endereco.logradouro);
+            this.formCertidao.get('complementoContratante')?.setValue(endereco.complemento);
+            this.formCertidao.get('bairroContratante')?.setValue(endereco.bairro);
+            this.formCertidao.get('estadoContratante')?.setValue(endereco.uf);
+            this.formCertidao.get('cidadeContratante')?.setValue(endereco.localidade);
+            break;
+        }
       },
       (error: any) => {
         console.error(error);
-      },
-      () => {}
+      }
     );
-  }
-
-  gerarCertidao() {
-    this.gerarPdf();
-  }
+  }  
 
   calcularEstadia(valorHora: number) {
     // Reseta a flag de data inválida antes de cada cálculo
@@ -312,6 +381,13 @@ export class CalculaEstadiaComponent {
 
   public cssValidator(campoForm: FormControl): any {
     return { 'is-invalid': campoForm.errors && campoForm.touched };
+  }
+
+  salvarCertidao() {
+    const doc = this.gerarPdf();
+
+    // Salvar o PDF
+    doc.save('certidao.pdf');
   }
 
   gerarPdf() {
@@ -500,8 +576,7 @@ export class CalculaEstadiaComponent {
       { align: 'center' }
     );
 
-    // Salvar o PDF
-    doc.save('certidao.pdf');
+    return doc;
   }
 
   validarCPF(cpf: string): boolean {
@@ -583,6 +658,51 @@ export class CalculaEstadiaComponent {
       return this.validarCPF(value) ? null : { cpfInvalido: true };
     } else {
       return this.validarCNPJ(value) ? null : { cnpjInvalido: true };
+    }
+  }
+
+  enviarPdfPorEmail() {
+    if (this.emailForm.valid) {
+      const emailDestino = this.emailForm.get('email')?.value;
+      const assunto = 'Certidão de Estadia';
+      const corpo = 'Segue em anexo a certidão de estadia.';
+      const copiaPara = ''; // Adicione e-mails de cópia conforme necessário
+
+      // Gerar o PDF
+      const doc = this.gerarPdf();
+      const pdfBlob = doc.output('blob');
+
+      // Usar o serviço para enviar o e-mail
+      this.emailService.enviarEmail(emailDestino, assunto, corpo, copiaPara, pdfBlob)
+        .subscribe(
+          (response) => {
+            this.toastr.success('E-mail enviado com sucesso!'); // Exibir notificação de sucesso
+            this.fecharModal(); // Fechar o modal após o sucesso
+          },
+          (error) => {
+            this.toastr.error('Erro ao enviar o e-mail.'); // Exibir notificação de erro
+            console.error('Erro ao enviar o e-mail', error);
+          }
+        );
+    }
+  }
+
+  ngAfterViewInit() {
+    // Certifique-se de que o código só será executado no client-side
+    if (this.isBrowser) {
+      // Qualquer código que dependa do `document` pode ser colocado aqui
+      console.log('Executando no navegador (client-side).');
+    }
+  }
+
+  fecharModal() {
+    // Somente manipule o DOM se estiver no navegador
+    if (this.isBrowser) {
+      const modal = document.getElementById('emailModal');
+      if (modal) {
+        const modalInstance = (window as any).bootstrap.Modal.getInstance(modal); // Obter instância do modal
+        modalInstance?.hide(); // Fechar o modal
+      }
     }
   }
 }

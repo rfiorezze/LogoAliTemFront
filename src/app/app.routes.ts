@@ -17,6 +17,8 @@ import { CadastrarVeiculoMotoristaComponent } from './components/veiculos/cadast
 import { BuscaMotoristaPorCpfComponent } from './components/motoristas/busca-motorista-por-cpf/busca-motorista-por-cpf.component';
 import { BuscaMotoristaPorLocalidadeComponent } from './components/motoristas/busca-motorista-por-localidade/busca-motorista-por-localidade.component';
 import { CalculaEstadiaComponent } from './components/calculadora/calcula-estadia.component';
+import { ForgotPasswordComponent } from './components/user/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './components/user/reset-password/reset-password.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' }, 
@@ -61,6 +63,8 @@ export const routes: Routes = [
     children: [
       { path: 'login', component: LoginComponent },
       { path: 'registration', component: RegistrationComponent },
+      { path: 'forgot-password', component: ForgotPasswordComponent },
+      { path: 'reset-password', component: ResetPasswordComponent }
     ],
   },
   { path: 'home', component: HomeComponent },
