@@ -1,4 +1,4 @@
 export const environment = {
     production: true,
-    apiURL: 'http://104.234.65.143:2030/'
+    apiURL: 'http://www.logoalitem.com.br:2030/'
   };
