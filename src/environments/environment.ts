@@ -4,7 +4,7 @@
 
 export const environment = {
     production: true,
-    apiURL: 'https://www.logoalitem.com.br:2030/'
+    apiURL: 'https://api.logoalitem.com.br/'
   };
   
   /*

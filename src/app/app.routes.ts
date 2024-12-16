@@ -19,6 +19,7 @@ import { BuscaMotoristaPorLocalidadeComponent } from './components/motoristas/bu
 import { CalculaEstadiaComponent } from './components/calculadora/calcula-estadia.component';
 import { ForgotPasswordComponent } from './components/user/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './components/user/reset-password/reset-password.component';
+import { TermsOfUseComponent } from './terms-of-use/terms-of-use.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' }, 
@@ -67,6 +68,7 @@ export const routes: Routes = [
       { path: 'reset-password', component: ResetPasswordComponent }
     ],
   },
+  { path: 'terms-of-use', component: TermsOfUseComponent },
   { path: 'home', component: HomeComponent },
   { path: '**', redirectTo: 'dashboard', pathMatch: 'full' },
 ];
