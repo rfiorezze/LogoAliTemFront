@@ -54,7 +54,6 @@ export const routes: Routes = [
           { path: 'cadastrar-veiculo-por-motorista', component: CadastrarVeiculoMotoristaComponent }
         ],
       },
-      { path: 'calcula-estadia', component: CalculaEstadiaComponent },
       { path: 'dashboard', component: DashboardComponent },
     ],
   },
@@ -70,5 +69,6 @@ export const routes: Routes = [
   },
   { path: 'terms-of-use', component: TermsOfUseComponent },
   { path: 'home', component: HomeComponent },
+  { path: 'calcula-estadia', component: CalculaEstadiaComponent },
   { path: '**', redirectTo: 'dashboard', pathMatch: 'full' },
 ];

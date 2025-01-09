@@ -27,11 +27,18 @@ export class LoginComponent implements OnInit{
   public login(): void {
     this.accountService.login(this.model).subscribe(
       () => {
-        this.router.navigateByUrl('/dashboard');
+        const retornarParaCertidao = localStorage.getItem('retornarParaCertidao');
+  
+        if (retornarParaCertidao) {
+          this.router.navigate(['/calcula-estadia']);
+          localStorage.removeItem('retornarParaCertidao');
+        } else {
+          this.router.navigate(['/dashboard']);
+        }
       },
       (error: any) => {
         if (error.status == 401)
-          this.toaster.error('usuário ou senha inválido');
+          this.toaster.error('Usuário ou senha inválido');
         else console.error(error);
       }
     );

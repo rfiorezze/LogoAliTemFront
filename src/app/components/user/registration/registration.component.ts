@@ -7,11 +7,12 @@ import { User } from '@app/models/identity/User';
 import { AccountService } from '@app/services/account.service';
 import { ToastrService } from 'ngx-toastr';
 import { CustomValidators } from '@app/shared/custom-validators'
+import { NgxMaskDirective } from 'ngx-mask';
 
 @Component({
   selector: 'app-registration',
   standalone: true,
-  imports: [RouterModule, CommonModule, ReactiveFormsModule],
+  imports: [RouterModule, CommonModule, ReactiveFormsModule, NgxMaskDirective],
   templateUrl: './registration.component.html',
   styleUrl: './registration.component.scss'
 })
@@ -39,6 +40,7 @@ export class RegistrationComponent implements OnInit {
 
     this.form = this.fb.group({
       nomeCompleto: ['', Validators.required],
+      telefone: ['', Validators.required],
       email: ['',
         [Validators.required, Validators.email, CustomValidators.emailDomainValidator]
       ],
@@ -50,11 +52,22 @@ export class RegistrationComponent implements OnInit {
     }, formOptions);
   }
 
-  register(): void{
-    this.user = {... this.form.value};
+  register(): void {
+    this.user = { ...this.form.value };
     this.accountService.register(this.user).subscribe(
-      () => this.router.navigateByUrl('/dashboard'),
-      (error: any) => this.toaster.error(error.error.mensagem) 
-    )
+      () => {
+        const retornarParaCertidao = localStorage.getItem('retornarParaCertidao');
+  
+        if (retornarParaCertidao) {
+          this.router.navigate(['/calcula-estadia']);
+          localStorage.removeItem('retornarParaCertidao');
+        } else {
+          this.router.navigate(['/dashboard']);
+        }
+      },
+      (error: any) => {
+        this.toaster.error(error.error.mensagem);
+      }
+    );
   }
 }

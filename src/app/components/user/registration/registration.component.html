@@ -17,7 +17,7 @@
         <h3 class="border-bottom">Cadastro de Usuário</h3>
       </div>
       <div class="row">
-        <div class="mb-3">
+        <div class="mb-3 col-md-8">
           <label>Nome Completo</label>
           <input
             type="text"
@@ -29,6 +29,25 @@
             placeholder="Insira o seu nome completo"
           />
           <div class="invalid-feedback">Nome Completo é obrigatório.</div>
+        </div>
+        <div class="mb-3 col-md-4">
+          <label>Telefone</label>
+          <input
+            type="text"
+            class="form-control"
+            mask="(00) 0 0000-0000"
+            [ngClass]="{
+              'is-invalid': f.telefone.errors && f.telefone.touched
+            }"
+            formControlName="telefone"
+            placeholder="(00) 9 0000-0000"
+          />
+          <div
+            *ngIf="f.telefone.errors?.required && f.telefone.touched"
+            class="invalid-feedback"
+          >
+            Telefone é obrigatório
+          </div>
         </div>
       </div>
       <div class="mb-3">
@@ -123,7 +142,7 @@
             <a routerLink="/terms-of-use" target="_blank">Termos de Uso</a>.
           </label>
         </div>
-      </div>      
+      </div>
       <div class="row">
         <div class="d-grid gap-2">
           <button

@@ -26,6 +26,8 @@ export class NavComponent implements OnInit {
 
   logout(): void {
     this.accountService.logout();
+    localStorage.removeItem('dadosEstadia');
+    localStorage.removeItem('retornarParaCertidao');
     this.router.navigateByUrl('/user/login');
     window.location.href="/user/login";
   }
