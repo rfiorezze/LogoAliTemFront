@@ -3,23 +3,15 @@ import { AbstractControl, FormControl, ValidationErrors } from '@angular/forms';
 import { Observable, of } from 'rxjs';
 
 export class CustomValidators {
-  static dataNascimentoValida(
-    control: AbstractControl
-  ): Observable<ValidationErrors | null> {
-    const dataNascimento = control.value;
-
-    if (!dataNascimento) {
-      return of(null); // Retorna Observable nulo se não houver data de nascimento
-    }
-
+  static dataNascimentoValida(control: AbstractControl): ValidationErrors | null {
+    const dataNascimento = control.value ? new Date(control.value) : null; // Converte para Date
     const hoje = new Date();
-    const dataNascimentoDate = new Date(dataNascimento);
 
-    if (dataNascimentoDate > hoje) {
-      return of({ dataFutura: true }); // Retorna Observable com erro se a data for futura
+    if (dataNascimento && dataNascimento > hoje) {
+      return { dataFutura: true }; // Retorna erro caso a data seja no futuro
     }
 
-    return of(null); // Retorna Observable nulo se a data estiver correta
+    return null; // Retorna null se a data for válida
   }
 
   static emailDomainValidator(

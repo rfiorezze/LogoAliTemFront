@@ -16,4 +16,5 @@ export interface Motorista {
     complemento: string;
     estado: string;
     cidade: string;
+    placaVeiculoPrincipal: string;
 }

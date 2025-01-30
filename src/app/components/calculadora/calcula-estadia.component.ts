@@ -27,10 +27,12 @@ import jsPDF from 'jspdf';
 import { format } from 'date-fns';
 import { CustomValidators } from '@app/shared/custom-validators';
 import { HttpClient } from '@angular/common/http';
-import bootstrap from 'bootstrap';
 import { EmailService } from '@app/services/email.service';
 import { isPlatformBrowser } from '@angular/common';
 import { AccountService } from '@app/services/account.service';
+import { take } from 'rxjs';
+import { MotoristaService } from '@app/services/motorista.service';
+import { Motorista } from '@app/models/Motorista';
 
 defineLocale('pt-br', ptBrLocale);
 
@@ -42,13 +44,11 @@ defineLocale('pt-br', ptBrLocale);
   imports: [
     CommonModule,
     TituloComponent,
-    RouterOutlet,
     ReactiveFormsModule,
     CommonModule,
     BsDatepickerModule,
     NgbTimepickerModule,
     FormsModule,
-    JsonPipe,
     NgxMaskDirective,
   ],
 })
@@ -106,6 +106,7 @@ export class CalculaEstadiaComponent {
     private http: HttpClient,
     private emailService: EmailService,
     private accountService: AccountService,
+    private motoristaService: MotoristaService,
     @Inject(PLATFORM_ID) private platformId: object
   ) {
     this.localeService.use('pt-br');
@@ -116,26 +117,70 @@ export class CalculaEstadiaComponent {
     this.validation();
     this.carregarEstados();
   
-    // Verifica se há dados armazenados no localStorage
-    const savedData = localStorage.getItem('dadosEstadia');
-    if (savedData) {
-      // Preenche o formulário com os dados recuperados
-      this.form.patchValue(JSON.parse(savedData));
-      this.dadosCertidaoVisivel = true;
+    const preserveData = localStorage.getItem('preserveData') === 'true';
+  
+    if (!preserveData) {
       localStorage.removeItem('dadosEstadia');
+      localStorage.removeItem('valorCalculado');
+    } else {
+      localStorage.removeItem('preserveData');
     }
   
-    // Preenche automaticamente os dados do motorista após login
-    this.accountService.currentUser$.subscribe(user => {
-      if (user) {
-        this.formCertidao.patchValue({
-          nomeMotorista: user.nomeCompleto,
-          emailMotorista: user.email,
-          telefoneMotorista: user.telefone
+    const savedData = localStorage.getItem('dadosEstadia');
+    if (savedData) {
+      const formData = JSON.parse(savedData);
+      if (formData.dataChegada) {
+        formData.dataChegada = new Date(formData.dataChegada);
+      }
+      if (formData.dataSaida) {
+        formData.dataSaida = new Date(formData.dataSaida);
+      }
+      this.form.patchValue(formData);
+      this.dadosCertidaoVisivel = true;
+    }
+  
+    const savedValorCalculado = localStorage.getItem('valorCalculado');
+    if (savedValorCalculado) {
+      this.valorCalculado = savedValorCalculado;
+    }
+  
+    this.accountService.currentUser$.pipe(take(1)).subscribe((user) => {
+      if (user?.cpf) {
+        this.motoristaService.getMotoristaByCpf(user.cpf).subscribe((motorista) => {
+          if (motorista) {
+            console.log('🚀 Dados do motorista retornados:', motorista);
+  
+            // Preenche os dados do motorista
+            this.formCertidao.patchValue({
+              nomeMotorista: motorista.nome || '',
+              emailMotorista: motorista.email || '',
+              telefoneMotorista: motorista.celular || '',
+              placa: motorista.placaVeiculoPrincipal || '',
+              cpfCnpjMotorista: motorista.cpf || '',
+              cepMotorista: motorista.cep || '',
+              estadoMotorista: motorista.estado || '',              
+            });
+
+            this.cepMotoristaInserido = motorista.cep;
+            
+            if (motorista.estado) {
+              this.FiltrarPorEstado(motorista.estado, 'Motorista');
+              setTimeout(() => {
+                this.formCertidao.patchValue({
+                  numeroMotorista: motorista.numero || '',
+                  complementoMotorista: motorista.complemento || '',
+                  cidadeMotorista: motorista.cidade || '',
+                  bairroMotorista: motorista.bairro || '',
+                  logradouroMotorista: motorista.logradouro || '',
+                });
+              }, 500); 
+            }
+          }
         });
       }
     });
   }
+  
 
   public validation(): void {
     this.emailForm = this.fb.group({
@@ -299,77 +344,94 @@ export class CalculaEstadiaComponent {
   }
 
   public BuscarPorCep(value: string, area: string) {
+    if (!value || value.length < 8) {
+      console.warn('CEP inválido ou incompleto.');
+      return;
+    }
+  
     this.localidadeService.getEnderecoPorCep(value).subscribe(
       (endereco: Endereco) => {
+        console.log(`🏠 Endereço retornado para ${area}:`, endereco);
+  
         switch (area) {
           case 'Motorista':
-            this.formCertidao
-              .get('logradouroMotorista')
-              ?.setValue(endereco.logradouro);
-            this.formCertidao
-              .get('complementoMotorista')
-              ?.setValue(endereco.complemento);
-            this.formCertidao.get('bairroMotorista')?.setValue(endereco.bairro);
-            this.formCertidao.get('estadoMotorista')?.setValue(endereco.uf);
-            this.formCertidao
-              .get('cidadeMotorista')
-              ?.setValue(endereco.localidade);
+            this.formCertidao.patchValue({
+              logradouroMotorista: endereco.logradouro || '',
+              complementoMotorista: endereco.complemento || '', // Agora sempre será preenchido
+              bairroMotorista: endereco.bairro || '',
+              estadoMotorista: endereco.uf || ''
+            });
+  
+            if (endereco.uf) {
+              this.FiltrarPorEstado(endereco.uf, 'Motorista');
+              setTimeout(() => {
+                this.formCertidao.patchValue({
+                  cidadeMotorista: endereco.localidade || ''
+                });
+              }, 500); // Garante que a cidade será preenchida após carregar os municípios
+            }
             break;
-
+  
           case 'LocalCarga':
-            this.formCertidao
-              .get('logradouroLocalCarga')
-              ?.setValue(endereco.logradouro);
-            this.formCertidao
-              .get('complementoLocalCarga')
-              ?.setValue(endereco.complemento);
-            this.formCertidao
-              .get('bairroLocalCarga')
-              ?.setValue(endereco.bairro);
-            this.formCertidao.get('estadoLocalCarga')?.setValue(endereco.uf);
-            this.formCertidao
-              .get('cidadeLocalCarga')
-              ?.setValue(endereco.localidade);
+            this.formCertidao.patchValue({
+              logradouroLocalCarga: endereco.logradouro || '',
+              complementoLocalCarga: endereco.complemento || '',
+              bairroLocalCarga: endereco.bairro || '',
+              estadoLocalCarga: endereco.uf || ''
+            });
+  
+            if (endereco.uf) {
+              this.FiltrarPorEstado(endereco.uf, 'LocalCarga');
+              setTimeout(() => {
+                this.formCertidao.patchValue({
+                  cidadeLocalCarga: endereco.localidade || ''
+                });
+              }, 500);
+            }
             break;
-
+  
           case 'LocalDescarga':
-            this.formCertidao
-              .get('logradouroLocalDescarga')
-              ?.setValue(endereco.logradouro);
-            this.formCertidao
-              .get('complementoLocalDescarga')
-              ?.setValue(endereco.complemento);
-            this.formCertidao
-              .get('bairroLocalDescarga')
-              ?.setValue(endereco.bairro);
-            this.formCertidao.get('estadoLocalDescarga')?.setValue(endereco.uf);
-            this.formCertidao
-              .get('cidadeLocalDescarga')
-              ?.setValue(endereco.localidade);
+            this.formCertidao.patchValue({
+              logradouroLocalDescarga: endereco.logradouro || '',
+              complementoLocalDescarga: endereco.complemento || '',
+              bairroLocalDescarga: endereco.bairro || '',
+              estadoLocalDescarga: endereco.uf || ''
+            });
+  
+            if (endereco.uf) {
+              this.FiltrarPorEstado(endereco.uf, 'LocalDescarga');
+              setTimeout(() => {
+                this.formCertidao.patchValue({
+                  cidadeLocalDescarga: endereco.localidade || ''
+                });
+              }, 500);
+            }
             break;
-
+  
           case 'Contratante':
-            this.formCertidao
-              .get('logradouroContratante')
-              ?.setValue(endereco.logradouro);
-            this.formCertidao
-              .get('complementoContratante')
-              ?.setValue(endereco.complemento);
-            this.formCertidao
-              .get('bairroContratante')
-              ?.setValue(endereco.bairro);
-            this.formCertidao.get('estadoContratante')?.setValue(endereco.uf);
-            this.formCertidao
-              .get('cidadeContratante')
-              ?.setValue(endereco.localidade);
+            this.formCertidao.patchValue({
+              logradouroContratante: endereco.logradouro || '',
+              complementoContratante: endereco.complemento || '',
+              bairroContratante: endereco.bairro || '',
+              estadoContratante: endereco.uf || ''
+            });
+  
+            if (endereco.uf) {
+              this.FiltrarPorEstado(endereco.uf, 'Contratante');
+              setTimeout(() => {
+                this.formCertidao.patchValue({
+                  cidadeContratante: endereco.localidade || ''
+                });
+              }, 500);
+            }
             break;
         }
       },
       (error: any) => {
-        console.error(error);
+        console.error('Erro ao buscar endereço pelo CEP:', error);
       }
     );
-  }
+  }  
 
   calcularEstadia(valorHora: number) {
     // Reseta a flag de data inválida antes de cada cálculo
@@ -418,19 +480,27 @@ export class CalculaEstadiaComponent {
 
     this.valorCalculado =
       'R$ ' + (diferencaHoras * capacidadeCargaVeiculo * valorHora).toFixed(2);
+    localStorage.setItem('valorCalculado', this.valorCalculado);
+
     this.spinner.hide();
   }
 
   exibirCamposPreencherCertidao() {
-    // Salva os dados do cálculo no localStorage
-    const formData = this.form.value;
-    localStorage.setItem('dadosEstadia', JSON.stringify(formData));
-  
-    // Salva uma flag indicando que o usuário precisa voltar para a calculadora
-    localStorage.setItem('retornarParaCertidao', 'true');
-  
-    // Redireciona para o login
-    this.router.navigate(['/user/login']);
+    this.accountService.currentUser$.pipe(take(1)).subscribe((user) => {
+      if (user) {
+        this.dadosCertidaoVisivel = true;
+      } else {
+        const formData = { ...this.form.value };
+        formData.dataChegada = new Date(formData.dataChegada).toISOString();
+        formData.dataSaida = new Date(formData.dataSaida).toISOString();
+
+        localStorage.setItem('dadosEstadia', JSON.stringify(formData));
+        localStorage.setItem('valorCalculado', this.valorCalculado);
+        localStorage.setItem('preserveData', 'true'); // Define a flag
+        localStorage.setItem('retornarParaCertidao', '/calcula-estadia'); // Define a rota de retorno
+        this.router.navigate(['/user/login']);
+      }
+    });
   }
 
   resetForm(): void {
@@ -443,11 +513,52 @@ export class CalculaEstadiaComponent {
     return { 'is-invalid': campoForm.errors && campoForm.touched };
   }
 
-  salvarCertidao() {
-    const doc = this.gerarPdf();
+  private atualizarMotorista(callback: () => void): void {
+    this.accountService.currentUser$.pipe(take(1)).subscribe((user) => {
+      if (user?.cpf) {
+        this.motoristaService
+          .getMotoristaByCpf(user.cpf)
+          .subscribe((motorista) => {
+            if (motorista) {
+              // Cria um objeto atualizado com os valores do formulário
+              const motoristaAtualizado: Motorista = {
+                ...motorista,
+                nome: this.formCertidao.value.nomeMotorista,
+                email: this.formCertidao.value.emailMotorista,
+                celular: this.formCertidao.value.telefoneMotorista,
+                placaVeiculoPrincipal: this.formCertidao.value.placa,
+                cpf: this.formCertidao.value.cpfCnpjMotorista,
+                cep: this.formCertidao.value.cepMotorista,
+                logradouro: this.formCertidao.value.logradouroMotorista,
+                bairro: this.formCertidao.value.bairroMotorista,
+                numero: this.formCertidao.value.numeroMotorista,
+                complemento: this.formCertidao.value.complementoMotorista,
+                estado: this.formCertidao.value.estadoMotorista,
+                cidade: this.formCertidao.value.cidadeMotorista,
+              };
 
-    // Salvar o PDF
-    doc.save('certidao.pdf');
+              // Atualiza os dados do motorista no banco de dados antes de prosseguir
+              this.motoristaService.put(motoristaAtualizado).subscribe(
+                () => {
+                  console.log('Dados do motorista atualizados com sucesso.');
+                  callback(); // Chama a função desejada (gerar PDF ou enviar e-mail) após a atualização
+                },
+                (error) => {
+                  console.error('Erro ao atualizar motorista:', error);
+                  this.toastr.error('Erro ao atualizar os dados do motorista.');
+                }
+              );
+            }
+          });
+      }
+    });
+  }
+
+  salvarCertidao(): void {
+    this.atualizarMotorista(() => {
+      const doc = this.gerarPdf();
+      doc.save('certidao.pdf');
+    });
   }
 
   gerarPdf() {
@@ -519,7 +630,7 @@ export class CalculaEstadiaComponent {
       115
     );
     doc.text(
-      `à ${formCertidao.logradouroLocalCarga}, ${formCertidao.numeroLocalCarga}, Bairro: ${formCertidao.bairroLocalCarga}, CEP ${formCertidao.cepLocalCarga}, Cidade: ${formCertidao.cidadeLocalCarga}, Estado: ${formCertidao.estadoLocalCarga}, Gerando um valor de estadia a ser pago de: ${this.valorCalculado}.`,
+      `à ${formCertidao.logradouroLocalCarga}, ${formCertidao.numeroLocalCarga}, Bairro: ${formCertidao.bairroLocalCarga}, CEP ${formCertidao.cepLocalCarga}, Cidade: ${formCertidao.cidadeLocalCarga}, Estado: ${formCertidao.estadoLocalCarga}`,
       10,
       120
     );
@@ -591,7 +702,7 @@ export class CalculaEstadiaComponent {
       200
     );
     doc.text(
-      'devido ao Transportador TAC ou à ETC direito indenizatório no Valor de R$ R$ 240,45',
+      `devido ao Transportador TAC ou à ETC direito indenizatório no Valor de ${this.valorCalculado}`,
       10,
       205
     );
@@ -721,30 +832,32 @@ export class CalculaEstadiaComponent {
     }
   }
 
-  enviarPdfPorEmail() {
+  enviarPdfPorEmail(): void {
     if (this.emailForm.valid) {
-      const emailDestino = this.emailForm.get('email')?.value;
-      const assunto = 'Certidão de Estadia';
-      const corpo = 'Segue em anexo a certidão de estadia.';
-      const copiaPara = ''; // Adicione e-mails de cópia conforme necessário
+      this.atualizarMotorista(() => {
+        const emailDestino = this.emailForm.get('email')?.value;
+        const assunto = 'Certidão de Estadia';
+        const corpo = 'Segue em anexo a certidão de estadia.';
+        const copiaPara = '';
 
-      // Gerar o PDF
-      const doc = this.gerarPdf();
-      const pdfBlob = doc.output('blob');
+        // Gerar o PDF atualizado
+        const doc = this.gerarPdf();
+        const pdfBlob = doc.output('blob');
 
-      // Usar o serviço para enviar o e-mail
-      this.emailService
-        .enviarEmail(emailDestino, assunto, corpo, copiaPara, pdfBlob)
-        .subscribe(
-          (response) => {
-            this.toastr.success('E-mail enviado com sucesso!'); // Exibir notificação de sucesso
-            this.fecharModal(); // Fechar o modal após o sucesso
-          },
-          (error) => {
-            this.toastr.error('Erro ao enviar o e-mail.'); // Exibir notificação de erro
-            console.error('Erro ao enviar o e-mail', error);
-          }
-        );
+        // Enviar e-mail com os dados atualizados
+        this.emailService
+          .enviarEmail(emailDestino, assunto, corpo, copiaPara, pdfBlob)
+          .subscribe(
+            () => {
+              this.toastr.success('E-mail enviado com sucesso!');
+              this.fecharModal();
+            },
+            (error) => {
+              this.toastr.error('Erro ao enviar o e-mail.');
+              console.error('Erro ao enviar o e-mail', error);
+            }
+          );
+      });
     }
   }
 
