@@ -3,10 +3,10 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-    production: true,
-    apiURL: 'https://localhost:5001/',
-    googleMapsApiKey: 'AIzaSyDY73zLaEyr-sZpbRRPnJPiSiIV95ri2aw'
-  };
+  production: true,
+  apiURL: 'https://api.logoalitem.com.br/',
+  googleMapsApiKey: 'AIzaSyDY73zLaEyr-sZpbRRPnJPiSiIV95ri2aw'
+};
   
   /*
    * For easier debugging in development mode, you can import the following file
