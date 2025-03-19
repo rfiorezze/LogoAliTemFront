@@ -46,12 +46,18 @@
             <li class="nav-item" routerLinkActive="active">
               <a class="nav-link" aria-current="page" routerLink="calcula-estadia">Calcula de estadia</a>
             </li>
+            <li class="nav-item" routerLinkActive="active">
+              <a class="nav-link" aria-current="page" routerLink="reboque">Calcula reboque</a>
+            </li>
           </ng-container>
 
           <!-- Menus visíveis apenas para Motoristas -->
           <ng-container *ngIf="(accountService.currentUser$ | async)?.userRoles?.includes('Motorista') && !(accountService.currentUser$ | async)?.userRoles?.includes('Admin')">
             <li class="nav-item" routerLinkActive="active">
               <a class="nav-link" aria-current="page" routerLink="calcula-estadia">Calcula de estadia</a>
+            </li>
+            <li class="nav-item" routerLinkActive="active">
+              <a class="nav-link" aria-current="page" routerLink="reboque">Calcula reboque</a>
             </li>
           </ng-container>
         </ng-container>

@@ -20,6 +20,7 @@ import { CalculaEstadiaComponent } from './components/calculadora/calcula-estadi
 import { ForgotPasswordComponent } from './components/user/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './components/user/reset-password/reset-password.component';
 import { TermsOfUseComponent } from './terms-of-use/terms-of-use.component';
+import { ReboqueComponent } from './components/calculo-reboque/reboque.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' }, 
@@ -70,5 +71,6 @@ export const routes: Routes = [
   { path: 'terms-of-use', component: TermsOfUseComponent },
   { path: 'home', component: HomeComponent },
   { path: 'calcula-estadia', component: CalculaEstadiaComponent },
+  { path: 'reboque', component: ReboqueComponent },
   { path: '**', redirectTo: 'dashboard', pathMatch: 'full' },
 ];
