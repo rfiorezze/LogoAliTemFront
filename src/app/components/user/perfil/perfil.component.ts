@@ -47,7 +47,7 @@ export class PerfilComponent implements OnInit {
         (error) => {
           console.error(error);
           this.toastr.error('Usuário não Carregado', 'Erro');
-          this.router.navigate(['/dashboard']);
+          this.router.navigate(['/home']);
         },
         () => this.spinner.hide()
       )      

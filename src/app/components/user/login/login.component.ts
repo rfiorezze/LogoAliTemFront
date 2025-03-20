@@ -38,7 +38,7 @@ export class LoginComponent implements OnInit {
           this.router.navigate(['/calcula-estadia']);
           localStorage.removeItem('retornarParaCertidao');
         } else {
-          this.router.navigate(['/dashboard']);
+          this.router.navigate(['/home']);
         }
         this.spinner.hide();
       },

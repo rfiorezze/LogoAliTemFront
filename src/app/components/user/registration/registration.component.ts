@@ -97,7 +97,7 @@ export class RegistrationComponent implements OnInit {
           this.router.navigate(['/calcula-estadia']);
           localStorage.removeItem('retornarParaCertidao');
         } else {
-          this.router.navigate(['/dashboard']);
+          this.router.navigate(['/home']);
         }
       },
       (error: any) => {

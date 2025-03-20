@@ -14,10 +14,13 @@
     <!-- Menus -->
     <div class="collapse navbar-collapse" [collapse]="isCollapsed" [isAnimated]="true" id="navbarNav">
       <ul class="navbar-nav me-auto" style="font-size: 18px !important;">
+
+        <li class="nav-item">
+          <a class="nav-link" routerLink="home">Pagina Inicial</a>
+        </li>
         
         <!-- Menus para usuários logados -->
         <ng-container *ngIf="(accountService.currentUser$ | async) !== null">
-          
           <!-- Administradores -->
           <ng-container *ngIf="(accountService.currentUser$ | async)?.userRoles?.includes('Administrador')">
             <li class="nav-item">
