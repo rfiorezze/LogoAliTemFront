@@ -6,13 +6,14 @@ import { ReboqueService } from '@app/services/reboque.service';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { TituloComponent } from '@app/shared/titulo/titulo.component';
 
 @Component({
   selector: 'app-reboque',
   standalone: true,
   templateUrl: './reboque.component.html',
   styleUrls: ['./reboque.component.scss'],
-  imports: [ReactiveFormsModule, CommonModule]
+  imports: [ReactiveFormsModule, CommonModule, TituloComponent]
 })
 export class ReboqueComponent implements OnInit {
   form!: FormGroup;

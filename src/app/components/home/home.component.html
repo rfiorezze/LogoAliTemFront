@@ -1,2 +1,44 @@
-<app-titulo [titulo]="'Pagina Inicial'" [subtitulo]="'Acompanhe aqui as novidades'" [iconClass]="'fa fa-home'"></app-titulo>
-<h3>Seja bem vindo ao LogoAliTem.</h3>
+<div class="container mt-4">
+    <app-titulo [titulo]="'Página Inicial'" [subtitulo]="'Acompanhe aqui as novidades'" [iconClass]="'fa fa-home'"></app-titulo>
+  
+    <div class="card shadow-sm p-4 text-center">
+      <div class="card-body">
+        <h2 class="fw-bold text-primary">👋 Bem-vindo ao Logo Ali Tem!</h2>
+        <p class="lead text-muted">Aqui você encontra tudo o que precisa para facilitar seu dia a dia.</p>
+  
+        <hr class="my-4">
+  
+        <h4 class="fw-bold">🚗 O que você pode fazer?</h4>
+        <p class="text-muted">Nosso sistema permite que você:</p>
+  
+        <div class="row justify-content-center">
+          <div class="col-md-5">
+            <div class="card border-0 shadow-sm p-3">
+              <h5 class="fw-bold text-success">📍 Cálculo de Estadia</h5>
+              <p class="text-muted">Calcule rapidamente os custos de estadia do seu veículo.</p>
+            </div>
+          </div>
+          <div class="col-md-5">
+            <div class="card border-0 shadow-sm p-3">
+              <h5 class="fw-bold text-danger">🚛 Cálculo de Reboque</h5>
+              <p class="text-muted">Saiba o valor estimado para o reboque do seu veículo.</p>
+            </div>
+          </div>
+        </div>
+  
+        <p class="mt-4 text-muted">Acesse o menu acima para começar a usar essas funcionalidades.</p>
+  
+        <hr class="my-4">
+  
+        <!-- Se o usuário NÃO estiver logado, exibe esse bloco -->
+        <ng-container *ngIf="!(accountService.currentUser$ | async)">
+            <h4 class="fw-bold">📌 Mais funcionalidades?</h4>
+            <p class="text-muted">Crie sua conta gratuitamente e tenha acesso a recursos exclusivos!</p>
+        
+            <a routerLink="/user/registration" class="btn btn-warning btn-lg mt-2">Criar Conta Agora</a>
+        </ng-container> 
+        
+      </div>
+    </div>
+  </div>
+  

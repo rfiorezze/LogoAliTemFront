@@ -1,86 +1,83 @@
-<nav class="navbar navbar-expand-lg navbar-light btn-white shadow-sm" *ngIf="showMenu()">
-  <div class="container-fluid">
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm" *ngIf="showMenu()">
+  <div class="container">
+    <!-- Logo -->
     <a class="navbar-brand" routerLink="home">
-      <img src="assets/logo.png" height="48">
+      <img src="assets/logo.png" height="48" alt="Logo">
     </a>
-    <button class="navbar-toggler" (click)="isCollapsed = !isCollapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+
+    <!-- Botão de Toggle (Mobile) -->
+    <button class="navbar-toggler" (click)="isCollapsed = !isCollapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
+
+    <!-- Menus -->
     <div class="collapse navbar-collapse" [collapse]="isCollapsed" [isAnimated]="true" id="navbarNav">
-      <ul class="navbar-nav me-auto" style="font-size: 20px !important;">
-        <!-- Menus que aparecem apenas quando logado -->
+      <ul class="navbar-nav me-auto" style="font-size: 18px !important;">
+        
+        <!-- Menus para usuários logados -->
         <ng-container *ngIf="(accountService.currentUser$ | async) !== null">
-          <!-- Menus Administradores -->
+          
+          <!-- Administradores -->
           <ng-container *ngIf="(accountService.currentUser$ | async)?.userRoles?.includes('Administrador')">
-            <li class="nav-item" routerLinkActive="active">
-              <a class="nav-link" aria-current="page" routerLink="dashboard">Dashboard</a>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="dashboard">Dashboard</a>
             </li>
-            <ul class="navbar-nav">
-              <li class="nav-item dropdown" dropdown>
-                <a dropdownToggle class="nav-link dropdown-toggle" style="cursor: pointer;" id="navbarDropdownMenuLink" data-toggle="dropdown"
-                  aria-haspopup="true" aria-expanded="false">
-                  Motorista
-                </a>
-                <div *dropdownMenu class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                  <a class="dropdown-item" routerLink="motoristas/detalhe">Cadastrar</a>
-                  <div role="separator" class="divider"></div>
-                  <a class="dropdown-item" routerLink="motoristas/busca-por-cpf">Consultar por CPF</a>
-                  <a class="dropdown-item" routerLink="motoristas/busca-por-regiao">Consultar por região</a>
-                </div>
-              </li>
-            </ul>
-            <ul class="navbar-nav">
-              <li class="nav-item dropdown" dropdown>
-                <a dropdownToggle class="nav-link dropdown-toggle" style="cursor: pointer;" id="navbarDropdownMenuLink" data-toggle="dropdown"
-                  aria-haspopup="true" aria-expanded="false">
-                  Veículos
-                </a>
-                <div *dropdownMenu class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                  <a class="dropdown-item" routerLink="veiculos/cadastrar-veiculo-por-motorista">Cadastrar</a>
-                  <div role="separator" class="divider"></div>
-                  <a class="dropdown-item" routerLink="veiculos/busca-veiculo-por-placa">Consultar por placa</a>
-                  <a class="dropdown-item" routerLink="veiculos/busca-veiculo-por-motorista">Consultar por motorista</a>
-                </div>
-              </li>
-            </ul>
-            <li class="nav-item" routerLinkActive="active">
-              <a class="nav-link" aria-current="page" routerLink="calcula-estadia">Calcula de estadia</a>
+
+            <!-- Dropdown Motoristas -->
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" id="motoristaDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Motorista
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="motoristaDropdown">
+                <li><a class="dropdown-item" routerLink="motoristas/detalhe">Cadastrar</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" routerLink="motoristas/busca-por-cpf">Consultar por CPF</a></li>
+                <li><a class="dropdown-item" routerLink="motoristas/busca-por-regiao">Consultar por região</a></li>
+              </ul>
             </li>
-            <li class="nav-item" routerLinkActive="active">
-              <a class="nav-link" aria-current="page" routerLink="reboque">Calcula reboque</a>
+
+            <!-- Dropdown Veículos -->
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" id="veiculosDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Veículos
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="veiculosDropdown">
+                <li><a class="dropdown-item" routerLink="veiculos/cadastrar-veiculo-por-motorista">Cadastrar</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" routerLink="veiculos/busca-veiculo-por-placa">Consultar por placa</a></li>
+                <li><a class="dropdown-item" routerLink="veiculos/busca-veiculo-por-motorista">Consultar por motorista</a></li>
+              </ul>
             </li>
           </ng-container>
         </ng-container>
 
-        <!-- Menu público -->
-          <ng-container>
-            <li class="nav-item" routerLinkActive="active">
-             <a class="nav-link" aria-current="page" routerLink="calcula-estadia">Calcula de estadia</a>
-            </li>
-            <li class="nav-item" routerLinkActive="active">
-              <a class="nav-link" aria-current="page" routerLink="reboque">Calcula reboque</a>
-            </li>
-          </ng-container>
+        <!-- Menu público (sempre visível) -->
+        <li class="nav-item">
+          <a class="nav-link" routerLink="calcula-estadia">Calcular Estadia</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="reboque">Calcular Reboque</a>
+        </li>
       </ul>
 
-      <!-- Botões para login e cadastro quando não logado -->
-      <div *ngIf="(accountService.currentUser$ | async) === null" class="navbar-nav ms-auto">
-        <a class="btn btn-light me-2 border" routerLink="/user/login">Entrar</a>
-        <a class="btn btn-warning mr-2" routerLink="/user/registration">Me Cadastrar</a>
-      </div>      
+      <!-- Botões de login/cadastro para usuários não logados -->
+      <div *ngIf="(accountService.currentUser$ | async) === null" class="d-flex">
+        <a class="btn btn-outline-primary me-2" routerLink="/user/login">Entrar</a>
+        <a class="btn btn-warning" routerLink="/user/registration">Criar Conta</a>
+      </div>
 
-      <!-- Menu de usuário logado -->
+      <!-- Menu do usuário logado -->
       <ul *ngIf="(accountService.currentUser$ | async) !== null" class="navbar-nav">
-        <li *ngIf="(accountService.currentUser$ | async) as user" class="nav-item dropdown" dropdown>
-          <a dropdownToggle class="nav-link dropdown-toggle" style="cursor: pointer;" id="navbarDropdownMenuLink" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false">
-            {{user.nomeCompleto | titlecase}}
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            {{ (accountService.currentUser$ | async)?.nomeCompleto | titlecase }}
           </a>
-          <div *dropdownMenu class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" routerLink="user/perfil">Perfil</a>
-            <div role="separator" class="divider"></div>
-            <a (click)="logout()" class="dropdown-item" style="cursor: pointer;">Sair</a>
-          </div>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+            <li><a class="dropdown-item" routerLink="user/perfil">Perfil</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a (click)="logout()" class="dropdown-item" style="cursor: pointer;">Sair</a></li>
+          </ul>
         </li>
       </ul>
     </div>

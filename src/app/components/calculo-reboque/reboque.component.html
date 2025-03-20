@@ -1,63 +1,77 @@
-<div class="container mt-4">
-  <h2 class="text-center mb-4">Cálculo de Reboque</h2>
-
-  <form [formGroup]="form" class="card p-4 shadow">
-    <fieldset [disabled]="solicitacaoEmAndamento">
-      <div class="mb-3">
-        <label class="form-label">Tipo do Veículo</label>
-        <select class="form-select" formControlName="tipoVeiculo">
-          <option value="" disabled selected>Selecione...</option>
-          <option value="Leve">Leve (Carros e Motos)</option>
-          <option value="Utilitario">Utilitário (Picapes e furgões médios)</option>
-          <option value="Semi-Pesado">Semi-Pesado (Vans)</option>
-        </select>
-      </div>
-
-      <div class="mb-3">
-        <label class="form-label">Endereço de Retirada</label>
-        <div class="input-group">
-          <input type="text" id="localRetirada" class="form-control" formControlName="localRetirada"
-                 placeholder="Digite ou use geolocalização" />
-          <button type="button" class="btn btn-primary" (click)="usarGeolocalizacao()">📍</button>
+ <app-titulo [titulo]="'Calculadora de Reboque'" [subtitulo]="'Calcule o custo do reboque aqui'" [iconClass]="'fa fa-truck'" [botaoListar]="false"></app-titulo>
+  <div class="card shadow-sm p-4">
+    <form [formGroup]="form">
+      <fieldset [disabled]="solicitacaoEmAndamento">
+        
+        <!-- Tipo do veículo -->
+        <div class="mb-3">
+          <label class="form-label fw-bold">🚘 Tipo do Veículo</label>
+          <select class="form-select" formControlName="tipoVeiculo">
+            <option value="" disabled selected>Selecione...</option>
+            <option value="Leve">Leve (Carros e Motos)</option>
+            <option value="Utilitario">Utilitário (Picapes e furgões médios)</option>
+            <option value="Semi-Pesado">Semi-Pesado (Vans)</option>
+          </select>
         </div>
-        <ul *ngIf="sugestoesRetirada.length > 0" class="list-group">
-          <li *ngFor="let sugestao of sugestoesRetirada" class="list-group-item list-group-item-action"
-              (click)="selecionarSugestao(sugestao, 'localRetirada')">{{ sugestao }}</li>
-        </ul>
-      </div>
 
-      <div class="mb-3">
-        <label class="form-label">Endereço de Destino</label>
-        <input type="text" id="localDestino" class="form-control" formControlName="localDestino"
-               placeholder="Digite o destino" />
-        <ul *ngIf="sugestoesDestino.length > 0" class="list-group">
-          <li *ngFor="let sugestao of sugestoesDestino" class="list-group-item list-group-item-action"
-              (click)="selecionarSugestao(sugestao, 'localDestino')">{{ sugestao }}</li>
-        </ul>
-      </div>
+        <!-- Endereço de Retirada -->
+        <div class="mb-3">
+          <label class="form-label fw-bold">📍 Endereço de Retirada</label>
+          <div class="input-group">
+            <input type="text" id="localRetirada" class="form-control" formControlName="localRetirada"
+                  placeholder="Digite ou use geolocalização" />
+            <button type="button" class="btn btn-primary" (click)="usarGeolocalizacao()">📍</button>
+          </div>
+          <ul *ngIf="sugestoesRetirada.length > 0" class="list-group mt-2">
+            <li *ngFor="let sugestao of sugestoesRetirada" class="list-group-item list-group-item-action"
+                (click)="selecionarSugestao(sugestao, 'localRetirada')">
+              {{ sugestao }}
+            </li>
+          </ul>
+        </div>
 
-      <button type="button" class="btn btn-primary w-100" (click)="calcularValor()" [disabled]="solicitacaoEmAndamento">
-        Calcular Valor
-      </button>
-    </fieldset>
-  </form>
+        <!-- Endereço de Destino -->
+        <div class="mb-3">
+          <label class="form-label fw-bold">🎯 Endereço de Destino</label>
+          <input type="text" id="localDestino" class="form-control" formControlName="localDestino"
+                placeholder="Digite o destino" />
+          <ul *ngIf="sugestoesDestino.length > 0" class="list-group mt-2">
+            <li *ngFor="let sugestao of sugestoesDestino" class="list-group-item list-group-item-action"
+                (click)="selecionarSugestao(sugestao, 'localDestino')">
+              {{ sugestao }}
+            </li>
+          </ul>
+        </div>
 
-  <!-- 🔥 EXIBIR SOMENTE SE O CÁLCULO DE VALOR RETORNAR SUCESSO -->
-  <div *ngIf="valorEstimado !== null && !solicitacaoConfirmada" class="mt-4 text-center">
-    <h4>Valor Estimado: <span class="badge bg-success">R$ {{ valorEstimado?.toFixed(2) }}</span></h4>
-    <button class="btn btn-success mt-2 w-100" (click)="contratarReboque()" [disabled]="solicitacaoEmAndamento">
+        <!-- Botão de Cálculo -->
+        <button type="button" class="btn btn-primary w-100 mt-3" (click)="calcularValor()" [disabled]="solicitacaoEmAndamento">
+          🔍 Calcular Valor
+        </button>
+      </fieldset>
+    </form>
+  </div>
+
+  <!-- 🔥 Exibir apenas se o cálculo for bem-sucedido -->
+  <div *ngIf="valorEstimado !== null && !solicitacaoConfirmada" class="card shadow-sm p-4 mt-4 text-center">
+    <h4 class="fw-bold">💰 Valor Estimado:</h4>
+    <span class="badge bg-success fs-4">R$ {{ valorEstimado?.toFixed(2) }}</span>
+    
+    <button class="btn btn-success mt-3 w-100" (click)="contratarReboque()" [disabled]="solicitacaoEmAndamento">
       🚛 Contratar Reboque
     </button>
   </div>
 
-  <!-- 🔥 SOMENTE EXIBIR SE A SOLICITAÇÃO FOR CONFIRMADA -->
-  <div *ngIf="solicitacaoConfirmada" class="mt-4 text-center alert alert-success">
+  <!-- 🔥 Exibir apenas se a solicitação for confirmada -->
+  <div *ngIf="solicitacaoConfirmada" class="alert alert-success mt-4 text-center shadow-sm p-4">
     <h4>✅ Solicitação registrada com sucesso!</h4>
-    <h3>Valor Estimado: <span class="badge bg-success">R$ {{ valorEstimado?.toFixed(2) }}</span></h3>
-    <p>Um atendente entrará em contato em breve.</p>    
-    <p class="text-muted"><small>🚨 caso queira agilizar o atendimento, clique no botão abaixo e acione nosso atendentes através do Whatsapp.</small></p>
-    <button class="btn btn-success mt-2 w-100" (click)="enviarWhatsApp()">
+    <h3>💰 Valor Estimado: <span class="badge bg-success">R$ {{ valorEstimado?.toFixed(2) }}</span></h3>
+    <p class="text-muted">Um atendente entrará em contato em breve.</p>    
+
+    <p class="text-muted">
+      <small>🚨 Caso queira agilizar o atendimento, clique no botão abaixo e fale com um atendente pelo WhatsApp.</small>
+    </p>
+
+    <button class="btn btn-success w-100 mt-2" (click)="enviarWhatsApp()">
       📲 Solicitar por WhatsApp
     </button>
   </div>
-</div>

@@ -1,75 +1,85 @@
-<app-titulo [titulo]="'Perfil'" [subtitulo]="'Dados pessoais'" [iconClass]="'fa fa-user-circle'"></app-titulo>
+<div class="container mt-4">
+  <app-titulo [titulo]="'Perfil'" [subtitulo]="'Dados pessoais'" [iconClass]="'fa fa-user-circle'"></app-titulo>
 
-<form [formGroup]="form" (ngSubmit)="onSubmit()">
-  <div class="row p-3">
-    <div class="col-lg-3 pt-1">
-      <div class="card mb-3">
-        <div class="card-header"></div>
-        <div class="d-flex align-self-center pt-3">
-          <a>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="row">
+      
+      <!-- Card do perfil (Imagem e Nome) -->
+      <div class="col-lg-4">
+        <div class="card shadow-sm text-center p-4">
+          <div class="card-body">
             <img
               src="https://i.pinimg.com/564x/51/65/bb/5165bbc3564b4296c70371b75c9774b0.jpg"
-              name="aboutme" width="120" height="120" class="rounded-circle">
-          </a>
+              alt="Imagem de perfil"
+              width="120"
+              height="120"
+              class="rounded-circle mb-3"
+            />
+            <h4 class="fw-bold">{{ f.nomeCompleto.value }}</h4>
+            <p class="text-muted">{{ f.email.value }}</p>
+          </div>
         </div>
-        <div class="card-body">
-          <div class="h4 text-center mb-3">{{f.nomeCompleto.value}}</div>
-        </div>
-        <div class="card-footer"></div>
       </div>
+
+      <!-- Formulário -->
+      <div class="col-lg-8">
+        <div class="card shadow-sm p-4">
+          <div class="card-body">
+            <h3 class="fw-bold text-primary border-bottom pb-2">Detalhes do Perfil</h3>
+
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="nomeCompleto" class="form-label">Nome Completo</label>
+                <input 
+                  type="text"
+                  id="nomeCompleto"
+                  formControlName="nomeCompleto"
+                  class="form-control"
+                  placeholder="Seu nome completo"
+                  [ngClass]="{ 'is-invalid': f.nomeCompleto.errors && f.nomeCompleto.touched }"
+                />
+                <div class="invalid-feedback">Nome Completo é obrigatório.</div>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="email" class="form-label">E-mail</label>
+                <input 
+                  type="email"
+                  id="email"
+                  formControlName="email"
+                  class="form-control"
+                  placeholder="seu@email.com"
+                  [ngClass]="{ 'is-invalid': f.email.errors && f.email.touched }"
+                />
+                <div class="invalid-feedback">E-mail obrigatório ou inválido.</div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-4 mb-3">
+                <label for="telefone" class="form-label">Telefone</label>
+                <input 
+                  type="text"
+                  id="telefone"
+                  formControlName="telefone"
+                  mask="(00) 0 0000-0000"
+                  class="form-control"
+                  placeholder="(00) 9 0000-0000"
+                  [ngClass]="{ 'is-invalid': f.telefone.errors && f.telefone.touched }"
+                />
+                <div class="invalid-feedback">Telefone é obrigatório.</div>
+              </div>
+            </div>
+
+            <div class="d-flex justify-content-end mt-3">
+              <button type="submit" class="btn btn-success px-4" [disabled]="!form.valid">
+                Salvar Alteração
+              </button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
     </div>
-    <div class="col-lg-9">
-      <div class="row">
-        <div class="mb-3 col-12">
-          <h3 class="border-bottom">Detalhe Perfil</h3>
-        </div>
-        <div class="mb-3 col-sm-5">
-          <label>Nome Completo</label>
-          <input type="text" formControlName="nomeCompleto" class="form-control" placeholder="Insira o nome completo"
-            [ngClass]="{ 'is-invalid': f.nomeCompleto.errors && f.nomeCompleto.touched }" />
-          <div *ngIf="f.nomeCompleto.errors && f.nomeCompleto.touched" class="invalid-feedback">
-            <div *ngIf="f.nomeCompleto.errors.required">Nome Completo é obrigatório</div>
-          </div>
-        </div>
-        <div class="mb-3 col-sm-5">
-          <label for="">Email:</label>
-          <input
-            class="form-control"
-            type="text"
-            formControlName="email"
-            [ngClass]="{ 'is-invalid': f.email.errors && f.email.touched }"
-            placeholder="Insira o e-mail"
-          />
-          <div
-            *ngIf="f.email.errors?.required && f.email.touched"
-            class="invalid-feedback"
-          >
-            e-mail é obrigatório.
-          </div>
-          <div
-            *ngIf="f.email.errors?.email && f.email.touched"
-            class="invalid-feedback"
-          >
-            Deve ser um e-mail válido.
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="mb-3 col-md-3">
-          <label>Telefone</label>
-          <input type="text" class="form-control" mask="(00) 0 0000-0000"
-            [ngClass]="{ 'is-invalid': f.telefone.errors && f.telefone.touched }" formControlName="telefone"
-            placeholder="(00) 9 0000-0000">
-          <div *ngIf="f.telefone.errors?.required && f.telefone.touched" class="invalid-feedback">
-            Telefone é obrigatório
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="card-footer d-flex">
-    <button type="submit" class="btn btn-success ms-auto" [disabled]="!form.valid">
-      Salvar Alteração
-    </button>
-  </div>
-</form>
+  </form>
+</div>
