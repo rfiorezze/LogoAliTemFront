@@ -10,7 +10,7 @@
       <ul class="navbar-nav me-auto" style="font-size: 20px !important;">
         <!-- Menus que aparecem apenas quando logado -->
         <ng-container *ngIf="(accountService.currentUser$ | async) !== null">
-          <!-- Menus visíveis apenas para Administradores -->
+          <!-- Menus Administradores -->
           <ng-container *ngIf="(accountService.currentUser$ | async)?.userRoles?.includes('Administrador')">
             <li class="nav-item" routerLinkActive="active">
               <a class="nav-link" aria-current="page" routerLink="dashboard">Dashboard</a>
@@ -50,25 +50,17 @@
               <a class="nav-link" aria-current="page" routerLink="reboque">Calcula reboque</a>
             </li>
           </ng-container>
+        </ng-container>
 
-          <!-- Menus visíveis apenas para Motoristas -->
-          <ng-container *ngIf="(accountService.currentUser$ | async)?.userRoles?.includes('Motorista') && !(accountService.currentUser$ | async)?.userRoles?.includes('Admin')">
+        <!-- Menu público -->
+          <ng-container>
             <li class="nav-item" routerLinkActive="active">
-              <a class="nav-link" aria-current="page" routerLink="calcula-estadia">Calcula de estadia</a>
+             <a class="nav-link" aria-current="page" routerLink="calcula-estadia">Calcula de estadia</a>
             </li>
             <li class="nav-item" routerLinkActive="active">
               <a class="nav-link" aria-current="page" routerLink="reboque">Calcula reboque</a>
             </li>
           </ng-container>
-        </ng-container>
-
-        <!-- Menu público "Calcula Estadia" -->
-        <li *ngIf="(accountService.currentUser$ | async) === null" class="nav-item" routerLinkActive="active">
-          <a class="nav-link" aria-current="page" routerLink="calcula-estadia">Calcula de estadia</a>
-        </li>
-        <li class="nav-item" routerLinkActive="active">
-          <a class="nav-link" aria-current="page" routerLink="reboque">Calcula reboque</a>
-        </li>
       </ul>
 
       <!-- Botões para login e cadastro quando não logado -->

@@ -7,14 +7,14 @@
         <label class="form-label">Tipo do Veículo</label>
         <select class="form-select" formControlName="tipoVeiculo">
           <option value="" disabled selected>Selecione...</option>
-          <option value="Carro">Carro</option>
-          <option value="Moto">Moto</option>
-          <option value="Caminhão">Caminhão</option>
+          <option value="Leve">Leve (Carros e Motos)</option>
+          <option value="Utilitario">Utilitário (Picapes e furgões médios)</option>
+          <option value="Semi-Pesado">Semi-Pesado (Vans)</option>
         </select>
       </div>
 
       <div class="mb-3">
-        <label class="form-label">Local de Retirada</label>
+        <label class="form-label">Endereço de Retirada</label>
         <div class="input-group">
           <input type="text" id="localRetirada" class="form-control" formControlName="localRetirada"
                  placeholder="Digite ou use geolocalização" />
@@ -27,7 +27,7 @@
       </div>
 
       <div class="mb-3">
-        <label class="form-label">Local de Destino</label>
+        <label class="form-label">Endereço de Destino</label>
         <input type="text" id="localDestino" class="form-control" formControlName="localDestino"
                placeholder="Digite o destino" />
         <ul *ngIf="sugestoesDestino.length > 0" class="list-group">
@@ -53,13 +53,11 @@
   <!-- 🔥 SOMENTE EXIBIR SE A SOLICITAÇÃO FOR CONFIRMADA -->
   <div *ngIf="solicitacaoConfirmada" class="mt-4 text-center alert alert-success">
     <h4>✅ Solicitação registrada com sucesso!</h4>
-    <p>Um atendente entrará em contato em breve.</p>
-    <h4>Valor Estimado: <span class="badge bg-success">R$ {{ valorEstimado?.toFixed(2) }}</span></h4>
-
-    <p class="text-muted"><small>🚨 Caso o envio para o WhatsApp tenha sido bloqueado pelo navegador, desbloqueie os pop-ups e clique no botão abaixo:</small></p>
-
-    <button class="btn btn-success mt-2 w-100" (click)="reenviarWhatsApp()">
-      📲 Enviar para o WhatsApp
+    <h3>Valor Estimado: <span class="badge bg-success">R$ {{ valorEstimado?.toFixed(2) }}</span></h3>
+    <p>Um atendente entrará em contato em breve.</p>    
+    <p class="text-muted"><small>🚨 caso queira agilizar o atendimento, clique no botão abaixo e acione nosso atendentes através do Whatsapp.</small></p>
+    <button class="btn btn-success mt-2 w-100" (click)="enviarWhatsApp()">
+      📲 Solicitar por WhatsApp
     </button>
   </div>
 </div>

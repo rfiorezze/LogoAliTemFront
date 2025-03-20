@@ -834,32 +834,39 @@ export class CalculaEstadiaComponent {
 
   enviarPdfPorEmail(): void {
     if (this.emailForm.valid) {
-      this.atualizarMotorista(() => {
-        const emailDestino = this.emailForm.get('email')?.value;
-        const assunto = 'Certidão de Estadia';
-        const corpo = 'Segue em anexo a certidão de estadia.';
-        const copiaPara = '';
+        this.atualizarMotorista(() => {
+            const emailDestino = this.emailForm.get('email')?.value;
+            const assunto = 'Detalhes da Estadia';
+            const corpo = `Prezado(a),
 
-        // Gerar o PDF atualizado
-        const doc = this.gerarPdf();
-        const pdfBlob = doc.output('blob');
+Segue em anexo o documento referente à sua solicitação de estadia. Esse documento contém informações detalhadas sobre o cálculo realizado.
 
-        // Enviar e-mail com os dados atualizados
-        this.emailService
-          .enviarEmail(emailDestino, assunto, corpo, copiaPara, pdfBlob)
-          .subscribe(
-            () => {
-              this.toastr.success('E-mail enviado com sucesso!');
-              this.fecharModal();
-            },
-            (error) => {
-              this.toastr.error('Erro ao enviar o e-mail.');
-              console.error('Erro ao enviar o e-mail', error);
-            }
-          );
-      });
+Caso tenha dúvidas, entre em contato conosco.
+
+Atenciosamente,
+Equipe LogoALitem`;
+            const copiaPara = 'servicoslogoalitem@gmail.com;contato@logoalitem.com.br';
+
+            // Gerar o PDF atualizado
+            const doc = this.gerarPdf();
+            const pdfBlob = doc.output('blob');
+
+            // Enviar e-mail com os dados atualizados
+            this.emailService
+                .enviarEmail(emailDestino, assunto, corpo, copiaPara, pdfBlob)
+                .subscribe(
+                    () => {
+                        this.toastr.success('E-mail enviado com sucesso!');
+                        this.fecharModal();
+                    },
+                    (error) => {
+                        this.toastr.error('Erro ao enviar o e-mail.');
+                        console.error('Erro ao enviar o e-mail', error);
+                    }
+                );
+        });
     }
-  }
+}
 
   ngAfterViewInit() {
     // Certifique-se de que o código só será executado no client-side

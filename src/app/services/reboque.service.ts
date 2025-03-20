@@ -17,9 +17,9 @@ export class ReboqueService {
    * @param localDestino Endereço de destino do veículo.
    * @returns Observable com o valor estimado do reboque.
    */
-  public calcularValor(localRetirada: string, localDestino: string): Observable<{ valor: number }> {
+  public calcularValor(localRetirada: string, localDestino: string, tipoVeiculo: string): Observable<{ valor: number }> {
     return this.http
-      .post<{ valor: number }>(`${this.baseURL}/calcular`, { localRetirada, localDestino })
+      .post<{ valor: number }>(`${this.baseURL}/calcular`, { localRetirada, localDestino, tipoVeiculo })
       .pipe(take(1));
   }
 

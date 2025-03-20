@@ -105,12 +105,12 @@ export class ReboqueComponent implements OnInit {
       return;
     }
 
-    const { localRetirada, localDestino } = this.form.value;
+    const { localRetirada, localDestino, tipoVeiculo } = this.form.value;
 
     this.solicitacaoEmAndamento = true;
     this.spinner.show();
 
-    this.reboqueService.calcularValor(localRetirada, localDestino).subscribe({
+    this.reboqueService.calcularValor(localRetirada, localDestino, tipoVeiculo).subscribe({
       next: (response) => {
         this.valorEstimado = response.valor;
         this.solicitacaoEmAndamento = false;
@@ -131,16 +131,14 @@ export class ReboqueComponent implements OnInit {
     }
 
     this.solicitacaoEmAndamento = true;
-    this.spinner.show();
-    
+    this.spinner.show();    
 
     const { localRetirada, localDestino, tipoVeiculo } = this.form.value;
 
     this.reboqueService.contratarReboque(localRetirada, localDestino, tipoVeiculo, this.valorEstimado).subscribe({
       next: () => {
-        this.toastr.success('Reboque contratado com sucesso!');
+        this.toastr.success('Solicitação realizada com sucesso!');
         this.solicitacaoConfirmada = true;
-        this.enviarWhatsApp(localRetirada, localDestino, tipoVeiculo);
         this.spinner.hide();
       },
       error: () => {
@@ -151,11 +149,13 @@ export class ReboqueComponent implements OnInit {
     });
   }
 
-
-  enviarWhatsApp(localRetirada: string, localDestino: string, tipoVeiculo: string): void {
+  enviarWhatsApp(): void {
+    const { localRetirada, localDestino, tipoVeiculo } = this.form.value;
+  
     const telefoneWhatsApp = '5531992049301';
     this.ultimaMensagemWhatsApp = `
       Olá, gostaria de contratar um reboque.
+  
       - Local de retirada: ${localRetirada}
       - Destino: ${localDestino}
       - Tipo do veículo: ${tipoVeiculo}
@@ -163,20 +163,10 @@ export class ReboqueComponent implements OnInit {
       
       Por favor, me envie mais detalhes.
     `;
-
+  
     const urlWhatsApp = `https://api.whatsapp.com/send/?phone=${telefoneWhatsApp}&text=${encodeURIComponent(this.ultimaMensagemWhatsApp)}&type=phone_number&app_absent=0`;
-
-    const popup = window.open(urlWhatsApp, '_blank');
-
-    if (!popup) {
-      this.toastr.warning('O envio automático pode ter sido bloqueado pelo seu navegador. Use o botão abaixo para reenviar.');
-      this.whatsappBloqueado = true;
-    }
-  }
-
-  reenviarWhatsApp(): void {
-    const telefoneWhatsApp = '5531992049301';
-    const urlWhatsApp = `https://api.whatsapp.com/send/?phone=${telefoneWhatsApp}&text=${encodeURIComponent(this.ultimaMensagemWhatsApp)}&type=phone_number&app_absent=0`;
-    window.open(urlWhatsApp, '_blank');
-  }
+  
+    // Redireciona diretamente para o WhatsApp
+    window.location.href = urlWhatsApp;
+  }  
 }
