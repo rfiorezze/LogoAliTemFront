@@ -7,16 +7,24 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { TituloComponent } from '@app/shared/titulo/titulo.component';
+import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
 
 @Component({
   selector: 'app-reboque',
   standalone: true,
   templateUrl: './reboque.component.html',
   styleUrls: ['./reboque.component.scss'],
-  imports: [ReactiveFormsModule, CommonModule, TituloComponent]
+  imports: [
+    ReactiveFormsModule,
+    CommonModule,
+    TituloComponent,
+    NgxMaskDirective,
+    NgxMaskPipe
+  ]
 })
 export class ReboqueComponent implements OnInit {
-  form!: FormGroup;
+  formCalculo!: FormGroup;
+  formPlaca!: FormGroup;
   valorEstimado: number | null = null;
   solicitacaoEmAndamento = false;
   solicitacaoConfirmada = false;
@@ -32,21 +40,32 @@ export class ReboqueComponent implements OnInit {
     private toastr: ToastrService,
     private localizacaoService: LocalizacaoService,
     private reboqueService: ReboqueService,
-    private spinner : NgxSpinnerService
+    private spinner: NgxSpinnerService
   ) {}
 
   ngOnInit(): void {
-    this.form = this.fb.group({
+    this.formCalculo = this.fb.group({
       tipoVeiculo: ['', Validators.required],
       localRetirada: ['', Validators.required],
-      localDestino: ['', Validators.required],
+      localDestino: ['', Validators.required]
+    });
+  
+    this.formPlaca = this.fb.group({
+      placa: ['', [
+        Validators.required
+      ]]
     });
 
     this.ativarAutocomplete();
   }
 
+  get f() {
+    return this.formCalculo.controls;
+    return this.formPlaca.controls;
+  }
+
   ativarAutocomplete(): void {
-    this.form.get('localRetirada')?.valueChanges.pipe(debounceTime(300), distinctUntilChanged()).subscribe(value => {
+    this.f.localRetirada.valueChanges.pipe(debounceTime(300), distinctUntilChanged()).subscribe(value => {
       if (typeof value === 'string' && value.length > 2) {
         this.localizacaoService.obterSugestoesEnderecos(value).subscribe({
           next: sugestoes => this.sugestoesRetirada = sugestoes,
@@ -57,7 +76,7 @@ export class ReboqueComponent implements OnInit {
       }
     });
 
-    this.form.get('localDestino')?.valueChanges.pipe(debounceTime(300), distinctUntilChanged()).subscribe(value => {
+    this.f.localDestino.valueChanges.pipe(debounceTime(300), distinctUntilChanged()).subscribe(value => {
       if (typeof value === 'string' && value.length > 2) {
         this.localizacaoService.obterSugestoesEnderecos(value).subscribe({
           next: sugestoes => this.sugestoesDestino = sugestoes,
@@ -70,7 +89,7 @@ export class ReboqueComponent implements OnInit {
   }
 
   selecionarSugestao(endereco: string, campo: 'localRetirada' | 'localDestino'): void {
-    this.form.get(campo)?.setValue(endereco, { emitEvent: false }); // Evita que o evento `valueChanges` dispare novamente
+    this.formCalculo.get(campo)?.setValue(endereco, { emitEvent: false });
     this.sugestoesRetirada = [];
     this.sugestoesDestino = [];
     this.campoFocado = null;
@@ -87,7 +106,7 @@ export class ReboqueComponent implements OnInit {
         const { latitude, longitude } = position.coords;
         this.localizacaoService.obterEnderecoPorCoordenadas(latitude, longitude).subscribe({
           next: (response) => {
-            this.form.get('localRetirada')?.setValue(response.endereco);
+            this.f.localRetirada.setValue(response.endereco);
           },
           error: () => {
             this.toastr.error('Erro ao obter o endereço.');
@@ -101,12 +120,12 @@ export class ReboqueComponent implements OnInit {
   }
 
   calcularValor(): void {
-    if (this.form.invalid) {
+    if (this.formCalculo.invalid) {
       this.toastr.warning('Preencha todos os campos obrigatórios.');
       return;
     }
 
-    const { localRetirada, localDestino, tipoVeiculo } = this.form.value;
+    const { localRetirada, localDestino, tipoVeiculo } = this.formCalculo.value;
 
     this.solicitacaoEmAndamento = true;
     this.spinner.show();
@@ -126,17 +145,31 @@ export class ReboqueComponent implements OnInit {
   }
 
   contratarReboque(): void {
+    const placa = this.formPlaca.get('placa')?.value?.trim().toUpperCase();
+    this.formPlaca.get('placa')?.setValue(placa);
+  
     if (!this.valorEstimado) {
       this.toastr.warning('Calcule o valor antes de contratar.');
       return;
     }
-
+  
+    if (this.formPlaca.invalid) {
+      this.toastr.warning('Placa inválida. Verifique o preenchimento.');
+      return;
+    }
+  
     this.solicitacaoEmAndamento = true;
-    this.spinner.show();    
-
-    const { localRetirada, localDestino, tipoVeiculo } = this.form.value;
-
-    this.reboqueService.contratarReboque(localRetirada, localDestino, tipoVeiculo, this.valorEstimado).subscribe({
+    this.spinner.show();
+  
+    const { localRetirada, localDestino, tipoVeiculo } = this.formCalculo.value;
+  
+    this.reboqueService.contratarReboque(
+      localRetirada,
+      localDestino,
+      tipoVeiculo,
+      this.valorEstimado,
+      placa
+    ).subscribe({
       next: () => {
         this.toastr.success('Solicitação realizada com sucesso!');
         this.solicitacaoConfirmada = true;
@@ -148,26 +181,27 @@ export class ReboqueComponent implements OnInit {
         this.spinner.hide();
       }
     });
-  }
+  }  
 
   enviarWhatsApp(): void {
-    const { localRetirada, localDestino, tipoVeiculo } = this.form.value;
-  
+    const { localRetirada, localDestino, tipoVeiculo } = this.formCalculo.value;
+    const { placa } = this.formPlaca.value;
+
     const telefoneWhatsApp = '5531992049301';
     this.ultimaMensagemWhatsApp = `
       Olá, gostaria de contratar um reboque.
-  
+
       - Local de retirada: ${localRetirada}
       - Destino: ${localDestino}
       - Tipo do veículo: ${tipoVeiculo}
+      - Placa: ${placa}
       - Valor estimado: R$ ${this.valorEstimado?.toFixed(2)}
-      
+
       Por favor, me envie mais detalhes.
     `;
-  
+
     const urlWhatsApp = `https://api.whatsapp.com/send/?phone=${telefoneWhatsApp}&text=${encodeURIComponent(this.ultimaMensagemWhatsApp)}&type=phone_number&app_absent=0`;
-  
-    // Redireciona diretamente para o WhatsApp
+
     window.location.href = urlWhatsApp;
-  }  
+  }
 }

@@ -107,7 +107,7 @@ export class BuscaMotoristaPorCpfComponent {
         (error: any) => {
           console.error(error);
           this.toastr.error(
-            `Erro ao tentar deletar o motorista ${this.motorista.id}`, 'Erro');
+            `Erro ao tentar deletar o motorista ${this.motorista?.nome}`, 'Erro');
         }
         ).add(() => this.spinner.hide());
   }

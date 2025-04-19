@@ -4,3 +4,15 @@
 @import '../node_modules/ngx-bootstrap/datepicker/bs-datepicker.css';
 @import '../node_modules/@fortawesome/fontawesome-free/css/all.min.css';
 @import "../node_modules/bootswatch/dist/cosmo/bootstrap.min.css";
+.toast-container {
+    position: fixed !important;
+    bottom: 1rem !important;
+    right: 1rem !important;
+    z-index: 9999 !important;
+    pointer-events: none; // pra não travar clique em elementos abaixo
+  }
+  
+  .toast {
+    pointer-events: auto; // mas ainda permite interagir com o toast
+  }
+  

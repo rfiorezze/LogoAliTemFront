@@ -1,77 +1,98 @@
- <app-titulo [titulo]="'Calculadora de Reboque'" [subtitulo]="'Calcule o custo do reboque aqui'" [iconClass]="'fa fa-truck'" [botaoListar]="false"></app-titulo>
-  <div class="card shadow-sm p-4">
-    <form [formGroup]="form">
-      <fieldset [disabled]="solicitacaoEmAndamento">
-        
-        <!-- Tipo do veículo -->
-        <div class="mb-3">
-          <label class="form-label fw-bold">🚘 Tipo do Veículo</label>
-          <select class="form-select" formControlName="tipoVeiculo">
-            <option value="" disabled selected>Selecione...</option>
-            <option value="Leve">Leve (Carros e Motos)</option>
-            <option value="Utilitario">Utilitário (Picapes e furgões médios)</option>
-            <option value="Semi-Pesado">Semi-Pesado (Vans)</option>
-          </select>
-        </div>
+<app-titulo [titulo]="'Calculadora de Reboque'" [subtitulo]="'Calcule o custo do reboque aqui'" [iconClass]="'fa fa-truck'" [botaoListar]="false"></app-titulo>
+<div class="card shadow-sm p-4">
+  <form [formGroup]="formCalculo">
+    <fieldset [disabled]="solicitacaoEmAndamento">
+      <!-- Tipo do veículo -->
+      <div class="mb-3">
+        <label class="form-label fw-bold">🚘 Tipo do Veículo</label>
+        <select class="form-select" formControlName="tipoVeiculo">
+          <option value="" disabled selected>Selecione...</option>
+          <option value="Leve">Leve (Carros e Motos)</option>
+          <option value="Utilitario">Utilitário (Picapes e furgões médios)</option>
+          <option value="Semi-Pesado">Semi-Pesado (Vans)</option>
+        </select>
+      </div>
 
-        <!-- Endereço de Retirada -->
-        <div class="mb-3">
-          <label class="form-label fw-bold">📍 Endereço de Retirada</label>
-          <div class="input-group">
-            <input type="text" id="localRetirada" class="form-control" formControlName="localRetirada"
-                  placeholder="Digite ou use geolocalização" />
-            <button type="button" class="btn btn-primary" (click)="usarGeolocalizacao()">📍</button>
-          </div>
-          <ul *ngIf="sugestoesRetirada.length > 0" class="list-group mt-2">
-            <li *ngFor="let sugestao of sugestoesRetirada" class="list-group-item list-group-item-action"
-                (click)="selecionarSugestao(sugestao, 'localRetirada')">
-              {{ sugestao }}
-            </li>
-          </ul>
+      <!-- Endereço de Retirada -->
+      <div class="mb-3">
+        <label class="form-label fw-bold">📍 Endereço de Retirada</label>
+        <div class="input-group">
+          <input type="text" id="localRetirada" class="form-control" formControlName="localRetirada" placeholder="Digite ou use geolocalização" />
+          <button type="button" class="btn btn-primary px-3" (click)="usarGeolocalizacao()">📍</button>
         </div>
+        <ul *ngIf="sugestoesRetirada.length > 0" class="list-group mt-2">
+          <li *ngFor="let sugestao of sugestoesRetirada" class="list-group-item list-group-item-action"
+              (click)="selecionarSugestao(sugestao, 'localRetirada')">
+            {{ sugestao }}
+          </li>
+        </ul>
+      </div>
 
-        <!-- Endereço de Destino -->
-        <div class="mb-3">
-          <label class="form-label fw-bold">🎯 Endereço de Destino</label>
-          <input type="text" id="localDestino" class="form-control" formControlName="localDestino"
-                placeholder="Digite o destino" />
-          <ul *ngIf="sugestoesDestino.length > 0" class="list-group mt-2">
-            <li *ngFor="let sugestao of sugestoesDestino" class="list-group-item list-group-item-action"
-                (click)="selecionarSugestao(sugestao, 'localDestino')">
-              {{ sugestao }}
-            </li>
-          </ul>
-        </div>
+      <!-- Endereço de Destino -->
+      <div class="mb-3">
+        <label class="form-label fw-bold">🎯 Endereço de Destino</label>
+        <input type="text" id="localDestino" class="form-control" formControlName="localDestino" placeholder="Digite o destino" />
+        <ul *ngIf="sugestoesDestino.length > 0" class="list-group mt-2">
+          <li *ngFor="let sugestao of sugestoesDestino" class="list-group-item list-group-item-action"
+              (click)="selecionarSugestao(sugestao, 'localDestino')">
+            {{ sugestao }}
+          </li>
+        </ul>
+      </div>
 
-        <!-- Botão de Cálculo -->
-        <button type="button" class="btn btn-primary w-100 mt-3" (click)="calcularValor()" [disabled]="solicitacaoEmAndamento">
+      <!-- Botão de Cálculo -->
+      <div class="text-center">
+        <button type="button" class="btn btn-primary px-4" (click)="calcularValor()" [disabled]="solicitacaoEmAndamento">
           🔍 Calcular Valor
         </button>
-      </fieldset>
-    </form>
-  </div>
+      </div>
+    </fieldset>
+  </form>
 
   <!-- 🔥 Exibir apenas se o cálculo for bem-sucedido -->
-  <div *ngIf="valorEstimado !== null && !solicitacaoConfirmada" class="card shadow-sm p-4 mt-4 text-center">
-    <h4 class="fw-bold">💰 Valor Estimado:</h4>
-    <span class="badge bg-success fs-4">R$ {{ valorEstimado?.toFixed(2) }}</span>
-    
-    <button class="btn btn-success mt-3 w-100" (click)="contratarReboque()" [disabled]="solicitacaoEmAndamento">
-      🚛 Contratar Reboque
-    </button>
-  </div>
+  <form *ngIf="valorEstimado !== null && !solicitacaoConfirmada" [formGroup]="formPlaca" class="card shadow-sm p-4 mt-4 text-center">
+    <h4 class="fw-bold">💰 Valor Estimado:
+      <span class="badge bg-success">R$ {{ valorEstimado?.toFixed(2) }}</span>
+    </h4>
+
+    <div class="alert alert-warning mt-4 text-start" role="alert">
+      ⚠️ <strong>Observação:</strong> o valor calculado é uma estimativa baseada na distância entre os endereços informados.
+      Custos adicionais, como pedágios, tempo de espera ou deslocamentos fora de rota, <strong>não estão incluídos</strong>.
+    </div>
+
+    <!-- Campo de Placa -->
+    <div class="mb-3 row justify-content-center">
+      <div class="col-md-4 text-start">
+        <label class="form-label fw-bold">🔢 Placa do Veículo</label>
+        <input type="text" class="form-control text-uppercase" formControlName="placa" mask="AAA-0A00" placeholder="Ex: ABC-1D23" />
+        <div *ngIf="formPlaca.get('placa')?.touched && formPlaca.get('placa')?.invalid" class="text-danger mt-1">
+          Placa é obrigatória para contratar o reboque.
+        </div>
+      </div>
+    </div>
+
+    <!-- Botão Contratar -->
+    <div class="d-flex justify-content-center">
+      <button class="btn btn-success mt-3 px-4"
+              (click)="contratarReboque()"
+              [disabled]="solicitacaoEmAndamento || formPlaca.invalid">
+        🚛 Contratar Reboque
+      </button>
+    </div>
+  </form>
 
   <!-- 🔥 Exibir apenas se a solicitação for confirmada -->
   <div *ngIf="solicitacaoConfirmada" class="alert alert-success mt-4 text-center shadow-sm p-4">
     <h4>✅ Solicitação registrada com sucesso!</h4>
     <h3>💰 Valor Estimado: <span class="badge bg-success">R$ {{ valorEstimado?.toFixed(2) }}</span></h3>
-    <p class="text-muted">Um atendente entrará em contato em breve.</p>    
+    <p class="text-muted">Um atendente entrará em contato em breve.</p>
 
     <p class="text-muted">
       <small>🚨 Caso queira agilizar o atendimento, clique no botão abaixo e fale com um atendente pelo WhatsApp.</small>
     </p>
 
-    <button class="btn btn-success w-100 mt-2" (click)="enviarWhatsApp()">
+    <button class="btn btn-success mt-2 px-4" (click)="enviarWhatsApp()">
       📲 Solicitar por WhatsApp
     </button>
   </div>
+</div>

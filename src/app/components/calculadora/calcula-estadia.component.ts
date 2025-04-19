@@ -30,9 +30,10 @@ import { HttpClient } from '@angular/common/http';
 import { EmailService } from '@app/services/email.service';
 import { isPlatformBrowser } from '@angular/common';
 import { AccountService } from '@app/services/account.service';
-import { take } from 'rxjs';
+import { finalize, take } from 'rxjs';
 import { MotoristaService } from '@app/services/motorista.service';
 import { Motorista } from '@app/models/Motorista';
+import { EstadiaService } from '@app/services/estadia.service';
 
 defineLocale('pt-br', ptBrLocale);
 
@@ -57,6 +58,7 @@ export class CalculaEstadiaComponent {
   form!: FormGroup;
   formCertidao!: FormGroup;
   valorCalculado: string = '';
+  calculoEstadiaId: number | null = null;
   formattedValueMotorista: string = ''; // Valor formatado para exibição
   formattedValueLocalCarga: string = ''; // Valor formatado para exibição
   formattedValueLocalDescarga: string = ''; // Valor formatado para exibição
@@ -77,6 +79,8 @@ export class CalculaEstadiaComponent {
   dadosCertidaoVisivel: boolean = false;
   dataInvalida: boolean = false;
   isBrowser: boolean;
+  botaoSegundaViaHabilitado: boolean = false;
+  certidaoGerada: boolean = false;
 
   get f(): any {
     return this.form.controls;
@@ -107,6 +111,7 @@ export class CalculaEstadiaComponent {
     private emailService: EmailService,
     private accountService: AccountService,
     private motoristaService: MotoristaService,
+    private estadiaService: EstadiaService,
     @Inject(PLATFORM_ID) private platformId: object
   ) {
     this.localeService.use('pt-br');
@@ -186,7 +191,7 @@ export class CalculaEstadiaComponent {
     this.emailForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
     });
-
+  
     this.form = this.fb.group({
       dataChegada: ['', Validators.required],
       horaChegada: ['', Validators.required],
@@ -194,84 +199,66 @@ export class CalculaEstadiaComponent {
       horaSaida: ['', Validators.required],
       capacidadeCargaVeiculo: ['', [Validators.required, Validators.min(1)]],
     });
-
+  
     this.formCertidao = this.fb.group({
+      // MOTORISTA (obrigatórios)
       placa: ['', Validators.required],
       rntrc: [''],
       nomeMotorista: ['', Validators.required],
-      cpfCnpjMotorista: [
-        '',
-        [Validators.required, this.validarCPFouCNPJ.bind(this)],
-      ],
-      cepMotorista: ['', Validators.required],
-      logradouroMotorista: ['', Validators.required],
-      bairroMotorista: ['', Validators.required],
+      cpfCnpjMotorista: ['', [Validators.required, this.validarCPFouCNPJ.bind(this)]],
+      emailMotorista: ['', [Validators.required, Validators.email, CustomValidators.emailDomainValidator]],
+      telefoneMotorista: ['', Validators.required],
+  
+      // Endereço do MOTORISTA (todos opcionais)
+      cepMotorista: [''],
+      logradouroMotorista: [''],
+      bairroMotorista: [''],
       numeroMotorista: [''],
       complementoMotorista: [''],
-      estadoMotorista: ['', Validators.required],
-      cidadeMotorista: ['', Validators.required],
-      emailMotorista: [
-        '',
-        [
-          Validators.required,
-          Validators.email,
-          CustomValidators.emailDomainValidator,
-        ],
-      ],
-      telefoneMotorista: ['', Validators.required],
+      estadoMotorista: [''],
+      cidadeMotorista: [''],
+  
+      // LOCAL DE CARGA (obrigatórios)
       cpfCnpjLocalCarga: ['', this.validarCPFouCNPJ.bind(this)],
       nomeLocalCarga: ['', Validators.required],
       cepLocalCarga: ['', Validators.required],
       logradouroLocalCarga: ['', Validators.required],
       bairroLocalCarga: ['', Validators.required],
-      numeroLocalCarga: [''],
+      numeroLocalCarga: ['', Validators.required],
       complementoLocalCarga: [''],
       estadoLocalCarga: ['', Validators.required],
       cidadeLocalCarga: ['', Validators.required],
-      emailLocalCarga: [
-        '',
-        [
-          Validators.required,
-          Validators.email,
-          CustomValidators.emailDomainValidator,
-        ],
-      ],
-      telefoneLocalCarga: ['', Validators.required],
+      emailLocalCarga: ['', [Validators.email, CustomValidators.emailDomainValidator]],
+      telefoneLocalCarga: [''],
+  
+      // LOCAL DE DESCARGA (obrigatórios)
       cpfCnpjLocalDescarga: ['', this.validarCPFouCNPJ.bind(this)],
       nomeLocalDescarga: ['', Validators.required],
       cepLocalDescarga: ['', Validators.required],
       logradouroLocalDescarga: ['', Validators.required],
       bairroLocalDescarga: ['', Validators.required],
-      numeroLocalDescarga: [''],
+      numeroLocalDescarga: ['', Validators.required],
       complementoLocalDescarga: [''],
       estadoLocalDescarga: ['', Validators.required],
       cidadeLocalDescarga: ['', Validators.required],
-      emailLocalDescarga: [
-        '',
-        [
-          Validators.required,
-          Validators.email,
-          CustomValidators.emailDomainValidator,
-        ],
-      ],
-      telefoneLocalDescarga: ['', Validators.required],
+      emailLocalDescarga: ['', [ Validators.email, CustomValidators.emailDomainValidator]],
+      telefoneLocalDescarga: [''],
+  
+      // CONTRATANTE (todos opcionais)
       cteCiotContratante: [''],
-      cpfCnpjContratante: [
-        '',
-        [Validators.required, this.validarCPFouCNPJ.bind(this)],
-      ],
-      nomeContratante: ['', Validators.required],
-      cepContratante: ['', Validators.required],
-      logradouroContratante: ['', Validators.required],
-      bairroContratante: ['', Validators.required],
+      cpfCnpjContratante: ['', this.validarCPFouCNPJ.bind(this)],
+      nomeContratante: [''],
+      cepContratante: [''],
+      logradouroContratante: [''],
+      bairroContratante: [''],
       numeroContratante: [''],
       complementoContratante: [''],
-      estadoContratante: ['', Validators.required],
-      cidadeContratante: ['', Validators.required],
-      emailContratante: ['', Validators.required],
-      telefoneContratante: ['', Validators.required],
+      estadoContratante: [''],
+      cidadeContratante: [''],
+      emailContratante: ['', [Validators.email, CustomValidators.emailDomainValidator]],
+      telefoneContratante: [''],
     });
-  }
+  }  
 
   onInput(event: Event, nomeCampo: any): void {
     const input = event.target as HTMLInputElement;
@@ -434,29 +421,26 @@ export class CalculaEstadiaComponent {
   }  
 
   calcularEstadia(valorHora: number) {
-    // Reseta a flag de data inválida antes de cada cálculo
     this.dataInvalida = false;
-
-    // Força a marcação dos campos como "touched" para que o Angular exiba os erros corretamente
+  
     this.form.get('dataChegada')?.markAsTouched();
     this.form.get('dataSaida')?.markAsTouched();
     this.form.updateValueAndValidity();
-
+  
     const formValues = this.form.value;
     const dataChegada = new Date(formValues.dataChegada);
     const dataSaida = new Date(formValues.dataSaida);
-
-    // Verifica se a data de saída é anterior à data de chegada
+  
     if (dataSaida < dataChegada) {
-      this.dataInvalida = true; // Exibe a mensagem de erro se a data for inválida
+      this.dataInvalida = true;
       return;
     }
-
-    // Se a validação passar, realiza o cálculo
+  
     this.spinner.show();
+  
     const horaChegada = formValues.horaChegada;
     const horaSaida = formValues.horaSaida;
-
+  
     const chegada = new Date(
       dataChegada.getFullYear(),
       dataChegada.getMonth(),
@@ -465,7 +449,7 @@ export class CalculaEstadiaComponent {
       horaChegada.minute,
       horaChegada.second
     );
-
+  
     const saida = new Date(
       dataSaida.getFullYear(),
       dataSaida.getMonth(),
@@ -474,16 +458,31 @@ export class CalculaEstadiaComponent {
       horaSaida.minute,
       horaSaida.second
     );
-
+  
     const diferencaHoras = differenceInHours(saida, chegada);
     const capacidadeCargaVeiculo = formValues.capacidadeCargaVeiculo;
-
-    this.valorCalculado =
-      'R$ ' + (diferencaHoras * capacidadeCargaVeiculo * valorHora).toFixed(2);
+    const valor = diferencaHoras * capacidadeCargaVeiculo * valorHora;
+  
+    this.valorCalculado = 'R$ ' + valor.toFixed(2);
     localStorage.setItem('valorCalculado', this.valorCalculado);
-
-    this.spinner.hide();
-  }
+  
+    const calculo = {
+      dataChegada: chegada.toISOString(),
+      dataSaida: saida.toISOString(),
+      capacidadeCargaVeiculo,
+      valorCalculado: valor
+    };
+  
+    this.estadiaService
+      .registrarCalculo(calculo)
+      .pipe(take(1), finalize(() => this.spinner.hide()))
+      .subscribe({
+        next: (res) => {
+          this.calculoEstadiaId = res.id; // 👈 aqui pega o ID retornado da API
+        },
+        error: () => this.toastr.error('Erro ao registrar o cálculo da estadia.')
+      });      
+  }  
 
   exibirCamposPreencherCertidao() {
     this.accountService.currentUser$.pipe(take(1)).subscribe((user) => {
@@ -555,10 +554,232 @@ export class CalculaEstadiaComponent {
   }
 
   salvarCertidao(): void {
+    if (this.formCertidao.invalid) {
+      this.formCertidao.markAllAsTouched();
+      this.toastr.error('Preencha todos os campos obrigatórios antes de salvar.');
+      return;
+    }
+  
+    if (!this.calculoEstadiaId) {
+      this.toastr.error('Cálculo da estadia não foi registrado.');
+      return;
+    }
+  
     this.atualizarMotorista(() => {
-      const doc = this.gerarPdf();
-      doc.save('certidao.pdf');
+      const doc = this.gerarPdf(); // Gera a instância do PDF
+      const pdfBlob = doc.output('blob'); // Converte para Blob
+  
+      const formData = new FormData();
+      formData.append('arquivo', pdfBlob, 'certidao.pdf');
+  
+      const certidaoData = {
+        calculoEstadiaId: this.calculoEstadiaId,
+        placa: this.fc.placa.value,
+        rntrc: this.fc.rntrc.value,
+        nomeMotorista: this.fc.nomeMotorista.value,
+        cpfCnpjMotorista: this.fc.cpfCnpjMotorista.value,
+        emailMotorista: this.fc.emailMotorista.value,
+        telefoneMotorista: this.fc.telefoneMotorista.value,
+        cepMotorista: this.fc.cepMotorista.value,
+        logradouroMotorista: this.fc.logradouroMotorista.value,
+        numeroMotorista: this.fc.numeroMotorista.value,
+        complementoMotorista: this.fc.complementoMotorista.value,
+        bairroMotorista: this.fc.bairroMotorista.value,
+        cidadeMotorista: this.fc.cidadeMotorista.value,
+        estadoMotorista: this.fc.estadoMotorista.value,
+        cpfCnpjLocalCarga: this.fc.cpfCnpjLocalCarga.value,
+        nomeLocalCarga: this.fc.nomeLocalCarga.value,
+        emailLocalCarga: this.fc.emailLocalCarga.value,
+        telefoneLocalCarga: this.fc.telefoneLocalCarga.value,
+        cepLocalCarga: this.fc.cepLocalCarga.value,
+        logradouroLocalCarga: this.fc.logradouroLocalCarga.value,
+        numeroLocalCarga: this.fc.numeroLocalCarga.value,
+        complementoLocalCarga: this.fc.complementoLocalCarga.value,
+        bairroLocalCarga: this.fc.bairroLocalCarga.value,
+        cidadeLocalCarga: this.fc.cidadeLocalCarga.value,
+        estadoLocalCarga: this.fc.estadoLocalCarga.value,
+        cpfCnpjLocalDescarga: this.fc.cpfCnpjLocalDescarga.value,
+        nomeLocalDescarga: this.fc.nomeLocalDescarga.value,
+        emailLocalDescarga: this.fc.emailLocalDescarga.value,
+        telefoneLocalDescarga: this.fc.telefoneLocalDescarga.value,
+        cepLocalDescarga: this.fc.cepLocalDescarga.value,
+        logradouroLocalDescarga: this.fc.logradouroLocalDescarga.value,
+        numeroLocalDescarga: this.fc.numeroLocalDescarga.value,
+        complementoLocalDescarga: this.fc.complementoLocalDescarga.value,
+        bairroLocalDescarga: this.fc.bairroLocalDescarga.value,
+        cidadeLocalDescarga: this.fc.cidadeLocalDescarga.value,
+        estadoLocalDescarga: this.fc.estadoLocalDescarga.value,
+        cpfCnpjContratante: this.fc.cpfCnpjContratante.value,
+        nomeContratante: this.fc.nomeContratante.value,
+        emailContratante: this.fc.emailContratante.value,
+        telefoneContratante: this.fc.telefoneContratante.value,
+        cepContratante: this.fc.cepContratante.value,
+        logradouroContratante: this.fc.logradouroContratante.value,
+        numeroContratante: this.fc.numeroContratante.value,
+        complementoContratante: this.fc.complementoContratante.value,
+        bairroContratante: this.fc.bairroContratante.value,
+        cidadeContratante: this.fc.cidadeContratante.value,
+        estadoContratante: this.fc.estadoContratante.value,
+        cteCiotContratante: this.fc.cteCiotContratante.value,
+      };
+  
+      // Adiciona todos os campos do objeto no FormData
+      for (const key in certidaoData) {
+        formData.append(key, certidaoData[key]);
+      }
+  
+      this.estadiaService.registrarCertidao(formData).subscribe({
+        next: () => {
+          this.toastr.success('Certidão registrada com sucesso!');
+          this.botaoSegundaViaHabilitado = true;
+          this.dadosCertidaoVisivel = false;
+          this.certidaoGerada = true;
+        },
+        error: (err) => {
+          console.error('Erro ao registrar a certidão', err);
+          this.toastr.error('Erro ao registrar a certidão.');
+        }
+      });
     });
+  }  
+  
+  validarCPF(cpf: string): boolean {
+    cpf = cpf.replace(/\D/g, ''); // Remove caracteres não numéricos
+
+    if (cpf.length !== 11 || /^(\d)\1+$/.test(cpf)) {
+      return false; // CPF inválido
+    }
+
+    let soma = 0;
+    let resto;
+
+    for (let i = 1; i <= 9; i++) {
+      soma += parseInt(cpf.substring(i - 1, i)) * (11 - i);
+    }
+    resto = (soma * 10) % 11;
+    if (resto === 10 || resto === 11) resto = 0;
+    if (resto !== parseInt(cpf.substring(9, 10))) return false;
+
+    soma = 0;
+    for (let i = 1; i <= 10; i++) {
+      soma += parseInt(cpf.substring(i - 1, i)) * (12 - i);
+    }
+    resto = (soma * 10) % 11;
+    if (resto === 10 || resto === 11) resto = 0;
+    if (resto !== parseInt(cpf.substring(10, 11))) return false;
+
+    return true;
+  }
+
+  // Função para validar CNPJ
+  validarCNPJ(cnpj: string): boolean {
+    cnpj = cnpj.replace(/\D/g, ''); // Remove caracteres não numéricos
+
+    if (cnpj.length !== 14 || /^(\d)\1+$/.test(cnpj)) {
+      return false; // Verifica se o CNPJ tem 14 dígitos e se não são todos iguais
+    }
+
+    let tamanho = cnpj.length - 2;
+    let numeros = cnpj.substring(0, tamanho);
+    let digitos = cnpj.substring(tamanho);
+    let soma = 0;
+    let pos = tamanho - 7;
+
+    for (let i = tamanho; i >= 1; i--) {
+      soma += parseInt(numeros.charAt(tamanho - i)) * pos--;
+      if (pos < 2) pos = 9;
+    }
+
+    let resultado = soma % 11 < 2 ? 0 : 11 - (soma % 11);
+    if (resultado !== parseInt(digitos.charAt(0))) return false;
+
+    tamanho++;
+    numeros = cnpj.substring(0, tamanho);
+    soma = 0;
+    pos = tamanho - 7;
+
+    for (let i = tamanho; i >= 1; i--) {
+      soma += parseInt(numeros.charAt(tamanho - i)) * pos--;
+      if (pos < 2) pos = 9;
+    }
+
+    resultado = soma % 11 < 2 ? 0 : 11 - (soma % 11);
+    if (resultado !== parseInt(digitos.charAt(1))) return false;
+
+    return true;
+  }
+
+  validarCPFouCNPJ(control: FormControl): ValidationErrors | null {
+    let value = control.value;
+    value = value.replace(/\D/g, '');
+
+    // Ignora validação se o campo estiver vazio
+    if (!value) {
+      return null; // Sem erros
+    }
+
+    if (value.length <= 11) {
+      return this.validarCPF(value) ? null : { cpfInvalido: true };
+    } else {
+      return this.validarCNPJ(value) ? null : { cnpjInvalido: true };
+    }
+  }
+
+  enviarPdfPorEmail(): void {
+    if (this.emailForm.valid) {
+        this.atualizarMotorista(() => {
+            const emailDestino = this.emailForm.get('email')?.value;
+            const assunto = 'Detalhes da Estadia';
+            const corpo = `Prezado(a),
+
+Segue em anexo o documento referente à sua solicitação de estadia. Esse documento contém informações detalhadas sobre o cálculo realizado.
+
+Caso tenha dúvidas, entre em contato conosco.
+
+Atenciosamente,
+Equipe LogoALitem`;
+            const copiaPara = 'servicoslogoalitem@gmail.com,contato@logoalitem.com.br';
+
+            // Gerar o PDF atualizado
+            const doc = this.gerarPdf();
+            const pdfBlob = doc.output('blob');
+
+            // Enviar e-mail com os dados atualizados
+            this.emailService
+                .enviarEmail(emailDestino, assunto, corpo, copiaPara, pdfBlob)
+                .subscribe(
+                    () => {
+                        this.toastr.success('E-mail enviado com sucesso!');
+                        this.fecharModal();
+                    },
+                    (error) => {
+                        this.toastr.error('Erro ao enviar o e-mail.');
+                        console.error('Erro ao enviar o e-mail', error);
+                    }
+                );
+        });
+    }
+}
+
+  ngAfterViewInit() {
+    // Certifique-se de que o código só será executado no client-side
+    if (this.isBrowser) {
+      // Qualquer código que dependa do `document` pode ser colocado aqui
+      console.log('Executando no navegador (client-side).');
+    }
+  }
+
+  fecharModal() {
+    // Somente manipule o DOM se estiver no navegador
+    if (this.isBrowser) {
+      const modal = document.getElementById('emailModal');
+      if (modal) {
+        const modalInstance = (window as any).bootstrap.Modal.getInstance(
+          modal
+        ); // Obter instância do modal
+        modalInstance?.hide(); // Fechar o modal
+      }
+    }
   }
 
   gerarPdf() {
@@ -748,144 +969,5 @@ export class CalculaEstadiaComponent {
     );
 
     return doc;
-  }
-
-  validarCPF(cpf: string): boolean {
-    cpf = cpf.replace(/\D/g, ''); // Remove caracteres não numéricos
-
-    if (cpf.length !== 11 || /^(\d)\1+$/.test(cpf)) {
-      return false; // CPF inválido
-    }
-
-    let soma = 0;
-    let resto;
-
-    for (let i = 1; i <= 9; i++) {
-      soma += parseInt(cpf.substring(i - 1, i)) * (11 - i);
-    }
-    resto = (soma * 10) % 11;
-    if (resto === 10 || resto === 11) resto = 0;
-    if (resto !== parseInt(cpf.substring(9, 10))) return false;
-
-    soma = 0;
-    for (let i = 1; i <= 10; i++) {
-      soma += parseInt(cpf.substring(i - 1, i)) * (12 - i);
-    }
-    resto = (soma * 10) % 11;
-    if (resto === 10 || resto === 11) resto = 0;
-    if (resto !== parseInt(cpf.substring(10, 11))) return false;
-
-    return true;
-  }
-
-  // Função para validar CNPJ
-  validarCNPJ(cnpj: string): boolean {
-    cnpj = cnpj.replace(/\D/g, ''); // Remove caracteres não numéricos
-
-    if (cnpj.length !== 14 || /^(\d)\1+$/.test(cnpj)) {
-      return false; // Verifica se o CNPJ tem 14 dígitos e se não são todos iguais
-    }
-
-    let tamanho = cnpj.length - 2;
-    let numeros = cnpj.substring(0, tamanho);
-    let digitos = cnpj.substring(tamanho);
-    let soma = 0;
-    let pos = tamanho - 7;
-
-    for (let i = tamanho; i >= 1; i--) {
-      soma += parseInt(numeros.charAt(tamanho - i)) * pos--;
-      if (pos < 2) pos = 9;
-    }
-
-    let resultado = soma % 11 < 2 ? 0 : 11 - (soma % 11);
-    if (resultado !== parseInt(digitos.charAt(0))) return false;
-
-    tamanho++;
-    numeros = cnpj.substring(0, tamanho);
-    soma = 0;
-    pos = tamanho - 7;
-
-    for (let i = tamanho; i >= 1; i--) {
-      soma += parseInt(numeros.charAt(tamanho - i)) * pos--;
-      if (pos < 2) pos = 9;
-    }
-
-    resultado = soma % 11 < 2 ? 0 : 11 - (soma % 11);
-    if (resultado !== parseInt(digitos.charAt(1))) return false;
-
-    return true;
-  }
-
-  validarCPFouCNPJ(control: FormControl): ValidationErrors | null {
-    let value = control.value;
-    value = value.replace(/\D/g, '');
-
-    // Ignora validação se o campo estiver vazio
-    if (!value) {
-      return null; // Sem erros
-    }
-
-    if (value.length <= 11) {
-      return this.validarCPF(value) ? null : { cpfInvalido: true };
-    } else {
-      return this.validarCNPJ(value) ? null : { cnpjInvalido: true };
-    }
-  }
-
-  enviarPdfPorEmail(): void {
-    if (this.emailForm.valid) {
-        this.atualizarMotorista(() => {
-            const emailDestino = this.emailForm.get('email')?.value;
-            const assunto = 'Detalhes da Estadia';
-            const corpo = `Prezado(a),
-
-Segue em anexo o documento referente à sua solicitação de estadia. Esse documento contém informações detalhadas sobre o cálculo realizado.
-
-Caso tenha dúvidas, entre em contato conosco.
-
-Atenciosamente,
-Equipe LogoALitem`;
-            const copiaPara = 'servicoslogoalitem@gmail.com;contato@logoalitem.com.br';
-
-            // Gerar o PDF atualizado
-            const doc = this.gerarPdf();
-            const pdfBlob = doc.output('blob');
-
-            // Enviar e-mail com os dados atualizados
-            this.emailService
-                .enviarEmail(emailDestino, assunto, corpo, copiaPara, pdfBlob)
-                .subscribe(
-                    () => {
-                        this.toastr.success('E-mail enviado com sucesso!');
-                        this.fecharModal();
-                    },
-                    (error) => {
-                        this.toastr.error('Erro ao enviar o e-mail.');
-                        console.error('Erro ao enviar o e-mail', error);
-                    }
-                );
-        });
-    }
-}
-
-  ngAfterViewInit() {
-    // Certifique-se de que o código só será executado no client-side
-    if (this.isBrowser) {
-      // Qualquer código que dependa do `document` pode ser colocado aqui
-      console.log('Executando no navegador (client-side).');
-    }
-  }
-
-  fecharModal() {
-    // Somente manipule o DOM se estiver no navegador
-    if (this.isBrowser) {
-      const modal = document.getElementById('emailModal');
-      if (modal) {
-        const modalInstance = (window as any).bootstrap.Modal.getInstance(
-          modal
-        ); // Obter instância do modal
-        modalInstance?.hide(); // Fechar o modal
-      }
-    }
   }
 }

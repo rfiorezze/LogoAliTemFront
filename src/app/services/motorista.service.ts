@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, take } from 'rxjs';
 import { Motorista } from '../models/Motorista';
 import { environment } from '@environments/environment';
+import { map } from 'rxjs/operators';
 
 @Injectable()
 export class MotoristaService {
@@ -58,4 +59,14 @@ export class MotoristaService {
       .delete<string>(`${this.baseURL}/${id}`)
       .pipe(take(1));
   }
+
+  public getQuantidadeMotoristas(): Observable<number> {
+    return this.http
+      .get<{ total: number }>(`${this.baseURL}/quantidade`)
+      .pipe(
+        take(1),
+        // extrai só o número
+        map(response => response.total)
+      );
+  }  
 }

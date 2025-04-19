@@ -18,9 +18,15 @@ export class CustomValidators {
     control: AbstractControl
   ): { [key: string]: boolean } | null {
     const email = control.value;
+  
+    // Se estiver vazio, está ok (não é required)
+    if (!email) {
+      return null;
+    }
+  
     const domainPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     return domainPattern.test(email) ? null : { invalidDomain: true };
-  }
+  }  
 
   static anoValido(control: AbstractControl): ValidationErrors | null {
     const ano = control.value;

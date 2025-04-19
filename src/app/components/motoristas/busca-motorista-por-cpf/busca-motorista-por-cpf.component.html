@@ -51,7 +51,7 @@
 (newConfirmationEvent)="getConfirmationValue($event)"
 [modalStyle]="modalStyle"
 [modalTitle]="modalTitle"
-[modalBody]="'Tem certeza que quer deletar o motorista : '+this.motorista.nome"
+[modalBody]="'Tem certeza que quer deletar o motorista : '+this.motorista?.nome"
 [modalButtonColor]="modalButtonColor"
 ></confirmation-modal>
 

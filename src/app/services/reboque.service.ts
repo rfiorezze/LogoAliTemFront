@@ -4,7 +4,7 @@ import { Observable, take } from 'rxjs';
 import { environment } from '@environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ReboqueService {
   private baseURL = environment.apiURL + 'api/reboque';
@@ -17,9 +17,17 @@ export class ReboqueService {
    * @param localDestino Endereço de destino do veículo.
    * @returns Observable com o valor estimado do reboque.
    */
-  public calcularValor(localRetirada: string, localDestino: string, tipoVeiculo: string): Observable<{ valor: number }> {
+  public calcularValor(
+    localRetirada: string,
+    localDestino: string,
+    tipoVeiculo: string
+  ): Observable<{ valor: number }> {
     return this.http
-      .post<{ valor: number }>(`${this.baseURL}/calcular`, { localRetirada, localDestino, tipoVeiculo })
+      .post<{ valor: number }>(`${this.baseURL}/calcular`, {
+        localRetirada,
+        localDestino,
+        tipoVeiculo,
+      })
       .pipe(take(1));
   }
 
@@ -30,9 +38,39 @@ export class ReboqueService {
    * @param tipoVeiculo Tipo do veículo a ser rebocado.
    * @returns Observable indicando sucesso ou falha da solicitação.
    */
-  public contratarReboque(localRetirada: string, localDestino: string, tipoVeiculo: string, valorEstimado: number): Observable<{ mensagem: string, valor: number }> {
+  public contratarReboque(
+    localRetirada: string,
+    localDestino: string,
+    tipoVeiculo: string,
+    valorEstimado: number,
+    placa: string
+  ): Observable<{ mensagem: string; valor: number }> {
     return this.http
-      .post<{ mensagem: string, valor: number }>(`${this.baseURL}/contratar`, { localRetirada, localDestino, tipoVeiculo, valorEstimado })
+      .post<{ mensagem: string; valor: number }>(`${this.baseURL}/contratar`, {
+        localRetirada,
+        localDestino,
+        tipoVeiculo,
+        valorEstimado,
+        placa,
+      })
       .pipe(take(1));
-  }  
+  }
+
+  /**
+   * Obtém os indicadores de reboque.
+   * @returns Observable com os dados dos indicadores.
+   */
+  public obterIndicadores(): Observable<{
+    totalCalculos: number;
+    totalContratacoes: number;
+    taxaConversao: string;
+  }> {
+    return this.http
+      .get<{
+        totalCalculos: number;
+        totalContratacoes: number;
+        taxaConversao: string;
+      }>(`${this.baseURL}/indicadores`)
+      .pipe(take(1));
+  }
 }

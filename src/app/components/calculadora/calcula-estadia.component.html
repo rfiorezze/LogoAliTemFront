@@ -1,8 +1,7 @@
 <app-titulo [titulo]="'Calculadora de estadia'" [subtitulo]="'Calcule sua estadia aqui'" [iconClass]="'fa fa-calculator'" [botaoListar]="false"></app-titulo>
 <div class="card rounded shadow-sm">
     <form [formGroup]="form">
-        <div class="p-3">
-            <h4>Dados da Estadia</h4>
+        <div class="p-3" *ngIf="!certidaoGerada">
             <!-- <p>Form value: {{form.value | json}}</p>
          <p>Form valid: {{form.status | json}}</p> -->
             <div class="row">
@@ -58,11 +57,11 @@
                 </div>
                 <div class="mb-3 col-md-2">
                     <label>Valor da Hora</label>
-                    <input type="text" class="form-control" value="R$ 2,29" disabled="true" />
+                    <input type="text" class="form-control" value="R$ 2,41" disabled="true" />
                 </div>
             </div>
             <div>
-                <button class="btn btn-success me-3" [disabled]="!form.valid" (click)="calcularEstadia(2.29)">
+                <button class="btn btn-success me-3" [disabled]="!form.valid" (click)="calcularEstadia(2.41)">
                     <!-- <span class="spinner-border spinner-border-sm mr-1"></span> -->
                     Calcular Estadia
                 </button>
@@ -75,7 +74,7 @@
                 <label><b>Valor Calculado</b></label>
                 <input type="text" class="form-control" [value]="valorCalculado" [disabled]="true" />
             </div>
-            <div class="mb-3 col-md-2" *ngIf="valorCalculado !== ''">
+            <div class="mb-3 col-md-2" *ngIf="valorCalculado !== '' && !certidaoGerada">
                 <button class="btn btn-success" (click)="exibirCamposPreencherCertidao()">
                     Preencher Certidão
                 </button>
@@ -174,22 +173,10 @@
                         placeholder="CEP"
                         mask="00000-000"
                     />
-                    <div *ngIf="fc.cepMotorista.errors?.required && fc.cepMotorista.touched" class="invalid-feedback">
-                        CEP é obrigatório
-                    </div>
                 </div>
                 <div class="mb-3 col-md-4">
                     <label>Logradouro</label>
                     <input type="text" class="form-control" [ngClass]="cssValidator(fc.logradouroMotorista)" formControlName="logradouroMotorista" placeholder="Logradouro" />
-                    <div
-                        *ngIf="
-              fc.logradouroMotorista.errors?.required &&
-              fc.logradouroMotorista.touched
-            "
-                        class="invalid-feedback"
-                    >
-                        Logradouro é obrigatório
-                    </div>
                 </div>
                 <div class="mb-3 col-md-1">
                     <label>Numero</label>
@@ -202,14 +189,6 @@
                 <div class="mb-3 col-md-2">
                     <label>Bairro</label>
                     <input type="text" class="form-control" formControlName="bairroMotorista" [ngClass]="cssValidator(fc.bairroMotorista)" placeholder="Bairro" />
-                    <div
-                        *ngIf="
-              fc.bairroMotorista.errors?.required && fc.bairroMotorista.touched
-            "
-                        class="invalid-feedback"
-                    >
-                        Bairro é obrigatório
-                    </div>
                 </div>
             </div>
             <div class="row">
@@ -220,15 +199,7 @@
                         <option *ngFor="let item of estados" [ngValue]="item.sigla">
                           {{ item.nome }}
                         </option>
-                      </select>                      
-                    <div
-                        *ngIf="
-              fc.estadoMotorista.errors?.required && fc.estadoMotorista.touched
-            "
-                        class="invalid-feedback"
-                    >
-                        Estado é obrigatório
-                    </div>
+                      </select>
                 </div>
                 <div class="mb-3 col-sm-3">
                     <label>Cidade</label>
@@ -237,15 +208,7 @@
                         <option *ngFor="let item of municipiosMotorista" [ngValue]="item.nome">
                           {{ item.nome }}
                         </option>
-                      </select>                      
-                    <div
-                        *ngIf="
-              fc.cidadeMotorista.errors?.required && fc.cidadeMotorista.touched
-            "
-                        class="invalid-feedback"
-                    >
-                        Cidade é obrigatório
-                    </div>
+                      </select>
                 </div>
             </div>
             <br />
@@ -263,12 +226,6 @@
                         placeholder="Digite CPF/CNPJ"
                         maxlength="18"
                     />
-                    <div *ngIf="fc.cpfCnpjLocalCarga?.errors?.cpfInvalido && fc.cpfCnpjLocalCarga.touched" class="invalid-feedback">
-                        CPF inválido
-                    </div>
-                    <div *ngIf="fc.cpfCnpjLocalCarga?.errors?.cnpjInvalido && fc.cpfCnpjLocalCarga.touched" class="invalid-feedback">
-                        CNPJ inválido
-                    </div>
                 </div>
                 <div class="mb-3 col-md-4">
                     <label>Nome do Local de Carga</label>
@@ -287,9 +244,6 @@
                 <div class="mb-3 col-md-3">
                     <label>E-mail</label>
                     <input type="text" class="form-control" [ngClass]="cssValidator(fc.emailLocalCarga)" formControlName="emailLocalCarga" placeholder="E-mail" />
-                    <div *ngIf="fc.emailLocalCarga.errors?.required && fc.emailLocalCarga.touched" class="invalid-feedback">
-                        E-mail é obrigatório
-                    </div>
                     <div *ngIf="fc.emailLocalCarga.errors?.email && fc.emailLocalCarga.touched" class="invalid-feedback">
                         Deve ser um e-mail válido
                     </div>
@@ -300,15 +254,6 @@
                 <div class="mb-3 col-md-2">
                     <label>Telefone</label>
                     <input type="text" class="form-control" mask="(00) 0 0000-0000" [ngClass]="cssValidator(fc.telefoneLocalCarga)" formControlName="telefoneLocalCarga" placeholder="(00) 9 0000-0000" />
-                    <div
-                        *ngIf="
-              fc.telefoneLocalCarga.errors?.required &&
-              fc.telefoneLocalCarga.touched
-            "
-                        class="invalid-feedback"
-                    >
-                        Telefone é obrigatório
-                    </div>
                 </div>
             </div>
             <div class="row">
@@ -348,7 +293,10 @@
                 </div>
                 <div class="mb-3 col-md-1">
                     <label>Numero</label>
-                    <input type="text" class="form-control" formControlName="numeroLocalCarga" placeholder="Ex: 55" />
+                    <input type="text" class="form-control" [ngClass]="cssValidator(fc.numeroLocalCarga)" formControlName="numeroLocalCarga" placeholder="Ex: 55" />
+                    <div *ngIf="fc.numeroLocalCarga.errors?.required && fc.numeroLocalCarga.touched" class="invalid-feedback">
+                        Numero é obrigatório
+                    </div>
                 </div>
                 <div class="mb-3 col-md-2">
                     <label>Complemento</label>
@@ -446,9 +394,6 @@
                 <div class="mb-3 col-md-3">
                     <label>E-mail</label>
                     <input type="text" class="form-control" [ngClass]="cssValidator(fc.emailLocalDescarga)" formControlName="emailLocalDescarga" placeholder="E-mail" />
-                    <div *ngIf="fc.emailLocalDescarga.errors?.required && fc.emailLocalDescarga.touched" class="invalid-feedback">
-                        E-mail é obrigatório
-                    </div>
                     <div *ngIf="fc.emailLocalDescarga.errors?.email && fc.emailLocalDescarga.touched" class="invalid-feedback">
                         Deve ser um e-mail válido
                     </div>
@@ -459,15 +404,6 @@
                 <div class="mb-3 col-md-2">
                     <label>Telefone</label>
                     <input type="text" class="form-control" mask="(00) 0 0000-0000" [ngClass]="cssValidator(fc.telefoneLocalDescarga)" formControlName="telefoneLocalDescarga" placeholder="(00) 9 0000-0000" />
-                    <div
-                        *ngIf="
-              fc.telefoneLocalDescarga.errors?.required &&
-              fc.telefoneLocalDescarga.touched
-            "
-                        class="invalid-feedback"
-                    >
-                        Telefone é obrigatório
-                    </div>
                 </div>
             </div>
             <div class="row">
@@ -508,7 +444,10 @@
                 </div>
                 <div class="mb-3 col-md-1">
                     <label>Numero</label>
-                    <input type="text" class="form-control" formControlName="numeroLocalDescarga" placeholder="Ex: 55" />
+                    <input type="text" class="form-control" [ngClass]="cssValidator(fc.numeroLocalDescarga)" formControlName="numeroLocalDescarga" placeholder="Ex: 55" />
+                    <div *ngIf="fc.numeroLocalDescarga.errors?.required && fc.numeroLocalDescarga.touched" class="invalid-feedback">
+                        Numero é obrigatório
+                    </div>
                 </div>
                 <div class="mb-3 col-md-2">
                     <label>Complemento</label>
@@ -591,30 +530,16 @@
                     <div *ngIf="fc.cpfCnpjContratante?.errors?.cnpjInvalido && fc.cpfCnpjContratante.touched" class="invalid-feedback">
                         CNPJ inválido
                     </div>
-                    <div *ngIf="fc.cpfCnpjContratante?.errors?.required && fc.cpfCnpjContratante.touched" class="invalid-feedback">
-                        CPF/CNPJ é obrigatório
-                    </div>
                 </div>
                 <div class="mb-3 col-md-4">
                     <label>Nome do Contratante da Carga e Descarga</label>
                     <input type="text" class="form-control is-invalid" formControlName="nomeContratante" [ngClass]="cssValidator(fc.nomeContratante)" />
-                    <div
-                        *ngIf="
-              fc.nomeContratante.errors?.required && fc.nomeContratante.touched
-            "
-                        class="invalid-feedback"
-                    >
-                        Nome do Contratante da Carga e Descarga é obrigatório
-                    </div>
                 </div>
             </div>
             <div class="row">
                 <div class="mb-3 col-md-3">
                     <label>E-mail</label>
                     <input type="text" class="form-control" [ngClass]="cssValidator(fc.emailContratante)" formControlName="emailContratante" placeholder="E-mail" />
-                    <div *ngIf="fc.emailContratante.errors?.required && fc.emailContratante.touched" class="invalid-feedback">
-                        E-mail é obrigatório
-                    </div>
                     <div *ngIf="fc.emailContratante.errors?.email && fc.emailContratante.touched" class="invalid-feedback">
                         Deve ser um e-mail válido
                     </div>
@@ -625,15 +550,6 @@
                 <div class="mb-3 col-md-2">
                     <label>Telefone</label>
                     <input type="text" class="form-control" mask="(00) 0 0000-0000" [ngClass]="cssValidator(fc.telefoneContratante)" formControlName="telefoneContratante" placeholder="(00) 9 0000-0000" />
-                    <div
-                        *ngIf="
-              fc.telefoneContratante.errors?.required &&
-              fc.telefoneContratante.touched
-            "
-                        class="invalid-feedback"
-                    >
-                        Telefone é obrigatório
-                    </div>
                 </div>
             </div>
             <div class="row">
@@ -649,27 +565,10 @@
                         placeholder="CEP"
                         mask="00000-000"
                     />
-                    <div
-                        *ngIf="
-              fc.cepContratante.errors?.required && fc.cepContratante.touched
-            "
-                        class="invalid-feedback"
-                    >
-                        CEP é obrigatório
-                    </div>
                 </div>
                 <div class="mb-3 col-md-4">
                     <label>Logradouro</label>
                     <input type="text" class="form-control" [ngClass]="cssValidator(fc.logradouroContratante)" formControlName="logradouroContratante" placeholder="Logradouro" />
-                    <div
-                        *ngIf="
-              fc.logradouroContratante.errors?.required &&
-              fc.logradouroContratante.touched
-            "
-                        class="invalid-feedback"
-                    >
-                        Logradouro é obrigatório
-                    </div>
                 </div>
                 <div class="mb-3 col-md-1">
                     <label>Numero</label>
@@ -682,15 +581,6 @@
                 <div class="mb-3 col-md-2">
                     <label>Bairro</label>
                     <input type="text" class="form-control" formControlName="bairroContratante" [ngClass]="cssValidator(fc.bairroContratante)" placeholder="Bairro" />
-                    <div
-                        *ngIf="
-              fc.bairroContratante.errors?.required &&
-              fc.bairroContratante.touched
-            "
-                        class="invalid-feedback"
-                    >
-                        Bairro é obrigatório
-                    </div>
                 </div>
             </div>
             <div class="row">
@@ -701,16 +591,7 @@
                         <option *ngFor="let item of estados" [ngValue]="item.sigla">
                           {{ item.nome }}
                         </option>
-                      </select>                      
-                    <div
-                        *ngIf="
-              fc.estadoContratante.errors?.required &&
-              fc.estadoContratante.touched
-            "
-                        class="invalid-feedback"
-                    >
-                        Estado é obrigatório
-                    </div>
+                      </select>
                 </div>
                 <div class="mb-3 col-sm-3">
                     <label>Cidade</label>
@@ -720,23 +601,29 @@
                           {{ item.nome }}
                         </option>
                       </select>
-                    <div
-                        *ngIf="
-              fc.cidadeContratante.errors?.required &&
-              fc.cidadeContratante.touched
-            "
-                        class="invalid-feedback"
-                    >
-                        Cidade é obrigatório
-                    </div>
                 </div>
             </div>
             <div>
-                <button class="btn btn-success me-2" [disabled]="!formCertidao.valid" (click)="salvarCertidao()">Gerar PDF</button>
-                <button class="btn btn-success" [disabled]="!formCertidao.valid" data-bs-toggle="modal" data-bs-target="#emailModal">Enviar por E-mail</button>
-            </div>            
+                <button class="btn btn-success me-2" (click)="salvarCertidao()">Gerar Certidão</button>                
+            </div>     
             <br />
         </div>
+        <div class="d-flex justify-content-center align-items-center flex-column text-center p-5" *ngIf="certidaoGerada">
+            <div class="card shadow p-4" style="max-width: 600px; width: 100%;">
+              <h4 class="text-success mb-3">
+                ✅ Certidão gerada com sucesso!
+              </h4>
+              <p class="mb-3">
+                Ela foi enviada para a equipe responsável. Em breve entraremos em contato com você.
+              </p>
+              <p class="mb-4">
+                Verifique seus downloads. Caso não tenha baixado, envie uma segunda via por e-mail clicando no botão abaixo.
+              </p>
+              <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#emailModal" [disabled]="!botaoSegundaViaHabilitado">
+                Enviar 2ª via por E-mail
+              </button>
+            </div>
+          </div>          
     </form>
 </div>
 <!-- Modal para inserir o e-mail -->

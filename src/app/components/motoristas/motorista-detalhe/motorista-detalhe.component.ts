@@ -199,11 +199,7 @@ export class MotoristaDetalheComponent {
       nome: ['', Validators.required],
       cpf: ['', [Validators.required, CustomValidators.validarCPF]],
       sexo: ['', Validators.required],
-      dataNascimento: [
-        '',
-        Validators.required,
-        CustomValidators.dataNascimentoValida,
-      ],
+      dataNascimento: ['', [Validators.required, CustomValidators.dataNascimentoValida]],
       numeroCNH: ['', [Validators.required, Validators.minLength(9)]],
       categoriaCNH: ['', Validators.required],
       dataVencimentoCNH: [],

@@ -64,5 +64,9 @@ export class VeiculoService {
   public getMarcas(): Observable<any> {
     return this.http.get<any>('assets/Marcas.json');
   }
+
+  public getQuantidadeVeiculos(): Observable<number> {
+    return this.http.get<number>(`${this.baseURL}/quantidade`).pipe(take(1));
+  }
   
 }

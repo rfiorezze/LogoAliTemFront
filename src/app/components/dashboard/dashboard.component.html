@@ -1,2 +1,97 @@
 <app-titulo [titulo]="'Dashboard'" [subtitulo]="'Acompanhe aqui os indicadores'" [iconClass]="'far fa-chart-bar'"></app-titulo>
-<h3>Acompanhe os indicadores do sistema</h3>
+
+<div class="container mt-4 dashboard-container">
+  <h4 class="mb-4 text-muted">📊 Acompanhe os indicadores do sistema</h4>
+
+  <!-- 🧑‍✈️ Seção Motoristas e Veículos -->
+  <h5 class="text-uppercase text-primary fw-bold mb-3">Motoristas & Veículos</h5>
+  <div class="row g-4 mb-5">
+    <div class="col-md-6 col-lg-3">
+      <div class="card text-white bg-primary shadow-sm h-100">
+        <div class="card-body text-center">
+          <i class="fas fa-user fa-2x mb-2"></i>
+          <h6>Motoristas Cadastrados</h6>
+          <h3>{{ qtdMotoristas }}</h3>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6 col-lg-3">
+      <div class="card text-white bg-dark shadow-sm h-100">
+        <div class="card-body text-center">
+          <i class="fas fa-car fa-2x mb-2"></i>
+          <h6>Veículos Cadastrados</h6>
+          <h3>{{ qtdVeiculos }}</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ⛺ Seção Estadia -->
+  <h5 class="text-uppercase text-info fw-bold mb-3">Estadia</h5>
+  <div class="row g-4 mb-5">
+    <div class="col-md-6 col-lg-3">
+      <div class="card text-white bg-info shadow-sm h-100">
+        <div class="card-body text-center">
+          <i class="fas fa-clock fa-2x mb-2"></i>
+          <h6>Estadias Calculadas</h6>
+          <h3>{{ qtdEstadias }}</h3>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6 col-lg-3">
+      <div class="card text-white bg-success shadow-sm h-100">
+        <div class="card-body text-center">
+          <i class="fas fa-file-alt fa-2x mb-2"></i>
+          <h6>Certidões Geradas</h6>
+          <h3>{{ qtdCertidoes }}</h3>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6 col-lg-3">
+      <div class="card text-white bg-secondary shadow-sm h-100">
+        <div class="card-body text-center">
+          <i class="fas fa-percentage fa-2x mb-2"></i>
+          <h6>Conversão Estadia</h6>
+          <h3>{{ percConversaoEstadia }}%</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 🚛 Seção Reboque -->
+  <h5 class="text-uppercase text-warning fw-bold mb-3">Reboque</h5>
+  <div class="row g-4">
+    <div class="col-md-6 col-lg-3">
+      <div class="card text-white bg-warning shadow-sm h-100">
+        <div class="card-body text-center">
+          <i class="fas fa-route fa-2x mb-2"></i>
+          <h6>Reboques Calculados</h6>
+          <h3>{{ qtdReboquesCalculados }}</h3>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6 col-lg-3">
+      <div class="card text-white bg-danger shadow-sm h-100">
+        <div class="card-body text-center">
+          <i class="fas fa-truck-pickup fa-2x mb-2"></i>
+          <h6>Reboques Contratados</h6>
+          <h3>{{ qtdReboquesContratados }}</h3>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6 col-lg-3">
+      <div class="card text-white bg-secondary shadow-sm h-100">
+        <div class="card-body text-center">
+          <i class="fas fa-percentage fa-2x mb-2"></i>
+          <h6>Conversão Reboque</h6>
+          <h3>{{ percConversaoReboque }}%</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
